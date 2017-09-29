@@ -36,8 +36,10 @@ public class UploadInfoManager implements UploadInfoService {
                     .where(
                             FINGERPRINTER_INFO.X.eq(x)
                                     .and(FINGERPRINTER_INFO.Y.eq(y))
-                                    .and(FINGERPRINTER_INFO.ROOM_ID.eq(roomId)
-                                    .and(FINGERPRINTER_INFO.BUILDING_ID.eq(buildingId))))
+                                    .and(FINGERPRINTER_INFO.ROOM_ID.eq(roomId))
+                                    .and(FINGERPRINTER_INFO.MAC_ADDRESS.eq(info.getMacAddress()))
+                                    .and(FINGERPRINTER_INFO.BUILDING_ID.eq(buildingId))
+                    )
                     .fetchAny();
             if (record == null) {
                 ktv.insertInto(FINGERPRINTER_INFO,
