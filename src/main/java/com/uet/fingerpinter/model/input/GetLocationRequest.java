@@ -3,16 +3,16 @@ package com.uet.fingerpinter.model.input;
 import java.util.List;
 
 public class GetLocationRequest {
-    private int buidingId;
+    private int buildingId;
     private int roomId;
     private List<InfoReferencePointRequest> infos;
 
-    public int getBuidingId() {
-        return buidingId;
+    public int getBuildingId() {
+        return buildingId;
     }
 
-    public void setBuidingId(int buidingId) {
-        this.buidingId = buidingId;
+    public void setBuildingId(int buildingId) {
+        this.buildingId = buildingId;
     }
 
     public int getRoomId() {

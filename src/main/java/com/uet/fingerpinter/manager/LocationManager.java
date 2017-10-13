@@ -41,7 +41,7 @@ public class LocationManager implements LocationService {
                 ktv.select(FINGERPRINTER_INFO.X, FINGERPRINTER_INFO.Y, DSL.count(FINGERPRINTER_INFO.MAC_ADDRESS).as("count")).from(FINGERPRINTER_INFO)
                         .where(
                                 FINGERPRINTER_INFO.ROOM_ID.eq(request.getRoomId())
-                                        .and(FINGERPRINTER_INFO.BUILDING_ID.eq(request.getBuidingId()))
+                                        .and(FINGERPRINTER_INFO.BUILDING_ID.eq(request.getBuildingId()))
                                         .and(FINGERPRINTER_INFO.MAC_ADDRESS.in(macAddress))
                         )
                         .groupBy(FINGERPRINTER_INFO.X, FINGERPRINTER_INFO.Y)
@@ -55,7 +55,7 @@ public class LocationManager implements LocationService {
                     ktv.selectFrom(FINGERPRINTER_INFO)
                             .where(
                                     FINGERPRINTER_INFO.ROOM_ID.eq(request.getRoomId())
-                                            .and(FINGERPRINTER_INFO.BUILDING_ID.eq(request.getBuidingId()))
+                                            .and(FINGERPRINTER_INFO.BUILDING_ID.eq(request.getBuildingId()))
                                             .and(FINGERPRINTER_INFO.MAC_ADDRESS.in(macAddress))
                                             .and(FINGERPRINTER_INFO.X.eq(record3.value1()))
                                             .and(FINGERPRINTER_INFO.Y.eq(record3.value2()))

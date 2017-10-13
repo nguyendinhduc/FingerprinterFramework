@@ -19,7 +19,7 @@ public class LocationController {
         this.service = service;
     }
 
-    @GetMapping(value = Constants.URL_GET_LOCATION)
+    @PostMapping(value = Constants.URL_GET_LOCATION)
     @ResponseBody
     public BaseResponse<GetLocationResponse> getLocation(@RequestBody GetLocationRequest request) {
         try {
