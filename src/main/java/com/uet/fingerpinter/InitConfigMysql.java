@@ -1,70 +1,91 @@
 package com.uet.fingerpinter;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.uet.fingerpinter.jooq.ExceptionTranslator;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.jooq.conf.Settings;
+import org.jooq.impl.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Component
-@ConfigurationProperties(prefix = "spring.datasource")
+@Configuration
+@EnableTransactionManagement
+@PropertySource("classpath:application.properties")
 public class InitConfigMysql {
+    private static Logger LOG = LoggerFactory.getLogger(InitConfigMysql.class);
+    private Environment environment;
 
-    private String driverClassName;
-
-    private String url;
-
-    private String username;
-
-    private String password;
-
-    public String getDriverClassName() {
-        return driverClassName;
+    @Autowired
+    public InitConfigMysql(Environment environment) {
+        this.environment = environment;
     }
 
-    public void setDriverClassName(String driverClassName) {
-        this.driverClassName = driverClassName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Bean("dslContext")
-    public DSLContext getDSLContext() {
+    @Bean(name = "dataSource")
+    public DataSource dataSource() {
+        ComboPooledDataSource dataSource = new com.mchange.v2.c3p0.ComboPooledDataSource();
         try {
-            Connection conn = DriverManager.getConnection(url, username, password);
-            return DSL.using(conn, SQLDialect.MYSQL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            dataSource.setDriverClass(environment.getRequiredProperty("spring.datasource.driverClassName"));
+            String url = environment.getRequiredProperty("spring.datasource.url");
+            dataSource.setJdbcUrl(url);
+            LOG.info("url: " + url);
+            String username = environment.getRequiredProperty("spring.datasource.username");
+            dataSource.setUser(username);
+            LOG.info("username: " + username);
+            String password = environment.getRequiredProperty("spring.datasource.password");
+            LOG.info("password: " + password);
+            dataSource.setPassword(password);
+        } catch (PropertyVetoException e) {
+            LOG.debug(e.getMessage());
         }
+        return dataSource;
     }
+
+    @Bean
+    public DataSourceConnectionProvider connectionProvider() {
+        return new DataSourceConnectionProvider(new TransactionAwareDataSourceProxy(dataSource()));
+    }
+
+    @Bean(name = "dslContext")
+    public DefaultDSLContext dsl() {
+        return new DefaultDSLContext(configuration());
+    }
+
+    @Bean
+    public DefaultConfiguration configuration() {
+        DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
+        jooqConfiguration.set(connectionProvider());
+        jooqConfiguration.set(new DefaultExecuteListenerProvider(exceptionTransformer()));
+        jooqConfiguration.setSQLDialect(SQLDialect.MYSQL);
+        Settings settings = new Settings();
+        settings.setRenderSchema(Boolean.FALSE);
+        settings.setRenderCatalog(Boolean.FALSE);
+        jooqConfiguration.setSettings(settings);
+        return jooqConfiguration;
+    }
+
+    @Bean
+    public ExceptionTranslator exceptionTransformer() {
+        return new ExceptionTranslator();
+    }
+
+    @Bean
+    public DataSourceTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dataSource());
+    }
+
 }

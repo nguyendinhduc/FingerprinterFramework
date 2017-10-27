@@ -84,6 +84,7 @@ public class LocationManager implements LocationService {
             pairs.add(new Pair<>(index, resultValue));
             index++;
         }
+
         Pair<Integer, Double> min = pairs.get(0);
         for (int i = 1; i < pairs.size(); i++) {
             if (pairs.get(i).getValue() < min.getValue()) {

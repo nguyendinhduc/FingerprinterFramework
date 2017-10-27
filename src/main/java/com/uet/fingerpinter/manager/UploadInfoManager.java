@@ -48,7 +48,7 @@ public class UploadInfoManager implements UploadInfoService {
                         .execute();
             } else {
                 ktv.update(FINGERPRINTER_INFO)
-                        .set(FINGERPRINTER_INFO.RSS, record.getRss() * 0.9f + info.getRss() * 0.1)
+                        .set(FINGERPRINTER_INFO.RSS, record.getRss() * 0.9f + info.getRss() * 0.1f)
                         .execute();
             }
 

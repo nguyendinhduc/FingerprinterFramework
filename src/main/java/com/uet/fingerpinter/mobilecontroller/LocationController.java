@@ -29,4 +29,9 @@ public class LocationController {
         }
 
     }
+
+    @GetMapping(value = "get")
+    public String get(){
+        return "ahihi";
+    }
 }

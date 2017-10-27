@@ -2,6 +2,8 @@ package com.uet.fingerpinter.mobilecontroller;
 
 import com.uet.fingerpinter.Constants;
 import com.uet.fingerpinter.manager.interf.UploadInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = Constants.API_URL_UPLOAD_INFO_MOBILE)
 public class UploadInfoController {
+    private static final Logger LOG = LoggerFactory.getLogger(UploadInfoController.class);
 
     private UploadInfoService service;
 
@@ -37,6 +40,11 @@ public class UploadInfoController {
     @GetMapping(value = Constants.URL_GET_INFO_BUILDING)
     public BaseResponse getInfoBuilding() {
         try {
+            if ( service == null ) {
+                LOG.info("null service");
+            }else {
+                LOG.info("not null service");
+            }
             return service.getInfoBuilding();
         } catch (CustomExceptionResponse e) {
             return BaseResponse.exceptionResponse(e.getMessage(), e.getErrorCode());

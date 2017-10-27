@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.LocationIndoor;
+import com.uet.fingerpinter.db.Sql12200503;
 import com.uet.fingerpinter.db.tables.records.BuildingRecord;
 
 import java.util.Arrays;
@@ -35,10 +35,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Building extends TableImpl<BuildingRecord> {
 
-    private static final long serialVersionUID = 343384248;
+    private static final long serialVersionUID = -710351050;
 
     /**
-     * The reference instance of <code>location_indoor.building</code>
+     * The reference instance of <code>sql12200503.building</code>
      */
     public static final Building BUILDING = new Building();
 
@@ -51,29 +51,29 @@ public class Building extends TableImpl<BuildingRecord> {
     }
 
     /**
-     * The column <code>location_indoor.building.id</code>.
+     * The column <code>sql12200503.building.id</code>.
      */
     public final TableField<BuildingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.building.building_name</code>.
+     * The column <code>sql12200503.building.building_name</code>.
      */
     public final TableField<BuildingRecord, String> BUILDING_NAME = createField("building_name", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.building.building_address</code>.
+     * The column <code>sql12200503.building.building_address</code>.
      */
     public final TableField<BuildingRecord, String> BUILDING_ADDRESS = createField("building_address", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
 
     /**
-     * Create a <code>location_indoor.building</code> table reference
+     * Create a <code>sql12200503.building</code> table reference
      */
     public Building() {
         this("building", null);
     }
 
     /**
-     * Create an aliased <code>location_indoor.building</code> table reference
+     * Create an aliased <code>sql12200503.building</code> table reference
      */
     public Building(String alias) {
         this(alias, BUILDING);
@@ -92,7 +92,7 @@ public class Building extends TableImpl<BuildingRecord> {
      */
     @Override
     public Schema getSchema() {
-        return LocationIndoor.LOCATION_INDOOR;
+        return Sql12200503.SQL12200503;
     }
 
     /**
