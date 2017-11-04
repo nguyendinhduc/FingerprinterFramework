@@ -28,45 +28,45 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BuildingRecord extends UpdatableRecordImpl<BuildingRecord> implements Record3<Integer, String, String> {
 
-    private static final long serialVersionUID = 1120034326;
+    private static final long serialVersionUID = 1391760278;
 
     /**
-     * Setter for <code>sql12200503.building.id</code>.
+     * Setter for <code>location_indoor.building.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>sql12200503.building.id</code>.
+     * Getter for <code>location_indoor.building.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>sql12200503.building.building_name</code>.
+     * Setter for <code>location_indoor.building.building_name</code>.
      */
     public void setBuildingName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>sql12200503.building.building_name</code>.
+     * Getter for <code>location_indoor.building.building_name</code>.
      */
     public String getBuildingName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>sql12200503.building.building_address</code>.
+     * Setter for <code>location_indoor.building.building_address</code>.
      */
     public void setBuildingAddress(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>sql12200503.building.building_address</code>.
+     * Getter for <code>location_indoor.building.building_address</code>.
      */
     public String getBuildingAddress() {
         return (String) get(2);

@@ -12,7 +12,7 @@ import javax.annotation.Generated;
 
 
 /**
- * Convenience access to all tables in sql12200503
+ * Convenience access to all tables in location_indoor
  */
 @Generated(
     value = {
@@ -25,17 +25,17 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>sql12200503.building</code>.
+     * The table <code>location_indoor.building</code>.
      */
     public static final Building BUILDING = com.uet.fingerpinter.db.tables.Building.BUILDING;
 
     /**
-     * The table <code>sql12200503.fingerprinter_info</code>.
+     * The table <code>location_indoor.fingerprinter_info</code>.
      */
     public static final FingerprinterInfo FINGERPRINTER_INFO = com.uet.fingerpinter.db.tables.FingerprinterInfo.FINGERPRINTER_INFO;
 
     /**
-     * The table <code>sql12200503.room</code>.
+     * The table <code>location_indoor.room</code>.
      */
     public static final Room ROOM = com.uet.fingerpinter.db.tables.Room.ROOM;
 }

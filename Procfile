@@ -1,0 +1,1 @@
+web: java -jar target/fingerprinter-0.0.1.jar

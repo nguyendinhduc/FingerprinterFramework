@@ -6,7 +6,7 @@
 	<groupId>com.uet.fingerprinter</groupId>
 	<artifactId>fingerprinter</artifactId>
 	<version>0.0.1</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
@@ -124,7 +124,7 @@
 							<name>org.jooq.util.mysql.MySQLDatabase</name>
 							<includes>.*</includes>
 							<excludes></excludes>
-							<inputSchema>sql12200503</inputSchema>
+							<inputSchema>location_indoor</inputSchema>
 						</database>
 						<target>
 							<packageName>com.uet.fingerpinter.db</packageName>
@@ -176,15 +176,15 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<jdbc.user>sql12200503</jdbc.user>
-				<jdbc.password>XDhMR5RHwU</jdbc.password>
-				<jdbc.url>jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12200503?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>
-				<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-
-				<!--<jdbc.user>root</jdbc.user>-->
-				<!--<jdbc.password>az09az09</jdbc.password>-->
-				<!--<jdbc.url>jdbc:mysql://localhost:3306/location_indoor?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
+				<!--<jdbc.user>sql12200503</jdbc.user>-->
+				<!--<jdbc.password>XDhMR5RHwU</jdbc.password>-->
+				<!--<jdbc.url>jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12200503?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
 				<!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>-->
+
+				<jdbc.user>root</jdbc.user>
+				<jdbc.password>az09az09</jdbc.password>
+				<jdbc.url>jdbc:mysql://localhost:3306/location_indoor?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>
+				<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
 			</properties>
 		</profile>
 	</profiles>

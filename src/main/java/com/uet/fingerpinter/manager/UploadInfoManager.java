@@ -59,7 +59,7 @@ public class UploadInfoManager implements UploadInfoService {
 
     @Override
     public BaseResponse<List<BuildingModel>> getInfoBuilding() throws CustomExceptionResponse {
-        return new BaseResponse<>(
+        List<BuildingModel> buildingModels =
                 ktv.selectFrom(BUILDING)
                         .fetch()
                         .map(record -> {
@@ -68,8 +68,10 @@ public class UploadInfoManager implements UploadInfoService {
                             buildingModel.setBuildingAddress(record.getBuildingAddress());
                             buildingModel.setBuildingName(record.getBuildingName());
                             return buildingModel;
-                        })
-        );
+                        });
+        BuildingModel buildingModel = buildingModels.remove(buildingModels.size() - 1);
+        buildingModels.add(0, buildingModel);
+        return new BaseResponse<>(buildingModels);
     }
 
     @Override

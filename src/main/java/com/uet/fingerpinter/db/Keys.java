@@ -20,7 +20,7 @@ import org.jooq.impl.AbstractKeys;
 
 
 /**
- * A class modelling foreign key relationships between tables of the <code>sql12200503</code> 
+ * A class modelling foreign key relationships between tables of the <code>location_indoor</code> 
  * schema
  */
 @Generated(
@@ -53,8 +53,8 @@ public class Keys {
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FINGERPRINTER_INFO_2 = ForeignKeys0.FINGERPRINTER_INFO_2;
-    public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FINGERPRINTER_INFO_1 = ForeignKeys0.FINGERPRINTER_INFO_1;
+    public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FK_FINGERPRINGER_INFO_2 = ForeignKeys0.FK_FINGERPRINGER_INFO_2;
+    public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FK_FINGERPRINGER_INFO_1 = ForeignKeys0.FK_FINGERPRINGER_INFO_1;
     public static final ForeignKey<RoomRecord, BuildingRecord> FK_ROOM_1 = ForeignKeys0.FK_ROOM_1;
 
     // -------------------------------------------------------------------------
@@ -74,8 +74,8 @@ public class Keys {
     }
 
     private static class ForeignKeys0 extends AbstractKeys {
-        public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FINGERPRINTER_INFO_2 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_ROOM_PRIMARY, FingerprinterInfo.FINGERPRINTER_INFO, "fingerprinter_info_2", FingerprinterInfo.FINGERPRINTER_INFO.ROOM_ID);
-        public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FINGERPRINTER_INFO_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_BUILDING_PRIMARY, FingerprinterInfo.FINGERPRINTER_INFO, "fingerprinter_info_1", FingerprinterInfo.FINGERPRINTER_INFO.BUILDING_ID);
+        public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FK_FINGERPRINGER_INFO_2 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_ROOM_PRIMARY, FingerprinterInfo.FINGERPRINTER_INFO, "fk_fingerpringer_info_2", FingerprinterInfo.FINGERPRINTER_INFO.ROOM_ID);
+        public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FK_FINGERPRINGER_INFO_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_BUILDING_PRIMARY, FingerprinterInfo.FINGERPRINTER_INFO, "fk_fingerpringer_info_1", FingerprinterInfo.FINGERPRINTER_INFO.BUILDING_ID);
         public static final ForeignKey<RoomRecord, BuildingRecord> FK_ROOM_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_BUILDING_PRIMARY, Room.ROOM, "fk_room_1", Room.ROOM.BUILDING_ID);
     }
 }
