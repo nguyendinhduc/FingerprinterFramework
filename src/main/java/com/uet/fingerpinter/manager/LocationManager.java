@@ -2,12 +2,12 @@ package com.uet.fingerpinter.manager;
 
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoRecord;
 import com.uet.fingerpinter.manager.interf.LocationService;
+import com.uet.fingerpinter.model.Pair;
 import com.uet.fingerpinter.model.input.GetLocationRequest;
 import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
 import com.uet.fingerpinter.model.response.BaseResponse;
 import com.uet.fingerpinter.model.response.CustomExceptionResponse;
 import com.uet.fingerpinter.model.response.GetLocationResponse;
-import javafx.util.Pair;
 import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
