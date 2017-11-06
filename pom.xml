@@ -6,7 +6,7 @@
     <groupId>com.uet.fingerprinter</groupId>
     <artifactId>fingerprinter</artifactId>
     <version>0.0.1</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <name>demo</name>
     <description>Demo project for Spring Boot</description>
@@ -71,17 +71,17 @@
             <version>3.9.2</version>
         </dependency>
          <!--https://mvnrepository.com/artifact/mysql/mysql-connector-java-->
-        <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>6.0.6</version>
-        </dependency>
-
         <!--<dependency>-->
-            <!--<groupId>org.postgresql</groupId>-->
-            <!--<artifactId>postgresql</artifactId>-->
-            <!--<version>9.4-1200-jdbc41</version>-->
+        <!--<groupId>mysql</groupId>-->
+        <!--<artifactId>mysql-connector-java</artifactId>-->
+        <!--<version>6.0.6</version>-->
         <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1200-jdbc41</version>
+        </dependency>
 
         <!--<dependency>-->
             <!--<groupId>com.fasterxml.jackson.core</groupId>-->
@@ -123,18 +123,19 @@
                     </jdbc>
 
                     <generator>
-                        <database>
-                            <name>org.jooq.util.mysql.MySQLDatabase</name>
-                            <includes>.*</includes>
-                            <excludes></excludes>
-                            <inputSchema>location_indoor</inputSchema>
-                        </database>
                         <!--<database>-->
-                            <!--<name>org.jooq.util.postgres.PostgresDatabase</name>-->
+                            <!--<name>org.jooq.util.mysql.MySQLDatabase</name>-->
                             <!--<includes>.*</includes>-->
                             <!--<excludes></excludes>-->
-                            <!--<inputSchema>d99ht5uda1f0vt</inputSchema>-->
+                            <!--<inputSchema>location_indoor</inputSchema>-->
                         <!--</database>-->
+                        <name>org.jooq.util.JavaGenerator</name>
+                        <database>
+                            <name>org.jooq.util.postgres.PostgresDatabase</name>
+                            <inputSchema>public</inputSchema>
+                            <includes>.*</includes>
+                            <excludes></excludes>
+                        </database>
                         <target>
                             <packageName>com.uet.fingerpinter.db</packageName>
                             <directory>src/main/java</directory>
@@ -190,15 +191,15 @@
                 <!--<jdbc.url>jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12200503?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
                 <!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>-->
 
-                <jdbc.user>root</jdbc.user>
-                <jdbc.password>az09az09</jdbc.password>
-                <jdbc.url>jdbc:mysql://localhost:3306/location_indoor?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>
-                <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+                <!--<jdbc.user>root</jdbc.user>-->
+                <!--<jdbc.password>az09az09</jdbc.password>-->
+                <!--<jdbc.url>jdbc:mysql://localhost:3306/location_indoor?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
+                <!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>-->
 
-                <!--<jdbc.user>nfpwjfwiwgjrun</jdbc.user>-->
-                <!--<jdbc.password>b1f3134843bfab92fa226871dc7aa07d1a63db1cd39e6d8886897b0d68582c2b</jdbc.password>-->
-                <!--<jdbc.url>jdbc:postgresql://ec2-184-73-222-194.compute-1.amazonaws.com:5432/d99ht5uda1f0vt?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory</jdbc.url>-->
-                <!--<jdbc.driver>org.postgresql.Driver</jdbc.driver>-->
+                <jdbc.user>dyylgetqjbdqan</jdbc.user>
+                <jdbc.password>4ff907eb5cc1def2d405e2b084f81195977113113158bb57ca80480295f786dc</jdbc.password>
+                <jdbc.url>jdbc:postgresql://ec2-54-235-207-254.compute-1.amazonaws.com:5432/d3qp1qt80gimji?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory</jdbc.url>
+                <jdbc.driver>org.postgresql.Driver</jdbc.driver>
 
                 <!--<jdbc.user>postgres</jdbc.user>-->
                 <!--<jdbc.password>az09az09</jdbc.password>-->
