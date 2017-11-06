@@ -1,6 +1,5 @@
 package com.uet.fingerpinter.manager;
 
-import com.uet.fingerpinter.db.tables.FingerprinterInfo;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoRecord;
 import com.uet.fingerpinter.manager.interf.LocationService;
 import com.uet.fingerpinter.model.input.GetLocationRequest;
@@ -8,7 +7,6 @@ import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
 import com.uet.fingerpinter.model.response.BaseResponse;
 import com.uet.fingerpinter.model.response.CustomExceptionResponse;
 import com.uet.fingerpinter.model.response.GetLocationResponse;
-import com.uet.fingerpinter.utils.ThreeValue;
 import javafx.util.Pair;
 import org.jooq.*;
 import org.jooq.impl.DSL;
@@ -19,7 +17,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
