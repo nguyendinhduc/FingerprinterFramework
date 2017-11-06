@@ -70,7 +70,7 @@ public class InitConfigMysql {
         DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
         jooqConfiguration.set(connectionProvider());
         jooqConfiguration.set(new DefaultExecuteListenerProvider(exceptionTransformer()));
-        jooqConfiguration.setSQLDialect(SQLDialect.MYSQL);
+        jooqConfiguration.setSQLDialect(SQLDialect.POSTGRES_9_4);
         Settings settings = new Settings();
         settings.setRenderSchema(Boolean.FALSE);
         settings.setRenderCatalog(Boolean.FALSE);
