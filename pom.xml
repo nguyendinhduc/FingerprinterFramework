@@ -70,24 +70,46 @@
             <artifactId>jooq-codegen</artifactId>
             <version>3.9.2</version>
         </dependency>
-         <!--https://mvnrepository.com/artifact/mysql/mysql-connector-java-->
-        <!--<dependency>-->
-        <!--<groupId>mysql</groupId>-->
-        <!--<artifactId>mysql-connector-java</artifactId>-->
-        <!--<version>6.0.6</version>-->
-        <!--</dependency>-->
-
+        <!--https://mvnrepository.com/artifact/mysql/mysql-connector-java-->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.4-1200-jdbc41</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
-            <!--<artifactId>jackson-databind</artifactId>-->
-            <!--<version>2.9.1</version>-->
+        <!--<groupId>org.postgresql</groupId>-->
+        <!--<artifactId>postgresql</artifactId>-->
+        <!--<version>9.4-1200-jdbc41</version>-->
         <!--</dependency>-->
+
+        <!--<dependency>-->
+        <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+        <!--<artifactId>jackson-databind</artifactId>-->
+        <!--<version>2.9.1</version>-->
+        <!--</dependency>-->
+
+        <!--log-->
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
+        <!--math-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+            <version>3.6.1</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -123,19 +145,40 @@
                     </jdbc>
 
                     <generator>
-                        <!--<database>-->
-                            <!--<name>org.jooq.util.mysql.MySQLDatabase</name>-->
-                            <!--<includes>.*</includes>-->
-                            <!--<excludes></excludes>-->
-                            <!--<inputSchema>location_indoor</inputSchema>-->
-                        <!--</database>-->
                         <name>org.jooq.util.JavaGenerator</name>
                         <database>
-                            <name>org.jooq.util.postgres.PostgresDatabase</name>
-                            <inputSchema>public</inputSchema>
+                            <name>org.jooq.util.mysql.MySQLDatabase</name>
                             <includes>.*</includes>
                             <excludes></excludes>
+                            <inputSchema>location_indoor</inputSchema>
+
+
+                            <!--<database>-->
+                            <!--<name>org.jooq.util.postgres.PostgresDatabase</name>-->
+                            <!--<inputSchema>public</inputSchema>-->
+                            <!--<includes>.*</includes>-->
+                            <!--<excludes></excludes>-->
+                            <!--</database>-->
+
+                            <!--customtype-->
+                            <customTypes>
+                                <customType>
+                                    <name>com.uet.fingerpinter.jooq.type.TypeFingerprinterInfo</name>
+                                    <converter>com.uet.fingerpinter.jooq.convert.TypeFingerprinterInfoConvertter
+                                    </converter>
+                                </customType>
+
+                            </customTypes>
+
+                            <forcedTypes>
+                                <forcedType>
+                                    <name>com.uet.fingerpinter.jooq.type.TypeFingerprinterInfo</name>
+                                    <expression>.*\.fingerprinter_info_detail\.type</expression>
+                                </forcedType>
+                            </forcedTypes>
+
                         </database>
+
                         <target>
                             <packageName>com.uet.fingerpinter.db</packageName>
                             <directory>src/main/java</directory>
@@ -191,15 +234,15 @@
                 <!--<jdbc.url>jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12200503?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
                 <!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>-->
 
-                <!--<jdbc.user>root</jdbc.user>-->
-                <!--<jdbc.password>az09az09</jdbc.password>-->
-                <!--<jdbc.url>jdbc:mysql://localhost:3306/location_indoor?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
-                <!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>-->
+                <jdbc.user>root</jdbc.user>
+                <jdbc.password>az09az09</jdbc.password>
+                <jdbc.url>jdbc:mysql://localhost:3306/location_indoor?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>
+                <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
 
-                <jdbc.user>dyylgetqjbdqan</jdbc.user>
-                <jdbc.password>4ff907eb5cc1def2d405e2b084f81195977113113158bb57ca80480295f786dc</jdbc.password>
-                <jdbc.url>jdbc:postgresql://ec2-54-235-207-254.compute-1.amazonaws.com:5432/d3qp1qt80gimji?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory</jdbc.url>
-                <jdbc.driver>org.postgresql.Driver</jdbc.driver>
+                <!--<jdbc.user>dyylgetqjbdqan</jdbc.user>-->
+                <!--<jdbc.password>4ff907eb5cc1def2d405e2b084f81195977113113158bb57ca80480295f786dc</jdbc.password>-->
+                <!--<jdbc.url>jdbc:postgresql://ec2-54-235-207-254.compute-1.amazonaws.com:5432/d3qp1qt80gimji?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory</jdbc.url>-->
+                <!--<jdbc.driver>org.postgresql.Driver</jdbc.driver>-->
 
                 <!--<jdbc.user>postgres</jdbc.user>-->
                 <!--<jdbc.password>az09az09</jdbc.password>-->

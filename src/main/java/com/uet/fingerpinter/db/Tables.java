@@ -6,13 +6,15 @@ package com.uet.fingerpinter.db;
 
 import com.uet.fingerpinter.db.tables.Building;
 import com.uet.fingerpinter.db.tables.FingerprinterInfo;
+import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
+import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
 import com.uet.fingerpinter.db.tables.Room;
 
 import javax.annotation.Generated;
 
 
 /**
- * Convenience access to all tables in public
+ * Convenience access to all tables in location_indoor
  */
 @Generated(
     value = {
@@ -25,17 +27,27 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>public.building</code>.
+     * The table <code>location_indoor.building</code>.
      */
     public static final Building BUILDING = com.uet.fingerpinter.db.tables.Building.BUILDING;
 
     /**
-     * The table <code>public.fingerprinter_info</code>.
+     * The table <code>location_indoor.fingerprinter_info</code>.
      */
     public static final FingerprinterInfo FINGERPRINTER_INFO = com.uet.fingerpinter.db.tables.FingerprinterInfo.FINGERPRINTER_INFO;
 
     /**
-     * The table <code>public.room</code>.
+     * The table <code>location_indoor.fingerprinter_info_detail</code>.
+     */
+    public static final FingerprinterInfoDetail FINGERPRINTER_INFO_DETAIL = com.uet.fingerpinter.db.tables.FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL;
+
+    /**
+     * The table <code>location_indoor.fingerprinter_info_gauss</code>.
+     */
+    public static final FingerprinterInfoGauss FINGERPRINTER_INFO_GAUSS = com.uet.fingerpinter.db.tables.FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS;
+
+    /**
+     * The table <code>location_indoor.room</code>.
      */
     public static final Room ROOM = com.uet.fingerpinter.db.tables.Room.ROOM;
 }

@@ -2,6 +2,7 @@ package com.uet.fingerpinter.mobilecontroller;
 
 import com.uet.fingerpinter.Constants;
 import com.uet.fingerpinter.manager.interf.UploadInfoService;
+import com.uet.fingerpinter.model.input.gauss.PostReferencePointGaussRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UploadInfoController {
         this.service = service;
     }
 
-    @PostMapping(value = Constants.URL_POST_REFERENCE_POINT, consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces =  {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    @PostMapping(value = Constants.URL_POST_REFERENCE_POINT, consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     @ResponseBody
     public BaseResponse postReferencePoint(
             @RequestBody PostReferencePointRequest body
@@ -40,9 +41,9 @@ public class UploadInfoController {
     @GetMapping(value = Constants.URL_GET_INFO_BUILDING)
     public BaseResponse getInfoBuilding() {
         try {
-            if ( service == null ) {
+            if (service == null) {
                 LOG.info("null service");
-            }else {
+            } else {
                 LOG.info("not null service");
             }
             return service.getInfoBuilding();
@@ -61,4 +62,17 @@ public class UploadInfoController {
             return BaseResponse.exceptionResponse(e.getMessage(), e.getErrorCode());
         }
     }
+
+    @PostMapping(value = Constants.URL_POST_REFERENCE_POINT_GAUSS, consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public BaseResponse<String> postReferencePointGauss(
+            @RequestBody PostReferencePointGaussRequest postReferencePointGaussRequest
+    ) {
+        try {
+            return service.postReferencePointGauss(postReferencePointGaussRequest);
+        } catch (CustomExceptionResponse e) {
+            return BaseResponse.exceptionResponse(e.getMessage(), e.getErrorCode());
+        }
+    }
+
+
 }

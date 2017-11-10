@@ -6,6 +6,7 @@ import com.uet.fingerpinter.model.input.GetLocationRequest;
 import com.uet.fingerpinter.model.response.BaseResponse;
 import com.uet.fingerpinter.model.response.CustomExceptionResponse;
 import com.uet.fingerpinter.model.response.GetLocationResponse;
+import org.apache.commons.math3.analysis.integration.gauss.GaussIntegratorFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

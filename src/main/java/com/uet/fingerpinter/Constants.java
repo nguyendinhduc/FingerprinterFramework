@@ -5,6 +5,7 @@ public interface Constants {
     String API_URL_UPLOAD_INFO_MOBILE = BASE_API_URL_MOBILE + "info";
 
     String URL_POST_REFERENCE_POINT = "postReferencePoint";
+    String URL_POST_REFERENCE_POINT_GAUSS = "postReferencePointGauss";
     String URL_GET_INFO_BUILDING = "getBuildings";
     String URL_GET_INFO_ROOM = "getRooms";
 

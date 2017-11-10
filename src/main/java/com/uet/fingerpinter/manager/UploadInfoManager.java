@@ -1,23 +1,29 @@
 package com.uet.fingerpinter.manager;
 
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoRecord;
+import com.uet.fingerpinter.jooq.type.TypeFingerprinterInfo;
 import com.uet.fingerpinter.manager.interf.UploadInfoService;
 import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
+import com.uet.fingerpinter.model.input.gauss.ItemPostReferencePointGaussRequest;
+import com.uet.fingerpinter.model.input.gauss.PostReferencePointGaussRequest;
 import org.jooq.DSLContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import com.uet.fingerpinter.model.response.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.uet.fingerpinter.db.Tables.BUILDING;
-import static com.uet.fingerpinter.db.Tables.FINGERPRINTER_INFO;
-import static com.uet.fingerpinter.db.Tables.ROOM;
+import static com.uet.fingerpinter.db.Tables.*;
 
 
 @Service
 public class UploadInfoManager implements UploadInfoService {
+    private static final Logger LOG = LoggerFactory.getLogger("UploadInfoManager");
     private DSLContext ktv;
 
     @Autowired
@@ -79,16 +85,120 @@ public class UploadInfoManager implements UploadInfoService {
         if (!ktv.fetchExists(BUILDING, BUILDING.ID.eq(buidingId))) {
             throw new CustomExceptionResponse("not found this buiding", CustomExceptionResponse.ERROR_PARAM);
         }
+        List<RoomModel> roomModels = ktv.selectFrom(ROOM).where(ROOM.BUILDING_ID.eq(buidingId))
+                .fetch()
+                .map(record -> {
+                    RoomModel model = new RoomModel();
+                    model.setBuildingId(record.getBuildingId());
+                    model.setRoomId(record.getId());
+                    model.setRoomName(record.getRoomName());
+                    return model;
+                });
+        Collections.reverse(roomModels);
         return new BaseResponse<>(
-                ktv.selectFrom(ROOM).where(ROOM.BUILDING_ID.eq(buidingId))
-                        .fetch()
-                        .map(record -> {
-                            RoomModel model = new RoomModel();
-                            model.setBuildingId(record.getBuildingId());
-                            model.setRoomId(record.getId());
-                            model.setRoomName(record.getRoomName());
-                            return model;
-                        })
+                roomModels
         );
+    }
+
+    @Override
+    public BaseResponse<String> postReferencePointGauss(PostReferencePointGaussRequest postReferencePointGaussRequest) throws CustomExceptionResponse {
+        postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().sort((o1, o2) -> Integer.compare(o2.getListRss().size(), o1.getListRss().size()));
+        int maxNumber = postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().get(0).getListRss().size();
+        int min = 4;
+        postReferencePointGaussRequest.setItemPostReferencePointGaussRequests(
+                postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().stream()
+                        .filter(res -> {
+                            if (res.getListRss().size() < min) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }).collect(Collectors.toList())
+        );
+        for (ItemPostReferencePointGaussRequest item : postReferencePointGaussRequest.getItemPostReferencePointGaussRequests()) {
+            double mean = 0.0;
+            double deviation = 0.0;
+            if (ktv.fetchExists(FINGERPRINTER_INFO_GAUSS,
+                    FINGERPRINTER_INFO_GAUSS.X.eq(postReferencePointGaussRequest.getX())
+                            .and(FINGERPRINTER_INFO_GAUSS.Y.eq(postReferencePointGaussRequest.getY()))
+                            .and(FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS.eq(item.getMacAddress()))
+                            .and(FINGERPRINTER_INFO_GAUSS.ROOM_ID.eq(postReferencePointGaussRequest.getRoomId()))
+            )) {
+                int gaussId = ktv.select(FINGERPRINTER_INFO_GAUSS.ID)
+                        .from(FINGERPRINTER_INFO_GAUSS)
+                        .where(
+                                FINGERPRINTER_INFO_GAUSS.X.eq(postReferencePointGaussRequest.getX())
+                                        .and(FINGERPRINTER_INFO_GAUSS.Y.eq(postReferencePointGaussRequest.getY()))
+                                        .and(FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS.eq(item.getMacAddress()))
+                                        .and(FINGERPRINTER_INFO_GAUSS.ROOM_ID.eq(postReferencePointGaussRequest.getRoomId()))
+                        ).fetchAny().value1();
+                List<Float> oldRss = ktv.select(FINGERPRINTER_INFO_DETAIL.RSS)
+                        .from(FINGERPRINTER_INFO_DETAIL)
+                        .where(
+                                FINGERPRINTER_INFO_DETAIL.REFERENCE_ID.eq(gaussId)
+                                        .and(FINGERPRINTER_INFO_DETAIL.TYPE.eq(TypeFingerprinterInfo.GAUSS))
+                        )
+                        .fetch()
+                        .map(record -> record.value1().floatValue());
+
+                //insert finger printer detail
+                for (Float value : item.getListRss()) {
+                    ktv.insertInto(FINGERPRINTER_INFO_DETAIL,
+                            FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
+                            .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                            .execute();
+                }
+                item.getListRss().addAll(oldRss);
+                //mean
+                for (Float value : item.getListRss()) {
+                    mean += value;
+                }
+                mean = mean / item.getListRss().size();
+
+                //deviation
+                for (Float value : item.getListRss()) {
+                    deviation += (value - mean) * (value - mean);
+                }
+                deviation = Math.sqrt(deviation/item.getListRss().size());
+
+                //update
+                ktv.update(FINGERPRINTER_INFO_GAUSS)
+                        .set(FINGERPRINTER_INFO_GAUSS.MEAN, mean)
+                        .set(FINGERPRINTER_INFO_GAUSS.STANDARD_DEVIATION, deviation)
+                        .set(FINGERPRINTER_INFO_GAUSS.MEASURES, item.getListRss().size())
+                        .where(FINGERPRINTER_INFO_GAUSS.ID.eq(gaussId))
+                        .execute();
+
+            } else {
+                for (Float value : item.getListRss()) {
+                    mean += value;
+                }
+                mean = mean / item.getListRss().size();
+
+                for (Float value : item.getListRss()) {
+                    deviation += (value - mean) * (value - mean);
+                }
+                deviation = Math.sqrt(deviation/item.getListRss().size());
+                //insert fingerprinter gauss
+                LOG.info("postReferencePointGauss "+  "appname: " + item.getAppName());
+                int gaussId = ktv.insertInto(FINGERPRINTER_INFO_GAUSS,
+                        FINGERPRINTER_INFO_GAUSS.ROOM_ID, FINGERPRINTER_INFO_GAUSS.AP_NAME, FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS,
+                        FINGERPRINTER_INFO_GAUSS.X, FINGERPRINTER_INFO_GAUSS.Y, FINGERPRINTER_INFO_GAUSS.MEAN, FINGERPRINTER_INFO_GAUSS.STANDARD_DEVIATION,
+                        FINGERPRINTER_INFO_GAUSS.MEASURES)
+                        .values(postReferencePointGaussRequest.getRoomId(), item.getAppName(), item.getMacAddress(),
+                                postReferencePointGaussRequest.getX(), postReferencePointGaussRequest.getY(), mean, deviation, item.getListRss().size())
+                        .returning(FINGERPRINTER_INFO_GAUSS.ID).fetchOne().getId();
+                //insert db finger printerinfo detail
+                for (Float value : item.getListRss()) {
+                    ktv.insertInto(FINGERPRINTER_INFO_DETAIL,
+                            FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
+                            .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                            .execute();
+                }
+            }
+
+        }
+
+        return new BaseResponse("Success");
     }
 }

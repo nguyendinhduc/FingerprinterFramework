@@ -1,6 +1,7 @@
 package com.uet.fingerpinter.manager.interf;
 
 import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
+import com.uet.fingerpinter.model.input.gauss.PostReferencePointGaussRequest;
 import com.uet.fingerpinter.model.response.*;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface UploadInfoService {
     BaseResponse<List<BuildingModel>> getInfoBuilding() throws CustomExceptionResponse;
 
     BaseResponse<List<RoomModel>> getInfoRoom(int buidingId) throws CustomExceptionResponse;
+
+    BaseResponse<String> postReferencePointGauss(PostReferencePointGaussRequest postReferencePointGaussRequest) throws CustomExceptionResponse;
 }
