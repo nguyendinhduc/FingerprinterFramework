@@ -9,6 +9,10 @@ import com.uet.fingerpinter.db.tables.FingerprinterInfo;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
 import com.uet.fingerpinter.db.tables.Room;
+import com.uet.fingerpinter.db.tables.SessionTracking;
+import com.uet.fingerpinter.db.tables.Tracking;
+import com.uet.fingerpinter.db.tables.TrackingKNearest;
+import com.uet.fingerpinter.db.tables.User;
 
 import javax.annotation.Generated;
 
@@ -50,4 +54,24 @@ public class Tables {
      * The table <code>location_indoor.room</code>.
      */
     public static final Room ROOM = com.uet.fingerpinter.db.tables.Room.ROOM;
+
+    /**
+     * The table <code>location_indoor.session_tracking</code>.
+     */
+    public static final SessionTracking SESSION_TRACKING = com.uet.fingerpinter.db.tables.SessionTracking.SESSION_TRACKING;
+
+    /**
+     * The table <code>location_indoor.tracking</code>.
+     */
+    public static final Tracking TRACKING = com.uet.fingerpinter.db.tables.Tracking.TRACKING;
+
+    /**
+     * The table <code>location_indoor.tracking_k_nearest</code>.
+     */
+    public static final TrackingKNearest TRACKING_K_NEAREST = com.uet.fingerpinter.db.tables.TrackingKNearest.TRACKING_K_NEAREST;
+
+    /**
+     * The table <code>location_indoor.user</code>.
+     */
+    public static final User USER = com.uet.fingerpinter.db.tables.User.USER;
 }

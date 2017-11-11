@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussRecord> {
 
-    private static final long serialVersionUID = -713649854;
+    private static final long serialVersionUID = -623227487;
 
     /**
      * The reference instance of <code>location_indoor.fingerprinter_info_gauss</code>
@@ -64,7 +64,7 @@ public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussReco
     /**
      * The column <code>location_indoor.fingerprinter_info_gauss.ap_name</code>.
      */
-    public final TableField<FingerprinterInfoGaussRecord, String> AP_NAME = createField("ap_name", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "");
+    public final TableField<FingerprinterInfoGaussRecord, String> AP_NAME = createField("ap_name", org.jooq.impl.SQLDataType.VARCHAR.length(2000), this, "");
 
     /**
      * The column <code>location_indoor.fingerprinter_info_gauss.mac_address</code>.

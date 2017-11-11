@@ -9,6 +9,10 @@ import com.uet.fingerpinter.db.tables.FingerprinterInfo;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
 import com.uet.fingerpinter.db.tables.Room;
+import com.uet.fingerpinter.db.tables.SessionTracking;
+import com.uet.fingerpinter.db.tables.Tracking;
+import com.uet.fingerpinter.db.tables.TrackingKNearest;
+import com.uet.fingerpinter.db.tables.User;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +38,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LocationIndoor extends SchemaImpl {
 
-    private static final long serialVersionUID = -541127250;
+    private static final long serialVersionUID = -2142908690;
 
     /**
      * The reference instance of <code>location_indoor</code>
@@ -67,6 +71,26 @@ public class LocationIndoor extends SchemaImpl {
     public final Room ROOM = com.uet.fingerpinter.db.tables.Room.ROOM;
 
     /**
+     * The table <code>location_indoor.session_tracking</code>.
+     */
+    public final SessionTracking SESSION_TRACKING = com.uet.fingerpinter.db.tables.SessionTracking.SESSION_TRACKING;
+
+    /**
+     * The table <code>location_indoor.tracking</code>.
+     */
+    public final Tracking TRACKING = com.uet.fingerpinter.db.tables.Tracking.TRACKING;
+
+    /**
+     * The table <code>location_indoor.tracking_k_nearest</code>.
+     */
+    public final TrackingKNearest TRACKING_K_NEAREST = com.uet.fingerpinter.db.tables.TrackingKNearest.TRACKING_K_NEAREST;
+
+    /**
+     * The table <code>location_indoor.user</code>.
+     */
+    public final User USER = com.uet.fingerpinter.db.tables.User.USER;
+
+    /**
      * No further instances allowed
      */
     private LocationIndoor() {
@@ -95,6 +119,10 @@ public class LocationIndoor extends SchemaImpl {
             FingerprinterInfo.FINGERPRINTER_INFO,
             FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL,
             FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS,
-            Room.ROOM);
+            Room.ROOM,
+            SessionTracking.SESSION_TRACKING,
+            Tracking.TRACKING,
+            TrackingKNearest.TRACKING_K_NEAREST,
+            User.USER);
     }
 }

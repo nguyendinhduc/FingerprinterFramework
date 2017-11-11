@@ -199,7 +199,7 @@ public class LocationManager implements LocationService {
                             )
                             .orderBy(FINGERPRINTER_INFO_GAUSS.MEASURES)
                             .fetch();
-            double distributionRss = 0;
+            double distributionRss = 1;
 
             int miss = 0;
             for (InfoReferencePointRequest infoReferencePointRequest : request.getInfos()) {
@@ -210,13 +210,13 @@ public class LocationManager implements LocationService {
                                 && infoGaussRecord.getMean() + DELTA * infoGaussRecord.getStandardDeviation() > infoReferencePointRequest.getRss()) {
                             double temDis;
                             if (infoReferencePointRequest.getRss() < infoGaussRecord.getMean()) {
-                                temDis = new NormalDistribution(infoGaussRecord.getMean(), infoGaussRecord.getStandardDeviation())
-                                        .cumulativeProbability(infoReferencePointRequest.getRss());
-                            } else {
                                 temDis = 1.0 - new NormalDistribution(infoGaussRecord.getMean(), infoGaussRecord.getStandardDeviation())
                                         .cumulativeProbability(infoReferencePointRequest.getRss());
+                            } else {
+                                temDis = new NormalDistribution(infoGaussRecord.getMean(), infoGaussRecord.getStandardDeviation())
+                                        .cumulativeProbability(infoReferencePointRequest.getRss());
                             }
-                            distributionRss += temDis;
+                            distributionRss *= temDis;
                         }
                         isMiss = true;
                         break;
@@ -235,10 +235,10 @@ public class LocationManager implements LocationService {
         }
 
         distributionGausses.sort((o1, o2) -> {
-            if (o1.getDistribution() < o2.getDistribution()) {
+            if (o1.getDistribution() > o2.getDistribution()) {
                 return 1;
             } else {
-                if (o1.getDistribution() > o2.getDistribution()) {
+                if (o1.getDistribution() < o2.getDistribution()) {
                     return -1;
                 } else {
                     return 0;

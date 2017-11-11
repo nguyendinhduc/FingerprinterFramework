@@ -168,13 +168,34 @@
                                     </converter>
                                 </customType>
 
+                                <!--local datetime-->
+                                <customType>
+                                    <name>java.sql.Timestamp</name>
+                                    <converter>com.uet.fingerpinter.jooq.convert.LocalDateTimeConverter
+                                    </converter>
+                                </customType>
+
                             </customTypes>
 
                             <forcedTypes>
+                                <!--fingerprinter_info_detail-->
                                 <forcedType>
                                     <name>com.uet.fingerpinter.jooq.type.TypeFingerprinterInfo</name>
                                     <expression>.*\.fingerprinter_info_detail\.type</expression>
                                 </forcedType>
+
+                                <!--session tracking-->
+                                <forcedType>
+                                    <name>java.time.LocalDateTime</name>
+                                    <expression>.*\.session_tracking\..*_time</expression>
+                                </forcedType>
+
+                                <!--tracking-->
+                                <forcedType>
+                                    <name>java.time.LocalDateTime</name>
+                                    <expression>.*\.tracking\..*_time</expression>
+                                </forcedType>
+
                             </forcedTypes>
 
                         </database>
