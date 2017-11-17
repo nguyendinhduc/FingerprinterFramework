@@ -154,12 +154,10 @@
                             <!--<inputSchema>location_indoor</inputSchema>-->
 
 
-                            <!--<database>-->
                             <name>org.jooq.util.postgres.PostgresDatabase</name>
                             <inputSchema>public</inputSchema>
                             <includes>.*</includes>
                             <excludes></excludes>
-                            <!--</database>-->
 
                             <!--customtype-->
                             <customTypes>
@@ -251,11 +249,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <!--<jdbc.user>sql12200503</jdbc.user>-->
-                <!--<jdbc.password>XDhMR5RHwU</jdbc.password>-->
-                <!--<jdbc.url>jdbc:mysql://sql12.freemysqlhosting.net:3306/sql12200503?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
-                <!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>-->
-
                 <!--<jdbc.user>root</jdbc.user>-->
                 <!--<jdbc.password>az09az09</jdbc.password>-->
                 <!--<jdbc.url>jdbc:mysql://localhost:3306/location_indoor?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull</jdbc.url>-->
@@ -266,10 +259,6 @@
                 <jdbc.url>jdbc:postgresql://ec2-54-235-207-254.compute-1.amazonaws.com:5432/d3qp1qt80gimji?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory</jdbc.url>
                 <jdbc.driver>org.postgresql.Driver</jdbc.driver>
 
-                <!--<jdbc.user>postgres</jdbc.user>-->
-                <!--<jdbc.password>az09az09</jdbc.password>-->
-                <!--<jdbc.url>jdbc:postgresql://localhost:5432/postgres</jdbc.url>-->
-                <!--<jdbc.driver>org.postgresql.Driver</jdbc.driver>-->
             </properties>
         </profile>
     </profiles>

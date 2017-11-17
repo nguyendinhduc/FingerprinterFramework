@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.Public;
+import com.uet.fingerpinter.db.LocationIndoor;
 import com.uet.fingerpinter.db.tables.records.TrackingKNearestRecord;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
 
-    private static final long serialVersionUID = -966906024;
+    private static final long serialVersionUID = 575396947;
 
     /**
-     * The reference instance of <code>public.tracking_k_nearest</code>
+     * The reference instance of <code>location_indoor.tracking_k_nearest</code>
      */
     public static final TrackingKNearest TRACKING_K_NEAREST = new TrackingKNearest();
 
@@ -52,39 +52,39 @@ public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
     }
 
     /**
-     * The column <code>public.tracking_k_nearest.id</code>.
+     * The column <code>location_indoor.tracking_k_nearest.id</code>.
      */
-    public final TableField<TrackingKNearestRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('tracking_k_nearest_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<TrackingKNearestRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking_k_nearest.tracking_id</code>.
+     * The column <code>location_indoor.tracking_k_nearest.tracking_id</code>.
      */
     public final TableField<TrackingKNearestRecord, Integer> TRACKING_ID = createField("tracking_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking_k_nearest.distribution</code>.
+     * The column <code>location_indoor.tracking_k_nearest.distribution</code>.
      */
-    public final TableField<TrackingKNearestRecord, Double> DISTRIBUTION = createField("distribution", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+    public final TableField<TrackingKNearestRecord, Double> DISTRIBUTION = createField("distribution", org.jooq.impl.SQLDataType.FLOAT.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking_k_nearest.x</code>.
+     * The column <code>location_indoor.tracking_k_nearest.x</code>.
      */
     public final TableField<TrackingKNearestRecord, Integer> X = createField("x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking_k_nearest.y</code>.
+     * The column <code>location_indoor.tracking_k_nearest.y</code>.
      */
     public final TableField<TrackingKNearestRecord, Integer> Y = createField("y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>public.tracking_k_nearest</code> table reference
+     * Create a <code>location_indoor.tracking_k_nearest</code> table reference
      */
     public TrackingKNearest() {
         this("tracking_k_nearest", null);
     }
 
     /**
-     * Create an aliased <code>public.tracking_k_nearest</code> table reference
+     * Create an aliased <code>location_indoor.tracking_k_nearest</code> table reference
      */
     public TrackingKNearest(String alias) {
         this(alias, TRACKING_K_NEAREST);
@@ -103,7 +103,7 @@ public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return LocationIndoor.LOCATION_INDOOR;
     }
 
     /**
@@ -119,7 +119,7 @@ public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
      */
     @Override
     public UniqueKey<TrackingKNearestRecord> getPrimaryKey() {
-        return Keys.TRACKING_K_NEAREST_PKEY;
+        return Keys.KEY_TRACKING_K_NEAREST_PRIMARY;
     }
 
     /**
@@ -127,7 +127,7 @@ public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
      */
     @Override
     public List<UniqueKey<TrackingKNearestRecord>> getKeys() {
-        return Arrays.<UniqueKey<TrackingKNearestRecord>>asList(Keys.TRACKING_K_NEAREST_PKEY);
+        return Arrays.<UniqueKey<TrackingKNearestRecord>>asList(Keys.KEY_TRACKING_K_NEAREST_PRIMARY);
     }
 
     /**
@@ -135,7 +135,7 @@ public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
      */
     @Override
     public List<ForeignKey<TrackingKNearestRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TrackingKNearestRecord, ?>>asList(Keys.TRACKING_K_NEAREST__TRACKING_K_NEAREST_1);
+        return Arrays.<ForeignKey<TrackingKNearestRecord, ?>>asList(Keys.TRACKING_K_NEAREST);
     }
 
     /**

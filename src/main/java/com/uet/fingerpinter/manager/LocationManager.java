@@ -7,6 +7,7 @@ import com.uet.fingerpinter.model.Pair;
 import com.uet.fingerpinter.model.input.GetLocationRequest;
 import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
 import com.uet.fingerpinter.model.input.gauss.DistributionGauss;
+import com.uet.fingerpinter.model.input.gauss.ItemFocusPosition;
 import com.uet.fingerpinter.model.response.BaseResponse;
 import com.uet.fingerpinter.model.response.CustomExceptionResponse;
 import com.uet.fingerpinter.model.response.GetLocationResponse;
@@ -223,7 +224,7 @@ public class LocationManager implements LocationService {
                     }
 
                 }
-                if ( !isMiss ) {
+                if (!isMiss) {
                     miss++;
                 }
             }
@@ -258,7 +259,53 @@ public class LocationManager implements LocationService {
         for (DistributionGauss distributionGauss : distributionGausses) {
             LOG.info("getLocationGauss " + "x = " + distributionGauss.getX() + " y = " + distributionGauss.getY() + " ,miss: " + distributionGauss.getNumberMiss() + ", distribution: " + distributionGauss.getDistribution());
         }
-        LOG.info("getLocationGauss -------------------------------------------------");
+        LOG.info("getLocationGauss -------------------------------------------------focus");
+
+
+        int max = 10;
+        if (distributionGausses.size() < 10) {
+            max = distributionGausses.size();
+        }
+
+        double xFocus = 0;
+        double yFocus = 0;
+        double totalDistribution = 0;
+        for (int i = 0; i < max; i++) {
+            xFocus += (1.0 - distributionGausses.get(i).getDistribution()) * distributionGausses.get(i).getX();
+            yFocus += (1.0 - distributionGausses.get(i).getDistribution()) * distributionGausses.get(i).getY();
+            totalDistribution += (1.0 - distributionGausses.get(i).getDistribution());
+        }
+        xFocus = xFocus / totalDistribution;
+        yFocus = yFocus / totalDistribution;
+        List<ItemFocusPosition> itemFocusPositions = new ArrayList<>();
+        for (int i = 0; i < max; i++) {
+            ItemFocusPosition position = new ItemFocusPosition();
+            position.setX(distributionGausses.get(i).getX());
+            position.setY(distributionGausses.get(i).getY());
+            position.setDistribution(distributionGausses.get(i).getDistribution());
+            position.setDeltaX(xFocus - distributionGausses.get(i).getX());
+            position.setDeltaY(yFocus - distributionGausses.get(i).getY());
+            position.setMiss(distributionGausses.get(i).getNumberMiss());
+
+            double distance = Math.sqrt(position.getDeltaX() * position.getDeltaX() + position.getDeltaY() * position.getDeltaY());
+            position.setDistanceWithFocus(distance);
+            itemFocusPositions.add(position);
+        }
+        itemFocusPositions.sort((o1, o2) -> {
+            if (o1.getDistanceWithFocus() > o2.getDistanceWithFocus()) {
+                return 1;
+            } else {
+                if (o1.getDistanceWithFocus() < o2.getDistanceWithFocus()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        for (ItemFocusPosition itemFocusPosition : itemFocusPositions) {
+            LOG.info("getLocationGauss " + "x = " + itemFocusPosition.getX() + " y = " + itemFocusPosition.getY() + " ,miss: " + itemFocusPosition.getMiss() + ", distribution: " + itemFocusPosition.getDistribution()+", distance: " + itemFocusPosition.getDistanceWithFocus());
+        }
+        LOG.info("getLocationGauss -------------------------------------------------focus");
         return new BaseResponse<>(new GetLocationResponse(distributionGausses.get(0).getX(), distributionGausses.get(0).getY()));
 
     }

@@ -28,73 +28,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrackingKNearestRecord extends UpdatableRecordImpl<TrackingKNearestRecord> implements Record5<Integer, Integer, Double, Integer, Integer> {
 
-    private static final long serialVersionUID = -1673903331;
+    private static final long serialVersionUID = 581407245;
 
     /**
-     * Setter for <code>public.tracking_k_nearest.id</code>.
+     * Setter for <code>location_indoor.tracking_k_nearest.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.tracking_k_nearest.id</code>.
+     * Getter for <code>location_indoor.tracking_k_nearest.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.tracking_k_nearest.tracking_id</code>.
+     * Setter for <code>location_indoor.tracking_k_nearest.tracking_id</code>.
      */
     public void setTrackingId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.tracking_k_nearest.tracking_id</code>.
+     * Getter for <code>location_indoor.tracking_k_nearest.tracking_id</code>.
      */
     public Integer getTrackingId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>public.tracking_k_nearest.distribution</code>.
+     * Setter for <code>location_indoor.tracking_k_nearest.distribution</code>.
      */
     public void setDistribution(Double value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.tracking_k_nearest.distribution</code>.
+     * Getter for <code>location_indoor.tracking_k_nearest.distribution</code>.
      */
     public Double getDistribution() {
         return (Double) get(2);
     }
 
     /**
-     * Setter for <code>public.tracking_k_nearest.x</code>.
+     * Setter for <code>location_indoor.tracking_k_nearest.x</code>.
      */
     public void setX(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.tracking_k_nearest.x</code>.
+     * Getter for <code>location_indoor.tracking_k_nearest.x</code>.
      */
     public Integer getX() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>public.tracking_k_nearest.y</code>.
+     * Setter for <code>location_indoor.tracking_k_nearest.y</code>.
      */
     public void setY(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.tracking_k_nearest.y</code>.
+     * Getter for <code>location_indoor.tracking_k_nearest.y</code>.
      */
     public Integer getY() {
         return (Integer) get(4);
