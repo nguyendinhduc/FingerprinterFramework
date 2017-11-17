@@ -12,7 +12,7 @@ public enum TypeFingerprinterInfo {
         return value;
     }
 
-    public static TypeFingerprinterInfo findByValue(Byte value) {
+    public static TypeFingerprinterInfo findByValue(Integer value) {
         if (value == null) {
             return null;
         }

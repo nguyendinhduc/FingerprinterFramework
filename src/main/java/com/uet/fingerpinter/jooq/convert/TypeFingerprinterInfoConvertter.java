@@ -3,9 +3,9 @@ package com.uet.fingerpinter.jooq.convert;
 import com.uet.fingerpinter.jooq.type.TypeFingerprinterInfo;
 import org.jooq.Converter;
 
-public class TypeFingerprinterInfoConvertter implements Converter<Byte, TypeFingerprinterInfo> {
+public class TypeFingerprinterInfoConvertter implements Converter<Integer, TypeFingerprinterInfo> {
     @Override
-    public TypeFingerprinterInfo from(Byte aByte) {
+    public TypeFingerprinterInfo from(Integer aByte) {
         if (aByte == null) {
             return null;
         }
@@ -13,17 +13,17 @@ public class TypeFingerprinterInfoConvertter implements Converter<Byte, TypeFing
     }
 
     @Override
-    public Byte to(TypeFingerprinterInfo typeFingerprinterInfo) {
+    public Integer to(TypeFingerprinterInfo typeFingerprinterInfo) {
         if (typeFingerprinterInfo == null) {
             return null;
         } else {
-            return (byte) typeFingerprinterInfo.getValue();
+            return (int) typeFingerprinterInfo.getValue();
         }
     }
 
     @Override
-    public Class<Byte> fromType() {
-        return Byte.class;
+    public Class<Integer> fromType() {
+        return Integer.class;
     }
 
     @Override

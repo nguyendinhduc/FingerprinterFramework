@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.LocationIndoor;
+import com.uet.fingerpinter.db.Public;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoGaussRecord;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussRecord> {
 
-    private static final long serialVersionUID = -623227487;
+    private static final long serialVersionUID = 2102475435;
 
     /**
-     * The reference instance of <code>location_indoor.fingerprinter_info_gauss</code>
+     * The reference instance of <code>public.fingerprinter_info_gauss</code>
      */
     public static final FingerprinterInfoGauss FINGERPRINTER_INFO_GAUSS = new FingerprinterInfoGauss();
 
@@ -52,59 +52,59 @@ public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussReco
     }
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.id</code>.
+     * The column <code>public.fingerprinter_info_gauss.id</code>.
      */
-    public final TableField<FingerprinterInfoGaussRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FingerprinterInfoGaussRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('fingerprinter_info_gauss_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.room_id</code>.
+     * The column <code>public.fingerprinter_info_gauss.room_id</code>.
      */
     public final TableField<FingerprinterInfoGaussRecord, Integer> ROOM_ID = createField("room_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.ap_name</code>.
+     * The column <code>public.fingerprinter_info_gauss.ap_name</code>.
      */
-    public final TableField<FingerprinterInfoGaussRecord, String> AP_NAME = createField("ap_name", org.jooq.impl.SQLDataType.VARCHAR.length(2000), this, "");
+    public final TableField<FingerprinterInfoGaussRecord, String> AP_NAME = createField("ap_name", org.jooq.impl.SQLDataType.VARCHAR, this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.mac_address</code>.
+     * The column <code>public.fingerprinter_info_gauss.mac_address</code>.
      */
-    public final TableField<FingerprinterInfoGaussRecord, String> MAC_ADDRESS = createField("mac_address", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<FingerprinterInfoGaussRecord, String> MAC_ADDRESS = createField("mac_address", org.jooq.impl.SQLDataType.VARCHAR.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.x</code>.
+     * The column <code>public.fingerprinter_info_gauss.x</code>.
      */
     public final TableField<FingerprinterInfoGaussRecord, Integer> X = createField("x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.y</code>.
+     * The column <code>public.fingerprinter_info_gauss.y</code>.
      */
     public final TableField<FingerprinterInfoGaussRecord, Integer> Y = createField("y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.mean</code>.
+     * The column <code>public.fingerprinter_info_gauss.mean</code>.
      */
-    public final TableField<FingerprinterInfoGaussRecord, Double> MEAN = createField("mean", org.jooq.impl.SQLDataType.FLOAT.nullable(false), this, "");
+    public final TableField<FingerprinterInfoGaussRecord, Double> MEAN = createField("mean", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.standard_deviation</code>.
+     * The column <code>public.fingerprinter_info_gauss.standard_deviation</code>.
      */
-    public final TableField<FingerprinterInfoGaussRecord, Double> STANDARD_DEVIATION = createField("standard_deviation", org.jooq.impl.SQLDataType.FLOAT.nullable(false), this, "");
+    public final TableField<FingerprinterInfoGaussRecord, Double> STANDARD_DEVIATION = createField("standard_deviation", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_gauss.measures</code>.
+     * The column <code>public.fingerprinter_info_gauss.measures</code>.
      */
     public final TableField<FingerprinterInfoGaussRecord, Integer> MEASURES = createField("measures", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>location_indoor.fingerprinter_info_gauss</code> table reference
+     * Create a <code>public.fingerprinter_info_gauss</code> table reference
      */
     public FingerprinterInfoGauss() {
         this("fingerprinter_info_gauss", null);
     }
 
     /**
-     * Create an aliased <code>location_indoor.fingerprinter_info_gauss</code> table reference
+     * Create an aliased <code>public.fingerprinter_info_gauss</code> table reference
      */
     public FingerprinterInfoGauss(String alias) {
         this(alias, FINGERPRINTER_INFO_GAUSS);
@@ -123,7 +123,7 @@ public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussReco
      */
     @Override
     public Schema getSchema() {
-        return LocationIndoor.LOCATION_INDOOR;
+        return Public.PUBLIC;
     }
 
     /**
@@ -139,7 +139,7 @@ public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussReco
      */
     @Override
     public UniqueKey<FingerprinterInfoGaussRecord> getPrimaryKey() {
-        return Keys.KEY_FINGERPRINTER_INFO_GAUSS_PRIMARY;
+        return Keys.FINGERPRINTER_INFO_GAUSS_PKEY;
     }
 
     /**
@@ -147,7 +147,7 @@ public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussReco
      */
     @Override
     public List<UniqueKey<FingerprinterInfoGaussRecord>> getKeys() {
-        return Arrays.<UniqueKey<FingerprinterInfoGaussRecord>>asList(Keys.KEY_FINGERPRINTER_INFO_GAUSS_PRIMARY);
+        return Arrays.<UniqueKey<FingerprinterInfoGaussRecord>>asList(Keys.FINGERPRINTER_INFO_GAUSS_PKEY);
     }
 
     /**
@@ -155,7 +155,7 @@ public class FingerprinterInfoGauss extends TableImpl<FingerprinterInfoGaussReco
      */
     @Override
     public List<ForeignKey<FingerprinterInfoGaussRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<FingerprinterInfoGaussRecord, ?>>asList(Keys.FINGERPRINTER_INFO_GAUSS_1);
+        return Arrays.<ForeignKey<FingerprinterInfoGaussRecord, ?>>asList(Keys.FINGERPRINTER_INFO_GAUSS__FINGERPRINTER_INFO_GAUSS_1);
     }
 
     /**

@@ -32,7 +32,7 @@ import org.jooq.impl.AbstractKeys;
 
 
 /**
- * A class modelling foreign key relationships between tables of the <code>location_indoor</code> 
+ * A class modelling foreign key relationships between tables of the <code>public</code> 
  * schema
  */
 @Generated(
@@ -63,29 +63,29 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<BuildingRecord> KEY_BUILDING_PRIMARY = UniqueKeys0.KEY_BUILDING_PRIMARY;
-    public static final UniqueKey<FingerprinterInfoRecord> KEY_FINGERPRINTER_INFO_PRIMARY = UniqueKeys0.KEY_FINGERPRINTER_INFO_PRIMARY;
-    public static final UniqueKey<FingerprinterInfoDetailRecord> KEY_FINGERPRINTER_INFO_DETAIL_PRIMARY = UniqueKeys0.KEY_FINGERPRINTER_INFO_DETAIL_PRIMARY;
-    public static final UniqueKey<FingerprinterInfoGaussRecord> KEY_FINGERPRINTER_INFO_GAUSS_PRIMARY = UniqueKeys0.KEY_FINGERPRINTER_INFO_GAUSS_PRIMARY;
-    public static final UniqueKey<RoomRecord> KEY_ROOM_PRIMARY = UniqueKeys0.KEY_ROOM_PRIMARY;
-    public static final UniqueKey<SessionTrackingRecord> KEY_SESSION_TRACKING_PRIMARY = UniqueKeys0.KEY_SESSION_TRACKING_PRIMARY;
-    public static final UniqueKey<TrackingRecord> KEY_TRACKING_PRIMARY = UniqueKeys0.KEY_TRACKING_PRIMARY;
-    public static final UniqueKey<TrackingKNearestRecord> KEY_TRACKING_K_NEAREST_PRIMARY = UniqueKeys0.KEY_TRACKING_K_NEAREST_PRIMARY;
-    public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = UniqueKeys0.KEY_USER_PRIMARY;
+    public static final UniqueKey<BuildingRecord> BUILDING_PKEY = UniqueKeys0.BUILDING_PKEY;
+    public static final UniqueKey<FingerprinterInfoRecord> FINGERPRINTER_INFO_PKEY = UniqueKeys0.FINGERPRINTER_INFO_PKEY;
+    public static final UniqueKey<FingerprinterInfoDetailRecord> FINGERPRINTER_INFO_DETAIL_PKEY = UniqueKeys0.FINGERPRINTER_INFO_DETAIL_PKEY;
+    public static final UniqueKey<FingerprinterInfoGaussRecord> FINGERPRINTER_INFO_GAUSS_PKEY = UniqueKeys0.FINGERPRINTER_INFO_GAUSS_PKEY;
+    public static final UniqueKey<RoomRecord> ROOM_PKEY = UniqueKeys0.ROOM_PKEY;
+    public static final UniqueKey<SessionTrackingRecord> SESSION_TRACKING_PKEY = UniqueKeys0.SESSION_TRACKING_PKEY;
+    public static final UniqueKey<TrackingRecord> TRACKING_PKEY = UniqueKeys0.TRACKING_PKEY;
+    public static final UniqueKey<TrackingKNearestRecord> TRACKING_K_NEAREST_PKEY = UniqueKeys0.TRACKING_K_NEAREST_PKEY;
+    public static final UniqueKey<UserRecord> USER_PKEY = UniqueKeys0.USER_PKEY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FK_FINGERPRINGER_INFO_2 = ForeignKeys0.FK_FINGERPRINGER_INFO_2;
-    public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FK_FINGERPRINGER_INFO_1 = ForeignKeys0.FK_FINGERPRINGER_INFO_1;
-    public static final ForeignKey<FingerprinterInfoGaussRecord, RoomRecord> FINGERPRINTER_INFO_GAUSS_1 = ForeignKeys0.FINGERPRINTER_INFO_GAUSS_1;
-    public static final ForeignKey<RoomRecord, BuildingRecord> FK_ROOM_1 = ForeignKeys0.FK_ROOM_1;
-    public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING_1 = ForeignKeys0.SESSION_TRACKING_1;
-    public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING_2 = ForeignKeys0.SESSION_TRACKING_2;
-    public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING_GAUSS_1 = ForeignKeys0.TRACKING_GAUSS_1;
-    public static final ForeignKey<TrackingRecord, UserRecord> TRACKING_GAUSS_2 = ForeignKeys0.TRACKING_GAUSS_2;
-    public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST = ForeignKeys0.TRACKING_K_NEAREST;
+    public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FINGERPRINTER_INFO__FORKEY_1 = ForeignKeys0.FINGERPRINTER_INFO__FORKEY_1;
+    public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FINGERPRINTER_INFO__FORKEY_2 = ForeignKeys0.FINGERPRINTER_INFO__FORKEY_2;
+    public static final ForeignKey<FingerprinterInfoGaussRecord, RoomRecord> FINGERPRINTER_INFO_GAUSS__FINGERPRINTER_INFO_GAUSS_1 = ForeignKeys0.FINGERPRINTER_INFO_GAUSS__FINGERPRINTER_INFO_GAUSS_1;
+    public static final ForeignKey<RoomRecord, BuildingRecord> ROOM__FORKEY_1 = ForeignKeys0.ROOM__FORKEY_1;
+    public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_1 = ForeignKeys0.SESSION_TRACKING__SESSION_TRACKING_1;
+    public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_2 = ForeignKeys0.SESSION_TRACKING__SESSION_TRACKING_2;
+    public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_1 = ForeignKeys0.TRACKING__TRACKING_1;
+    public static final ForeignKey<TrackingRecord, UserRecord> TRACKING__TRACKING_2 = ForeignKeys0.TRACKING__TRACKING_2;
+    public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST__TRACKING_K_NEAREST_1 = ForeignKeys0.TRACKING_K_NEAREST__TRACKING_K_NEAREST_1;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -104,26 +104,26 @@ public class Keys {
     }
 
     private static class UniqueKeys0 extends AbstractKeys {
-        public static final UniqueKey<BuildingRecord> KEY_BUILDING_PRIMARY = createUniqueKey(Building.BUILDING, "KEY_building_PRIMARY", Building.BUILDING.ID);
-        public static final UniqueKey<FingerprinterInfoRecord> KEY_FINGERPRINTER_INFO_PRIMARY = createUniqueKey(FingerprinterInfo.FINGERPRINTER_INFO, "KEY_fingerprinter_info_PRIMARY", FingerprinterInfo.FINGERPRINTER_INFO.ID);
-        public static final UniqueKey<FingerprinterInfoDetailRecord> KEY_FINGERPRINTER_INFO_DETAIL_PRIMARY = createUniqueKey(FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL, "KEY_fingerprinter_info_detail_PRIMARY", FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL.ID);
-        public static final UniqueKey<FingerprinterInfoGaussRecord> KEY_FINGERPRINTER_INFO_GAUSS_PRIMARY = createUniqueKey(FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, "KEY_fingerprinter_info_gauss_PRIMARY", FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ID);
-        public static final UniqueKey<RoomRecord> KEY_ROOM_PRIMARY = createUniqueKey(Room.ROOM, "KEY_room_PRIMARY", Room.ROOM.ID);
-        public static final UniqueKey<SessionTrackingRecord> KEY_SESSION_TRACKING_PRIMARY = createUniqueKey(SessionTracking.SESSION_TRACKING, "KEY_session_tracking_PRIMARY", SessionTracking.SESSION_TRACKING.ID);
-        public static final UniqueKey<TrackingRecord> KEY_TRACKING_PRIMARY = createUniqueKey(Tracking.TRACKING, "KEY_tracking_PRIMARY", Tracking.TRACKING.ID);
-        public static final UniqueKey<TrackingKNearestRecord> KEY_TRACKING_K_NEAREST_PRIMARY = createUniqueKey(TrackingKNearest.TRACKING_K_NEAREST, "KEY_tracking_k_nearest_PRIMARY", TrackingKNearest.TRACKING_K_NEAREST.ID);
-        public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = createUniqueKey(User.USER, "KEY_user_PRIMARY", User.USER.ID);
+        public static final UniqueKey<BuildingRecord> BUILDING_PKEY = createUniqueKey(Building.BUILDING, "building_pkey", Building.BUILDING.ID);
+        public static final UniqueKey<FingerprinterInfoRecord> FINGERPRINTER_INFO_PKEY = createUniqueKey(FingerprinterInfo.FINGERPRINTER_INFO, "fingerprinter_info_pkey", FingerprinterInfo.FINGERPRINTER_INFO.ID);
+        public static final UniqueKey<FingerprinterInfoDetailRecord> FINGERPRINTER_INFO_DETAIL_PKEY = createUniqueKey(FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL, "fingerprinter_info_detail_pkey", FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL.ID);
+        public static final UniqueKey<FingerprinterInfoGaussRecord> FINGERPRINTER_INFO_GAUSS_PKEY = createUniqueKey(FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, "fingerprinter_info_gauss_pkey", FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ID);
+        public static final UniqueKey<RoomRecord> ROOM_PKEY = createUniqueKey(Room.ROOM, "room_pkey", Room.ROOM.ID);
+        public static final UniqueKey<SessionTrackingRecord> SESSION_TRACKING_PKEY = createUniqueKey(SessionTracking.SESSION_TRACKING, "session_tracking_pkey", SessionTracking.SESSION_TRACKING.ID);
+        public static final UniqueKey<TrackingRecord> TRACKING_PKEY = createUniqueKey(Tracking.TRACKING, "tracking_pkey", Tracking.TRACKING.ID);
+        public static final UniqueKey<TrackingKNearestRecord> TRACKING_K_NEAREST_PKEY = createUniqueKey(TrackingKNearest.TRACKING_K_NEAREST, "tracking_k_nearest_pkey", TrackingKNearest.TRACKING_K_NEAREST.ID);
+        public static final UniqueKey<UserRecord> USER_PKEY = createUniqueKey(User.USER, "user_pkey", User.USER.ID);
     }
 
     private static class ForeignKeys0 extends AbstractKeys {
-        public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FK_FINGERPRINGER_INFO_2 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_ROOM_PRIMARY, FingerprinterInfo.FINGERPRINTER_INFO, "fk_fingerpringer_info_2", FingerprinterInfo.FINGERPRINTER_INFO.ROOM_ID);
-        public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FK_FINGERPRINGER_INFO_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_BUILDING_PRIMARY, FingerprinterInfo.FINGERPRINTER_INFO, "fk_fingerpringer_info_1", FingerprinterInfo.FINGERPRINTER_INFO.BUILDING_ID);
-        public static final ForeignKey<FingerprinterInfoGaussRecord, RoomRecord> FINGERPRINTER_INFO_GAUSS_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_ROOM_PRIMARY, FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, "fingerprinter_info_gauss_1", FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ROOM_ID);
-        public static final ForeignKey<RoomRecord, BuildingRecord> FK_ROOM_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_BUILDING_PRIMARY, Room.ROOM, "fk_room_1", Room.ROOM.BUILDING_ID);
-        public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_TRACKING_PRIMARY, SessionTracking.SESSION_TRACKING, "session_tracking_1", SessionTracking.SESSION_TRACKING.TRACKING_START_ID);
-        public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING_2 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_TRACKING_PRIMARY, SessionTracking.SESSION_TRACKING, "session_tracking_2", SessionTracking.SESSION_TRACKING.TRACKING_END_ID);
-        public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING_GAUSS_1 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_ROOM_PRIMARY, Tracking.TRACKING, "tracking_gauss_1", Tracking.TRACKING.ROOM_ID);
-        public static final ForeignKey<TrackingRecord, UserRecord> TRACKING_GAUSS_2 = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_USER_PRIMARY, Tracking.TRACKING, "tracking_gauss_2", Tracking.TRACKING.USER_ID);
-        public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST = createForeignKey(com.uet.fingerpinter.db.Keys.KEY_TRACKING_PRIMARY, TrackingKNearest.TRACKING_K_NEAREST, "tracking_k_nearest", TrackingKNearest.TRACKING_K_NEAREST.TRACKING_ID);
+        public static final ForeignKey<FingerprinterInfoRecord, RoomRecord> FINGERPRINTER_INFO__FORKEY_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, FingerprinterInfo.FINGERPRINTER_INFO, "fingerprinter_info__forkey_1", FingerprinterInfo.FINGERPRINTER_INFO.ROOM_ID);
+        public static final ForeignKey<FingerprinterInfoRecord, BuildingRecord> FINGERPRINTER_INFO__FORKEY_2 = createForeignKey(com.uet.fingerpinter.db.Keys.BUILDING_PKEY, FingerprinterInfo.FINGERPRINTER_INFO, "fingerprinter_info__forkey_2", FingerprinterInfo.FINGERPRINTER_INFO.BUILDING_ID);
+        public static final ForeignKey<FingerprinterInfoGaussRecord, RoomRecord> FINGERPRINTER_INFO_GAUSS__FINGERPRINTER_INFO_GAUSS_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, "fingerprinter_info_gauss__fingerprinter_info_gauss_1", FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ROOM_ID);
+        public static final ForeignKey<RoomRecord, BuildingRecord> ROOM__FORKEY_1 = createForeignKey(com.uet.fingerpinter.db.Keys.BUILDING_PKEY, Room.ROOM, "room__forkey_1", Room.ROOM.BUILDING_ID);
+        public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_1 = createForeignKey(com.uet.fingerpinter.db.Keys.TRACKING_PKEY, SessionTracking.SESSION_TRACKING, "session_tracking__session_tracking_1", SessionTracking.SESSION_TRACKING.TRACKING_START_ID);
+        public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_2 = createForeignKey(com.uet.fingerpinter.db.Keys.TRACKING_PKEY, SessionTracking.SESSION_TRACKING, "session_tracking__session_tracking_2", SessionTracking.SESSION_TRACKING.TRACKING_END_ID);
+        public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, Tracking.TRACKING, "tracking__tracking_1", Tracking.TRACKING.ROOM_ID);
+        public static final ForeignKey<TrackingRecord, UserRecord> TRACKING__TRACKING_2 = createForeignKey(com.uet.fingerpinter.db.Keys.USER_PKEY, Tracking.TRACKING, "tracking__tracking_2", Tracking.TRACKING.USER_ID);
+        public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST__TRACKING_K_NEAREST_1 = createForeignKey(com.uet.fingerpinter.db.Keys.TRACKING_PKEY, TrackingKNearest.TRACKING_K_NEAREST, "tracking_k_nearest__tracking_k_nearest_1", TrackingKNearest.TRACKING_K_NEAREST.TRACKING_ID);
     }
 }
