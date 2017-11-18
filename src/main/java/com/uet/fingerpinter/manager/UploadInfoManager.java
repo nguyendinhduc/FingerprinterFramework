@@ -7,6 +7,7 @@ import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
 import com.uet.fingerpinter.model.input.gauss.ItemPostReferencePointGaussRequest;
 import com.uet.fingerpinter.model.input.gauss.PostReferencePointGaussRequest;
 import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,102 +104,115 @@ public class UploadInfoManager implements UploadInfoService {
     @Override
     public BaseResponse<String> postReferencePointGauss(PostReferencePointGaussRequest postReferencePointGaussRequest) throws CustomExceptionResponse {
         postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().sort((o1, o2) -> Integer.compare(o2.getListRss().size(), o1.getListRss().size()));
-        int maxNumber = postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().get(0).getListRss().size();
-        int min = 4;
-        postReferencePointGaussRequest.setItemPostReferencePointGaussRequests(
-                postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().stream()
-                        .filter(res -> {
-                            if (res.getListRss().size() < min) {
-                                return false;
-                            } else {
-                                return true;
-                            }
-                        }).collect(Collectors.toList())
-        );
-        for (ItemPostReferencePointGaussRequest item : postReferencePointGaussRequest.getItemPostReferencePointGaussRequests()) {
-            double mean = 0.0;
-            double deviation = 0.0;
-            if (ktv.fetchExists(FINGERPRINTER_INFO_GAUSS,
-                    FINGERPRINTER_INFO_GAUSS.X.eq(postReferencePointGaussRequest.getX())
-                            .and(FINGERPRINTER_INFO_GAUSS.Y.eq(postReferencePointGaussRequest.getY()))
-                            .and(FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS.eq(item.getMacAddress()))
-                            .and(FINGERPRINTER_INFO_GAUSS.ROOM_ID.eq(postReferencePointGaussRequest.getRoomId()))
-            )) {
-                int gaussId = ktv.select(FINGERPRINTER_INFO_GAUSS.ID)
-                        .from(FINGERPRINTER_INFO_GAUSS)
-                        .where(
-                                FINGERPRINTER_INFO_GAUSS.X.eq(postReferencePointGaussRequest.getX())
-                                        .and(FINGERPRINTER_INFO_GAUSS.Y.eq(postReferencePointGaussRequest.getY()))
-                                        .and(FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS.eq(item.getMacAddress()))
-                                        .and(FINGERPRINTER_INFO_GAUSS.ROOM_ID.eq(postReferencePointGaussRequest.getRoomId()))
-                        ).fetchAny().value1();
-                List<Float> oldRss = ktv.select(FINGERPRINTER_INFO_DETAIL.RSS)
-                        .from(FINGERPRINTER_INFO_DETAIL)
-                        .where(
-                                FINGERPRINTER_INFO_DETAIL.REFERENCE_ID.eq(gaussId)
-                                        .and(FINGERPRINTER_INFO_DETAIL.TYPE.eq(TypeFingerprinterInfo.GAUSS))
-                        )
-                        .fetch()
-                        .map(record -> record.value1().floatValue());
+//        int maxNumber = postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().get(0).getListRss().size();
+        OK ok = new OK();
+        ok.message = "Error";
+        ktv.transaction(configuration -> {
+            DSLContext dslContext = DSL.using(configuration);
+            int min = 4;
+            postReferencePointGaussRequest.setItemPostReferencePointGaussRequests(
+                    postReferencePointGaussRequest.getItemPostReferencePointGaussRequests().stream()
+                            .filter(res -> {
+                                if (res.getListRss().size() < min) {
+                                    return false;
+                                } else {
+                                    return true;
+                                }
+                            }).collect(Collectors.toList())
+            );
+            for (ItemPostReferencePointGaussRequest item : postReferencePointGaussRequest.getItemPostReferencePointGaussRequests()) {
+                double mean = 0.0;
+                double deviation = 0.0;
+                if (dslContext.fetchExists(FINGERPRINTER_INFO_GAUSS,
+                        FINGERPRINTER_INFO_GAUSS.X.eq(postReferencePointGaussRequest.getX())
+                                .and(FINGERPRINTER_INFO_GAUSS.Y.eq(postReferencePointGaussRequest.getY()))
+                                .and(FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS.eq(item.getMacAddress()))
+                                .and(FINGERPRINTER_INFO_GAUSS.ROOM_ID.eq(postReferencePointGaussRequest.getRoomId()))
+                )) {
+                    int gaussId = dslContext.select(FINGERPRINTER_INFO_GAUSS.ID)
+                            .from(FINGERPRINTER_INFO_GAUSS)
+                            .where(
+                                    FINGERPRINTER_INFO_GAUSS.X.eq(postReferencePointGaussRequest.getX())
+                                            .and(FINGERPRINTER_INFO_GAUSS.Y.eq(postReferencePointGaussRequest.getY()))
+                                            .and(FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS.eq(item.getMacAddress()))
+                                            .and(FINGERPRINTER_INFO_GAUSS.ROOM_ID.eq(postReferencePointGaussRequest.getRoomId()))
+                            ).fetchAny().value1();
+                    List<Float> oldRss = dslContext.select(FINGERPRINTER_INFO_DETAIL.RSS)
+                            .from(FINGERPRINTER_INFO_DETAIL)
+                            .where(
+                                    FINGERPRINTER_INFO_DETAIL.REFERENCE_ID.eq(gaussId)
+                                            .and(FINGERPRINTER_INFO_DETAIL.TYPE.eq(TypeFingerprinterInfo.GAUSS))
+                            )
+                            .fetch()
+                            .map(record -> record.value1().floatValue());
 
-                //insert finger printer detail
-                for (Float value : item.getListRss()) {
-                    ktv.insertInto(FINGERPRINTER_INFO_DETAIL,
-                            FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
-                            .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                    //insert finger printer detail
+                    for (Float value : item.getListRss()) {
+                        dslContext.insertInto(FINGERPRINTER_INFO_DETAIL,
+                                FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
+                                .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                                .execute();
+                    }
+                    item.getListRss().addAll(oldRss);
+                    //mean
+                    for (Float value : item.getListRss()) {
+                        mean += value;
+                    }
+                    mean = mean / item.getListRss().size();
+
+                    //deviation
+                    for (Float value : item.getListRss()) {
+                        deviation += (value - mean) * (value - mean);
+                    }
+                    deviation = Math.sqrt(deviation / item.getListRss().size());
+
+                    //update
+                    dslContext.update(FINGERPRINTER_INFO_GAUSS)
+                            .set(FINGERPRINTER_INFO_GAUSS.MEAN, mean)
+                            .set(FINGERPRINTER_INFO_GAUSS.STANDARD_DEVIATION, deviation)
+                            .set(FINGERPRINTER_INFO_GAUSS.MEASURES, item.getListRss().size())
+                            .where(FINGERPRINTER_INFO_GAUSS.ID.eq(gaussId))
                             .execute();
-                }
-                item.getListRss().addAll(oldRss);
-                //mean
-                for (Float value : item.getListRss()) {
-                    mean += value;
-                }
-                mean = mean / item.getListRss().size();
 
-                //deviation
-                for (Float value : item.getListRss()) {
-                    deviation += (value - mean) * (value - mean);
-                }
-                deviation = Math.sqrt(deviation/item.getListRss().size());
+                } else {
+                    for (Float value : item.getListRss()) {
+                        mean += value;
+                    }
+                    mean = mean / item.getListRss().size();
 
-                //update
-                ktv.update(FINGERPRINTER_INFO_GAUSS)
-                        .set(FINGERPRINTER_INFO_GAUSS.MEAN, mean)
-                        .set(FINGERPRINTER_INFO_GAUSS.STANDARD_DEVIATION, deviation)
-                        .set(FINGERPRINTER_INFO_GAUSS.MEASURES, item.getListRss().size())
-                        .where(FINGERPRINTER_INFO_GAUSS.ID.eq(gaussId))
-                        .execute();
+                    for (Float value : item.getListRss()) {
+                        deviation += (value - mean) * (value - mean);
+                    }
+                    deviation = Math.sqrt(deviation / item.getListRss().size());
+                    //insert fingerprinter gauss
+                    LOG.info("postReferencePointGauss " + "appname: " + item.getAppName());
+                    int gaussId = dslContext.insertInto(FINGERPRINTER_INFO_GAUSS,
+                            FINGERPRINTER_INFO_GAUSS.ROOM_ID, FINGERPRINTER_INFO_GAUSS.AP_NAME, FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS,
+                            FINGERPRINTER_INFO_GAUSS.X, FINGERPRINTER_INFO_GAUSS.Y, FINGERPRINTER_INFO_GAUSS.MEAN, FINGERPRINTER_INFO_GAUSS.STANDARD_DEVIATION,
+                            FINGERPRINTER_INFO_GAUSS.MEASURES)
+                            .values(postReferencePointGaussRequest.getRoomId(), item.getAppName(), item.getMacAddress(),
+                                    postReferencePointGaussRequest.getX(), postReferencePointGaussRequest.getY(), mean, deviation, item.getListRss().size())
+                            .returning(FINGERPRINTER_INFO_GAUSS.ID).fetchOne().getId();
+                    //insert db finger printerinfo detail
+                    for (Float value : item.getListRss()) {
+                        dslContext.insertInto(FINGERPRINTER_INFO_DETAIL,
+                                FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
+                                .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                                .execute();
+                    }
+                }
 
-            } else {
-                for (Float value : item.getListRss()) {
-                    mean += value;
-                }
-                mean = mean / item.getListRss().size();
-
-                for (Float value : item.getListRss()) {
-                    deviation += (value - mean) * (value - mean);
-                }
-                deviation = Math.sqrt(deviation/item.getListRss().size());
-                //insert fingerprinter gauss
-                LOG.info("postReferencePointGauss "+  "appname: " + item.getAppName());
-                int gaussId = ktv.insertInto(FINGERPRINTER_INFO_GAUSS,
-                        FINGERPRINTER_INFO_GAUSS.ROOM_ID, FINGERPRINTER_INFO_GAUSS.AP_NAME, FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS,
-                        FINGERPRINTER_INFO_GAUSS.X, FINGERPRINTER_INFO_GAUSS.Y, FINGERPRINTER_INFO_GAUSS.MEAN, FINGERPRINTER_INFO_GAUSS.STANDARD_DEVIATION,
-                        FINGERPRINTER_INFO_GAUSS.MEASURES)
-                        .values(postReferencePointGaussRequest.getRoomId(), item.getAppName(), item.getMacAddress(),
-                                postReferencePointGaussRequest.getX(), postReferencePointGaussRequest.getY(), mean, deviation, item.getListRss().size())
-                        .returning(FINGERPRINTER_INFO_GAUSS.ID).fetchOne().getId();
-                //insert db finger printerinfo detail
-                for (Float value : item.getListRss()) {
-                    ktv.insertInto(FINGERPRINTER_INFO_DETAIL,
-                            FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
-                            .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
-                            .execute();
-                }
             }
 
-        }
+            ok.message = "Success";
+        });
 
-        return new BaseResponse("Success");
+
+        return new BaseResponse(ok.message);
+    }
+
+    public static class OK {
+        private String message;
+
     }
 }
