@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.LocationIndoor;
+import com.uet.fingerpinter.db.Public;
 import com.uet.fingerpinter.db.tables.records.RoomRecord;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Room extends TableImpl<RoomRecord> {
 
-    private static final long serialVersionUID = 1511243380;
+    private static final long serialVersionUID = -1919365184;
 
     /**
-     * The reference instance of <code>location_indoor.room</code>
+     * The reference instance of <code>public.room</code>
      */
     public static final Room ROOM = new Room();
 
@@ -52,29 +52,29 @@ public class Room extends TableImpl<RoomRecord> {
     }
 
     /**
-     * The column <code>location_indoor.room.id</code>.
+     * The column <code>public.room.id</code>.
      */
-    public final TableField<RoomRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RoomRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('room_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>location_indoor.room.room_name</code>.
+     * The column <code>public.room.room_name</code>.
      */
-    public final TableField<RoomRecord, String> ROOM_NAME = createField("room_name", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
+    public final TableField<RoomRecord, String> ROOM_NAME = createField("room_name", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.room.building_id</code>.
+     * The column <code>public.room.building_id</code>.
      */
     public final TableField<RoomRecord, Integer> BUILDING_ID = createField("building_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>location_indoor.room</code> table reference
+     * Create a <code>public.room</code> table reference
      */
     public Room() {
         this("room", null);
     }
 
     /**
-     * Create an aliased <code>location_indoor.room</code> table reference
+     * Create an aliased <code>public.room</code> table reference
      */
     public Room(String alias) {
         this(alias, ROOM);
@@ -93,7 +93,7 @@ public class Room extends TableImpl<RoomRecord> {
      */
     @Override
     public Schema getSchema() {
-        return LocationIndoor.LOCATION_INDOOR;
+        return Public.PUBLIC;
     }
 
     /**
@@ -109,7 +109,7 @@ public class Room extends TableImpl<RoomRecord> {
      */
     @Override
     public UniqueKey<RoomRecord> getPrimaryKey() {
-        return Keys.KEY_ROOM_PRIMARY;
+        return Keys.ROOM_PKEY;
     }
 
     /**
@@ -117,7 +117,7 @@ public class Room extends TableImpl<RoomRecord> {
      */
     @Override
     public List<UniqueKey<RoomRecord>> getKeys() {
-        return Arrays.<UniqueKey<RoomRecord>>asList(Keys.KEY_ROOM_PRIMARY);
+        return Arrays.<UniqueKey<RoomRecord>>asList(Keys.ROOM_PKEY);
     }
 
     /**
@@ -125,7 +125,7 @@ public class Room extends TableImpl<RoomRecord> {
      */
     @Override
     public List<ForeignKey<RoomRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<RoomRecord, ?>>asList(Keys.FK_ROOM_1);
+        return Arrays.<ForeignKey<RoomRecord, ?>>asList(Keys.ROOM__FORKEY_1);
     }
 
     /**

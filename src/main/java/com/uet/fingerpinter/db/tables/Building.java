@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.LocationIndoor;
+import com.uet.fingerpinter.db.Public;
 import com.uet.fingerpinter.db.tables.records.BuildingRecord;
 
 import java.util.Arrays;
@@ -35,10 +35,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Building extends TableImpl<BuildingRecord> {
 
-    private static final long serialVersionUID = 343384248;
+    private static final long serialVersionUID = 414675051;
 
     /**
-     * The reference instance of <code>location_indoor.building</code>
+     * The reference instance of <code>public.building</code>
      */
     public static final Building BUILDING = new Building();
 
@@ -51,29 +51,29 @@ public class Building extends TableImpl<BuildingRecord> {
     }
 
     /**
-     * The column <code>location_indoor.building.id</code>.
+     * The column <code>public.building.id</code>.
      */
-    public final TableField<BuildingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<BuildingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('building_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>location_indoor.building.building_name</code>.
+     * The column <code>public.building.building_name</code>.
      */
-    public final TableField<BuildingRecord, String> BUILDING_NAME = createField("building_name", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
+    public final TableField<BuildingRecord, String> BUILDING_NAME = createField("building_name", org.jooq.impl.SQLDataType.VARCHAR.length(225).nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.building.building_address</code>.
+     * The column <code>public.building.building_address</code>.
      */
-    public final TableField<BuildingRecord, String> BUILDING_ADDRESS = createField("building_address", org.jooq.impl.SQLDataType.VARCHAR.length(30).nullable(false), this, "");
+    public final TableField<BuildingRecord, String> BUILDING_ADDRESS = createField("building_address", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
     /**
-     * Create a <code>location_indoor.building</code> table reference
+     * Create a <code>public.building</code> table reference
      */
     public Building() {
         this("building", null);
     }
 
     /**
-     * Create an aliased <code>location_indoor.building</code> table reference
+     * Create an aliased <code>public.building</code> table reference
      */
     public Building(String alias) {
         this(alias, BUILDING);
@@ -92,7 +92,7 @@ public class Building extends TableImpl<BuildingRecord> {
      */
     @Override
     public Schema getSchema() {
-        return LocationIndoor.LOCATION_INDOOR;
+        return Public.PUBLIC;
     }
 
     /**
@@ -108,7 +108,7 @@ public class Building extends TableImpl<BuildingRecord> {
      */
     @Override
     public UniqueKey<BuildingRecord> getPrimaryKey() {
-        return Keys.KEY_BUILDING_PRIMARY;
+        return Keys.BUILDING_PKEY;
     }
 
     /**
@@ -116,7 +116,7 @@ public class Building extends TableImpl<BuildingRecord> {
      */
     @Override
     public List<UniqueKey<BuildingRecord>> getKeys() {
-        return Arrays.<UniqueKey<BuildingRecord>>asList(Keys.KEY_BUILDING_PRIMARY);
+        return Arrays.<UniqueKey<BuildingRecord>>asList(Keys.BUILDING_PKEY);
     }
 
     /**

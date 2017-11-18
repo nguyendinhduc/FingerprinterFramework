@@ -28,31 +28,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserRecord extends UpdatableRecordImpl<UserRecord> implements Record2<Integer, String> {
 
-    private static final long serialVersionUID = -1256951982;
+    private static final long serialVersionUID = -1236395408;
 
     /**
-     * Setter for <code>location_indoor.user.id</code>.
+     * Setter for <code>public.user.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>location_indoor.user.id</code>.
+     * Getter for <code>public.user.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>location_indoor.user.mac_address</code>.
+     * Setter for <code>public.user.mac_address</code>.
      */
     public void setMacAddress(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>location_indoor.user.mac_address</code>.
+     * Getter for <code>public.user.mac_address</code>.
      */
     public String getMacAddress() {
         return (String) get(1);

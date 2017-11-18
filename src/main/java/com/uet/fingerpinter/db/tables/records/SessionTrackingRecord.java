@@ -30,73 +30,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionTrackingRecord extends UpdatableRecordImpl<SessionTrackingRecord> implements Record5<Integer, Integer, Integer, Timestamp, Timestamp> {
 
-    private static final long serialVersionUID = -391501432;
+    private static final long serialVersionUID = 382011368;
 
     /**
-     * Setter for <code>location_indoor.session_tracking.id</code>.
+     * Setter for <code>public.session_tracking.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>location_indoor.session_tracking.id</code>.
+     * Getter for <code>public.session_tracking.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>location_indoor.session_tracking.tracking_start_id</code>.
+     * Setter for <code>public.session_tracking.tracking_start_id</code>.
      */
     public void setTrackingStartId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>location_indoor.session_tracking.tracking_start_id</code>.
+     * Getter for <code>public.session_tracking.tracking_start_id</code>.
      */
     public Integer getTrackingStartId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>location_indoor.session_tracking.tracking_end_id</code>.
+     * Setter for <code>public.session_tracking.tracking_end_id</code>.
      */
     public void setTrackingEndId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>location_indoor.session_tracking.tracking_end_id</code>.
+     * Getter for <code>public.session_tracking.tracking_end_id</code>.
      */
     public Integer getTrackingEndId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>location_indoor.session_tracking.created_time</code>.
+     * Setter for <code>public.session_tracking.created_time</code>.
      */
     public void setCreatedTime(Timestamp value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>location_indoor.session_tracking.created_time</code>.
+     * Getter for <code>public.session_tracking.created_time</code>.
      */
     public Timestamp getCreatedTime() {
         return (Timestamp) get(3);
     }
 
     /**
-     * Setter for <code>location_indoor.session_tracking.update_time</code>.
+     * Setter for <code>public.session_tracking.update_time</code>.
      */
     public void setUpdateTime(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>location_indoor.session_tracking.update_time</code>.
+     * Getter for <code>public.session_tracking.update_time</code>.
      */
     public Timestamp getUpdateTime() {
         return (Timestamp) get(4);

@@ -147,10 +147,12 @@ public class UploadInfoManager implements UploadInfoService {
                             .map(record -> record.value1().floatValue());
 
                     //insert finger printer detail
+                    int maxId = getMaxIdFingerprinterDetail(dslContext);
                     for (Float value : item.getListRss()) {
+                        maxId++;
                         dslContext.insertInto(FINGERPRINTER_INFO_DETAIL,
-                                FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
-                                .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                                FINGERPRINTER_INFO_DETAIL.ID, FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
+                                .values(maxId, gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
                                 .execute();
                     }
                     item.getListRss().addAll(oldRss);
@@ -186,18 +188,21 @@ public class UploadInfoManager implements UploadInfoService {
                     deviation = Math.sqrt(deviation / item.getListRss().size());
                     //insert fingerprinter gauss
                     LOG.info("postReferencePointGauss " + "appname: " + item.getAppName());
+                    int maxIdGauss = getMaxIdFingerprinterGauss(dslContext);
                     int gaussId = dslContext.insertInto(FINGERPRINTER_INFO_GAUSS,
-                            FINGERPRINTER_INFO_GAUSS.ROOM_ID, FINGERPRINTER_INFO_GAUSS.AP_NAME, FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS,
+                            FINGERPRINTER_INFO_GAUSS.ID, FINGERPRINTER_INFO_GAUSS.ROOM_ID, FINGERPRINTER_INFO_GAUSS.AP_NAME, FINGERPRINTER_INFO_GAUSS.MAC_ADDRESS,
                             FINGERPRINTER_INFO_GAUSS.X, FINGERPRINTER_INFO_GAUSS.Y, FINGERPRINTER_INFO_GAUSS.MEAN, FINGERPRINTER_INFO_GAUSS.STANDARD_DEVIATION,
                             FINGERPRINTER_INFO_GAUSS.MEASURES)
-                            .values(postReferencePointGaussRequest.getRoomId(), item.getAppName(), item.getMacAddress(),
+                            .values(maxIdGauss + 1, postReferencePointGaussRequest.getRoomId(), item.getAppName(), item.getMacAddress(),
                                     postReferencePointGaussRequest.getX(), postReferencePointGaussRequest.getY(), mean, deviation, item.getListRss().size())
                             .returning(FINGERPRINTER_INFO_GAUSS.ID).fetchOne().getId();
                     //insert db finger printerinfo detail
+                    int maxIdDetail = getMaxIdFingerprinterDetail(dslContext);
                     for (Float value : item.getListRss()) {
+                        maxIdDetail++;
                         dslContext.insertInto(FINGERPRINTER_INFO_DETAIL,
-                                FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
-                                .values(gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                                FINGERPRINTER_INFO_DETAIL.ID, FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
+                                .values(maxIdDetail, gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
                                 .execute();
                     }
                 }
@@ -210,6 +215,21 @@ public class UploadInfoManager implements UploadInfoService {
 
         return new BaseResponse(ok.message);
     }
+
+    private int getMaxIdFingerprinterDetail(DSLContext context) {
+        return context.select(DSL.max(FINGERPRINTER_INFO_DETAIL.ID))
+                .from(FINGERPRINTER_INFO_DETAIL)
+                .fetchAny()
+                .value1();
+    }
+
+    private int getMaxIdFingerprinterGauss(DSLContext context) {
+        return context.select(DSL.max(FINGERPRINTER_INFO_GAUSS.ID))
+                .from(FINGERPRINTER_INFO_GAUSS)
+                .fetchAny()
+                .value1();
+    }
+
 
     public static class OK {
         private String message;

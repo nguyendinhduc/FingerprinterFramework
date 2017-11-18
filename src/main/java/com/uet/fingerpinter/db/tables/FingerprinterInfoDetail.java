@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.LocationIndoor;
+import com.uet.fingerpinter.db.Public;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoDetailRecord;
 import com.uet.fingerpinter.jooq.convert.TypeFingerprinterInfoConvertter;
 import com.uet.fingerpinter.jooq.type.TypeFingerprinterInfo;
@@ -37,10 +37,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FingerprinterInfoDetail extends TableImpl<FingerprinterInfoDetailRecord> {
 
-    private static final long serialVersionUID = 1560521171;
+    private static final long serialVersionUID = -1634016198;
 
     /**
-     * The reference instance of <code>location_indoor.fingerprinter_info_detail</code>
+     * The reference instance of <code>public.fingerprinter_info_detail</code>
      */
     public static final FingerprinterInfoDetail FINGERPRINTER_INFO_DETAIL = new FingerprinterInfoDetail();
 
@@ -53,34 +53,34 @@ public class FingerprinterInfoDetail extends TableImpl<FingerprinterInfoDetailRe
     }
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_detail.id</code>.
+     * The column <code>public.fingerprinter_info_detail.id</code>.
      */
-    public final TableField<FingerprinterInfoDetailRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FingerprinterInfoDetailRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('fingerprinter_info_detail_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_detail.reference_id</code>.
+     * The column <code>public.fingerprinter_info_detail.reference_id</code>.
      */
     public final TableField<FingerprinterInfoDetailRecord, Integer> REFERENCE_ID = createField("reference_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_detail.type</code>.
+     * The column <code>public.fingerprinter_info_detail.rss</code>.
+     */
+    public final TableField<FingerprinterInfoDetailRecord, Double> RSS = createField("rss", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
+
+    /**
+     * The column <code>public.fingerprinter_info_detail.type</code>.
      */
     public final TableField<FingerprinterInfoDetailRecord, TypeFingerprinterInfo> TYPE = createField("type", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "", new TypeFingerprinterInfoConvertter());
 
     /**
-     * The column <code>location_indoor.fingerprinter_info_detail.rss</code>.
-     */
-    public final TableField<FingerprinterInfoDetailRecord, Double> RSS = createField("rss", org.jooq.impl.SQLDataType.FLOAT.nullable(false), this, "");
-
-    /**
-     * Create a <code>location_indoor.fingerprinter_info_detail</code> table reference
+     * Create a <code>public.fingerprinter_info_detail</code> table reference
      */
     public FingerprinterInfoDetail() {
         this("fingerprinter_info_detail", null);
     }
 
     /**
-     * Create an aliased <code>location_indoor.fingerprinter_info_detail</code> table reference
+     * Create an aliased <code>public.fingerprinter_info_detail</code> table reference
      */
     public FingerprinterInfoDetail(String alias) {
         this(alias, FINGERPRINTER_INFO_DETAIL);
@@ -99,7 +99,7 @@ public class FingerprinterInfoDetail extends TableImpl<FingerprinterInfoDetailRe
      */
     @Override
     public Schema getSchema() {
-        return LocationIndoor.LOCATION_INDOOR;
+        return Public.PUBLIC;
     }
 
     /**
@@ -115,7 +115,7 @@ public class FingerprinterInfoDetail extends TableImpl<FingerprinterInfoDetailRe
      */
     @Override
     public UniqueKey<FingerprinterInfoDetailRecord> getPrimaryKey() {
-        return Keys.KEY_FINGERPRINTER_INFO_DETAIL_PRIMARY;
+        return Keys.FINGERPRINTER_INFO_DETAIL_PKEY;
     }
 
     /**
@@ -123,7 +123,7 @@ public class FingerprinterInfoDetail extends TableImpl<FingerprinterInfoDetailRe
      */
     @Override
     public List<UniqueKey<FingerprinterInfoDetailRecord>> getKeys() {
-        return Arrays.<UniqueKey<FingerprinterInfoDetailRecord>>asList(Keys.KEY_FINGERPRINTER_INFO_DETAIL_PRIMARY);
+        return Arrays.<UniqueKey<FingerprinterInfoDetailRecord>>asList(Keys.FINGERPRINTER_INFO_DETAIL_PKEY);
     }
 
     /**

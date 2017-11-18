@@ -27,7 +27,7 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = -1831417870;
+    private static final long serialVersionUID = -1708870951;
 
     /**
      * The reference instance of <code></code>
@@ -35,9 +35,9 @@ public class DefaultCatalog extends CatalogImpl {
     public static final DefaultCatalog DEFAULT_CATALOG = new DefaultCatalog();
 
     /**
-     * The schema <code>location_indoor</code>.
+     * The schema <code>public</code>.
      */
-    public final LocationIndoor LOCATION_INDOOR = com.uet.fingerpinter.db.LocationIndoor.LOCATION_INDOOR;
+    public final Public PUBLIC = com.uet.fingerpinter.db.Public.PUBLIC;
 
     /**
      * No further instances allowed
@@ -55,6 +55,6 @@ public class DefaultCatalog extends CatalogImpl {
 
     private final List<Schema> getSchemas0() {
         return Arrays.<Schema>asList(
-            LocationIndoor.LOCATION_INDOOR);
+            Public.PUBLIC);
     }
 }
