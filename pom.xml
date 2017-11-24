@@ -169,7 +169,7 @@
 
                                 <!--local datetime-->
                                 <customType>
-                                    <name>java.sql.Timestamp</name>
+                                    <name>java.time.LocalDateTime</name>
                                     <converter>com.uet.fingerpinter.jooq.convert.LocalDateTimeConverter
                                     </converter>
                                 </customType>

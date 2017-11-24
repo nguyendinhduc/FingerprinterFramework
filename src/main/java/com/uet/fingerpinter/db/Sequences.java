@@ -64,6 +64,11 @@ public class Sequences {
     public static final Sequence<Long> TRACKING_K_NEAREST_ID_SEQ = new SequenceImpl<Long>("tracking_k_nearest_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
     /**
+     * The sequence <code>public.track_real_id_seq</code>
+     */
+    public static final Sequence<Long> TRACK_REAL_ID_SEQ = new SequenceImpl<Long>("track_real_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+    /**
      * The sequence <code>public.user_id_seq</code>
      */
     public static final Sequence<Long> USER_ID_SEQ = new SequenceImpl<Long>("user_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));

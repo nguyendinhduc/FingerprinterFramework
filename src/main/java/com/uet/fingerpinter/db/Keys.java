@@ -10,6 +10,7 @@ import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
 import com.uet.fingerpinter.db.tables.Room;
 import com.uet.fingerpinter.db.tables.SessionTracking;
+import com.uet.fingerpinter.db.tables.TrackReal;
 import com.uet.fingerpinter.db.tables.Tracking;
 import com.uet.fingerpinter.db.tables.TrackingKNearest;
 import com.uet.fingerpinter.db.tables.User;
@@ -19,6 +20,7 @@ import com.uet.fingerpinter.db.tables.records.FingerprinterInfoGaussRecord;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoRecord;
 import com.uet.fingerpinter.db.tables.records.RoomRecord;
 import com.uet.fingerpinter.db.tables.records.SessionTrackingRecord;
+import com.uet.fingerpinter.db.tables.records.TrackRealRecord;
 import com.uet.fingerpinter.db.tables.records.TrackingKNearestRecord;
 import com.uet.fingerpinter.db.tables.records.TrackingRecord;
 import com.uet.fingerpinter.db.tables.records.UserRecord;
@@ -55,6 +57,7 @@ public class Keys {
     public static final Identity<FingerprinterInfoGaussRecord, Integer> IDENTITY_FINGERPRINTER_INFO_GAUSS = Identities0.IDENTITY_FINGERPRINTER_INFO_GAUSS;
     public static final Identity<RoomRecord, Integer> IDENTITY_ROOM = Identities0.IDENTITY_ROOM;
     public static final Identity<SessionTrackingRecord, Integer> IDENTITY_SESSION_TRACKING = Identities0.IDENTITY_SESSION_TRACKING;
+    public static final Identity<TrackRealRecord, Integer> IDENTITY_TRACK_REAL = Identities0.IDENTITY_TRACK_REAL;
     public static final Identity<TrackingRecord, Integer> IDENTITY_TRACKING = Identities0.IDENTITY_TRACKING;
     public static final Identity<TrackingKNearestRecord, Integer> IDENTITY_TRACKING_K_NEAREST = Identities0.IDENTITY_TRACKING_K_NEAREST;
     public static final Identity<UserRecord, Integer> IDENTITY_USER = Identities0.IDENTITY_USER;
@@ -69,6 +72,7 @@ public class Keys {
     public static final UniqueKey<FingerprinterInfoGaussRecord> FINGERPRINTER_INFO_GAUSS_PKEY = UniqueKeys0.FINGERPRINTER_INFO_GAUSS_PKEY;
     public static final UniqueKey<RoomRecord> ROOM_PKEY = UniqueKeys0.ROOM_PKEY;
     public static final UniqueKey<SessionTrackingRecord> SESSION_TRACKING_PKEY = UniqueKeys0.SESSION_TRACKING_PKEY;
+    public static final UniqueKey<TrackRealRecord> TRACK_REAL_PKEY = UniqueKeys0.TRACK_REAL_PKEY;
     public static final UniqueKey<TrackingRecord> TRACKING_PKEY = UniqueKeys0.TRACKING_PKEY;
     public static final UniqueKey<TrackingKNearestRecord> TRACKING_K_NEAREST_PKEY = UniqueKeys0.TRACKING_K_NEAREST_PKEY;
     public static final UniqueKey<UserRecord> USER_PKEY = UniqueKeys0.USER_PKEY;
@@ -83,8 +87,8 @@ public class Keys {
     public static final ForeignKey<RoomRecord, BuildingRecord> ROOM__FORKEY_1 = ForeignKeys0.ROOM__FORKEY_1;
     public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_1 = ForeignKeys0.SESSION_TRACKING__SESSION_TRACKING_1;
     public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_2 = ForeignKeys0.SESSION_TRACKING__SESSION_TRACKING_2;
+    public static final ForeignKey<TrackRealRecord, RoomRecord> TRACK_REAL__TRACK_REAL_1 = ForeignKeys0.TRACK_REAL__TRACK_REAL_1;
     public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_1 = ForeignKeys0.TRACKING__TRACKING_1;
-    public static final ForeignKey<TrackingRecord, UserRecord> TRACKING__TRACKING_2 = ForeignKeys0.TRACKING__TRACKING_2;
     public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST__TRACKING_K_NEAREST_1 = ForeignKeys0.TRACKING_K_NEAREST__TRACKING_K_NEAREST_1;
 
     // -------------------------------------------------------------------------
@@ -98,6 +102,7 @@ public class Keys {
         public static Identity<FingerprinterInfoGaussRecord, Integer> IDENTITY_FINGERPRINTER_INFO_GAUSS = createIdentity(FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ID);
         public static Identity<RoomRecord, Integer> IDENTITY_ROOM = createIdentity(Room.ROOM, Room.ROOM.ID);
         public static Identity<SessionTrackingRecord, Integer> IDENTITY_SESSION_TRACKING = createIdentity(SessionTracking.SESSION_TRACKING, SessionTracking.SESSION_TRACKING.ID);
+        public static Identity<TrackRealRecord, Integer> IDENTITY_TRACK_REAL = createIdentity(TrackReal.TRACK_REAL, TrackReal.TRACK_REAL.ID);
         public static Identity<TrackingRecord, Integer> IDENTITY_TRACKING = createIdentity(Tracking.TRACKING, Tracking.TRACKING.ID);
         public static Identity<TrackingKNearestRecord, Integer> IDENTITY_TRACKING_K_NEAREST = createIdentity(TrackingKNearest.TRACKING_K_NEAREST, TrackingKNearest.TRACKING_K_NEAREST.ID);
         public static Identity<UserRecord, Integer> IDENTITY_USER = createIdentity(User.USER, User.USER.ID);
@@ -110,6 +115,7 @@ public class Keys {
         public static final UniqueKey<FingerprinterInfoGaussRecord> FINGERPRINTER_INFO_GAUSS_PKEY = createUniqueKey(FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, "fingerprinter_info_gauss_pkey", FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ID);
         public static final UniqueKey<RoomRecord> ROOM_PKEY = createUniqueKey(Room.ROOM, "room_pkey", Room.ROOM.ID);
         public static final UniqueKey<SessionTrackingRecord> SESSION_TRACKING_PKEY = createUniqueKey(SessionTracking.SESSION_TRACKING, "session_tracking_pkey", SessionTracking.SESSION_TRACKING.ID);
+        public static final UniqueKey<TrackRealRecord> TRACK_REAL_PKEY = createUniqueKey(TrackReal.TRACK_REAL, "track_real_pkey", TrackReal.TRACK_REAL.ID);
         public static final UniqueKey<TrackingRecord> TRACKING_PKEY = createUniqueKey(Tracking.TRACKING, "tracking_pkey", Tracking.TRACKING.ID);
         public static final UniqueKey<TrackingKNearestRecord> TRACKING_K_NEAREST_PKEY = createUniqueKey(TrackingKNearest.TRACKING_K_NEAREST, "tracking_k_nearest_pkey", TrackingKNearest.TRACKING_K_NEAREST.ID);
         public static final UniqueKey<UserRecord> USER_PKEY = createUniqueKey(User.USER, "user_pkey", User.USER.ID);
@@ -122,8 +128,8 @@ public class Keys {
         public static final ForeignKey<RoomRecord, BuildingRecord> ROOM__FORKEY_1 = createForeignKey(com.uet.fingerpinter.db.Keys.BUILDING_PKEY, Room.ROOM, "room__forkey_1", Room.ROOM.BUILDING_ID);
         public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_1 = createForeignKey(com.uet.fingerpinter.db.Keys.TRACKING_PKEY, SessionTracking.SESSION_TRACKING, "session_tracking__session_tracking_1", SessionTracking.SESSION_TRACKING.TRACKING_START_ID);
         public static final ForeignKey<SessionTrackingRecord, TrackingRecord> SESSION_TRACKING__SESSION_TRACKING_2 = createForeignKey(com.uet.fingerpinter.db.Keys.TRACKING_PKEY, SessionTracking.SESSION_TRACKING, "session_tracking__session_tracking_2", SessionTracking.SESSION_TRACKING.TRACKING_END_ID);
+        public static final ForeignKey<TrackRealRecord, RoomRecord> TRACK_REAL__TRACK_REAL_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, TrackReal.TRACK_REAL, "track_real__track_real_1", TrackReal.TRACK_REAL.ROOM_ID);
         public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, Tracking.TRACKING, "tracking__tracking_1", Tracking.TRACKING.ROOM_ID);
-        public static final ForeignKey<TrackingRecord, UserRecord> TRACKING__TRACKING_2 = createForeignKey(com.uet.fingerpinter.db.Keys.USER_PKEY, Tracking.TRACKING, "tracking__tracking_2", Tracking.TRACKING.USER_ID);
         public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST__TRACKING_K_NEAREST_1 = createForeignKey(com.uet.fingerpinter.db.Keys.TRACKING_PKEY, TrackingKNearest.TRACKING_K_NEAREST, "tracking_k_nearest__tracking_k_nearest_1", TrackingKNearest.TRACKING_K_NEAREST.TRACKING_ID);
     }
 }

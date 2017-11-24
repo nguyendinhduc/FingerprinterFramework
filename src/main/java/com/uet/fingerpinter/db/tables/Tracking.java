@@ -7,8 +7,9 @@ package com.uet.fingerpinter.db.tables;
 import com.uet.fingerpinter.db.Keys;
 import com.uet.fingerpinter.db.Public;
 import com.uet.fingerpinter.db.tables.records.TrackingRecord;
+import com.uet.fingerpinter.jooq.convert.LocalDateTimeConverter;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tracking extends TableImpl<TrackingRecord> {
 
-    private static final long serialVersionUID = -167907865;
+    private static final long serialVersionUID = -1937085044;
 
     /**
      * The reference instance of <code>public.tracking</code>
@@ -68,19 +69,19 @@ public class Tracking extends TableImpl<TrackingRecord> {
     public final TableField<TrackingRecord, Integer> Y = createField("y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking.created_time</code>.
-     */
-    public final TableField<TrackingRecord, Time> CREATED_TIME = createField("created_time", org.jooq.impl.SQLDataType.TIME.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIME)), this, "");
-
-    /**
      * The column <code>public.tracking.room_id</code>.
      */
     public final TableField<TrackingRecord, Integer> ROOM_ID = createField("room_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking.user_id</code>.
+     * The column <code>public.tracking.session_id</code>.
      */
-    public final TableField<TrackingRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<TrackingRecord, Integer> SESSION_ID = createField("session_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>public.tracking.created_time</code>.
+     */
+    public final TableField<TrackingRecord, LocalDateTime> CREATED_TIME = createField("created_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "", new LocalDateTimeConverter());
 
     /**
      * Create a <code>public.tracking</code> table reference
@@ -141,7 +142,7 @@ public class Tracking extends TableImpl<TrackingRecord> {
      */
     @Override
     public List<ForeignKey<TrackingRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING__TRACKING_1, Keys.TRACKING__TRACKING_2);
+        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING__TRACKING_1);
     }
 
     /**

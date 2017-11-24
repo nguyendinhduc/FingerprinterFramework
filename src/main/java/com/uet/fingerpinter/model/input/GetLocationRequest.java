@@ -6,6 +6,7 @@ public class GetLocationRequest {
     private int buildingId;
     private int roomId;
     private List<InfoReferencePointRequest> infos;
+    private ExtendGetLocationModel extendGetLocationModel;
 
     public int getBuildingId() {
         return buildingId;
@@ -29,5 +30,13 @@ public class GetLocationRequest {
 
     public void setInfos(List<InfoReferencePointRequest> infos) {
         this.infos = infos;
+    }
+
+    public ExtendGetLocationModel getExtendGetLocationModel() {
+        return extendGetLocationModel;
+    }
+
+    public void setExtendGetLocationModel(ExtendGetLocationModel extendGetLocationModel) {
+        this.extendGetLocationModel = extendGetLocationModel;
     }
 }

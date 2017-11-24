@@ -10,6 +10,7 @@ import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
 import com.uet.fingerpinter.db.tables.Room;
 import com.uet.fingerpinter.db.tables.SessionTracking;
+import com.uet.fingerpinter.db.tables.TrackReal;
 import com.uet.fingerpinter.db.tables.Tracking;
 import com.uet.fingerpinter.db.tables.TrackingKNearest;
 import com.uet.fingerpinter.db.tables.User;
@@ -39,7 +40,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 1909216998;
+    private static final long serialVersionUID = 2138653006;
 
     /**
      * The reference instance of <code>public</code>
@@ -75,6 +76,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.session_tracking</code>.
      */
     public final SessionTracking SESSION_TRACKING = com.uet.fingerpinter.db.tables.SessionTracking.SESSION_TRACKING;
+
+    /**
+     * The table <code>public.track_real</code>.
+     */
+    public final TrackReal TRACK_REAL = com.uet.fingerpinter.db.tables.TrackReal.TRACK_REAL;
 
     /**
      * The table <code>public.tracking</code>.
@@ -124,6 +130,7 @@ public class Public extends SchemaImpl {
             Sequences.SESSION_TRACKING_ID_SEQ,
             Sequences.TRACKING_ID_SEQ,
             Sequences.TRACKING_K_NEAREST_ID_SEQ,
+            Sequences.TRACK_REAL_ID_SEQ,
             Sequences.USER_ID_SEQ);
     }
 
@@ -142,6 +149,7 @@ public class Public extends SchemaImpl {
             FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS,
             Room.ROOM,
             SessionTracking.SESSION_TRACKING,
+            TrackReal.TRACK_REAL,
             Tracking.TRACKING,
             TrackingKNearest.TRACKING_K_NEAREST,
             User.USER);

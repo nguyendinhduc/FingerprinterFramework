@@ -32,7 +32,16 @@ public class LocationController {
     }
 
     @GetMapping(value = "get")
-    public String get(){
+    public String get() {
         return "ahihi";
+    }
+
+    @GetMapping(value = "getPath")
+    public Object getPath() {
+        try {
+            return service.getPath();
+        } catch (CustomExceptionResponse e) {
+            return BaseResponse.exceptionResponse(e.getMessage(), e.getErrorCode());
+        }
     }
 }

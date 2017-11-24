@@ -1,19 +1,17 @@
-package com.uet.fingerpinter.model.response;
+package com.uet.fingerpinter.model.input;
 
-public class GetLocationResponse {
+public class ExtendGetLocationModel {
+    private boolean isFirst;
     private int x;
     private int y;
     private int transactionId;
 
-    public GetLocationResponse(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public boolean isFirst() {
+        return isFirst;
     }
 
-    public GetLocationResponse(int x, int y, int transactionId) {
-        this.x = x;
-        this.y = y;
-        this.transactionId = transactionId;
+    public void setFirst(boolean first) {
+        isFirst = first;
     }
 
     public int getX() {

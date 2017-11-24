@@ -2,8 +2,9 @@ package com.uet.fingerpinter.manager;
 
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoGaussRecord;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoRecord;
+import com.uet.fingerpinter.db.tables.records.TrackingKNearestRecord;
+import com.uet.fingerpinter.db.tables.records.TrackingRecord;
 import com.uet.fingerpinter.manager.interf.LocationService;
-import com.uet.fingerpinter.model.Pair;
 import com.uet.fingerpinter.model.input.GetLocationRequest;
 import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
 import com.uet.fingerpinter.model.input.gauss.DistributionGauss;
@@ -11,6 +12,7 @@ import com.uet.fingerpinter.model.input.gauss.ItemFocusPosition;
 import com.uet.fingerpinter.model.response.BaseResponse;
 import com.uet.fingerpinter.model.response.CustomExceptionResponse;
 import com.uet.fingerpinter.model.response.GetLocationResponse;
+import com.uet.fingerpinter.model.response.ItemPositionKNearestGauss;
 import org.apache.commons.math3.distribution.NormalDistribution;
 import org.jooq.*;
 import org.jooq.impl.DSL;
@@ -20,16 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static com.uet.fingerpinter.db.Tables.FINGERPRINTER_INFO;
-import static com.uet.fingerpinter.db.Tables.FINGERPRINTER_INFO_GAUSS;
+import static com.uet.fingerpinter.db.Tables.*;
 
 @Service
 public class LocationManager implements LocationService {
+    private int K_NEAREST = 4;
+    private int MAX_MOVE_SECOND = 2;
     private static final double DELTA = 1.96;
     private static final Logger LOG = LoggerFactory.getLogger(LocationManager.class);
     private final DSLContext ktv;
@@ -171,6 +173,28 @@ public class LocationManager implements LocationService {
 
 
     private BaseResponse<GetLocationResponse> getLocationGauss(GetLocationRequest request) throws CustomExceptionResponse {
+        if (request.getExtendGetLocationModel().isFirst()) {
+            int transactionId = crateTransactionIdTracking();
+            int trackingId = ktv.insertInto(TRACKING)
+                    .set(TRACKING.ROOM_ID, request.getRoomId())
+                    .set(TRACKING.SESSION_ID, request.getExtendGetLocationModel().getTransactionId())
+                    .set(TRACKING.X, request.getExtendGetLocationModel().getX())
+                    .set(TRACKING.Y, request.getExtendGetLocationModel().getY())
+                    .set(TRACKING.CREATED_TIME, LocalDateTime.now())
+                    .returning(TRACKING.ID).fetchOne().getId();
+
+            ktv.insertInto(TRACKING_K_NEAREST)
+                    .set(TRACKING_K_NEAREST.TRACKING_ID, trackingId)
+                    .set(TRACKING_K_NEAREST.DISTRIBUTION, 1.0)
+                    .set(TRACKING_K_NEAREST.X, request.getExtendGetLocationModel().getX())
+                    .set(TRACKING_K_NEAREST.Y, request.getExtendGetLocationModel().getY())
+                    .execute();
+
+            GetLocationResponse response = new GetLocationResponse(request.getExtendGetLocationModel().getX(),
+                    request.getExtendGetLocationModel().getY());
+            response.setTransactionId(transactionId);
+            return new BaseResponse<>(response);
+        }
         request.getInfos().sort((o1, o2) -> {
             if (o1.getRss() < o2.getRss()) {
                 return 1;
@@ -228,10 +252,6 @@ public class LocationManager implements LocationService {
                     miss++;
                 }
             }
-//            if (distributionRss == 1.0) {
-//                distributionRss = 0.0;
-//            }
-
             distributionGausses.add(new DistributionGauss(getLocation.getX(), getLocation.getY(), distributionRss, miss));
         }
 
@@ -245,23 +265,94 @@ public class LocationManager implements LocationService {
                     return 0;
                 }
             }
-//            if (o1.getNumberMiss() > o2.getNumberMiss()) {
-//                return 1;
-//            } else {
-//                if (o1.getNumberMiss() < o2.getNumberMiss()) {
-//                    return -1;
-//                } else {
-//                    return 0;
-//                }
-//            }
         });
 
         for (DistributionGauss distributionGauss : distributionGausses) {
             LOG.info("getLocationGauss " + "x = " + distributionGauss.getX() + " y = " + distributionGauss.getY() + " ,miss: " + distributionGauss.getNumberMiss() + ", distribution: " + distributionGauss.getDistribution());
         }
-        LOG.info("getLocationGauss -------------------------------------------------focus");
+//        LOG.info("getLocationGauss -------------------------------------------------focus-----------------------------------------");
+//        getPositionFocus(distributionGausses);
 
 
+        //algorithm k nearest
+        int trackingId = request.getExtendGetLocationModel().getTransactionId();
+        LocalDateTime maxTime =
+                ktv.select(DSL.max(TRACKING.CREATED_TIME))
+                        .from(TRACKING)
+                        .where(TRACKING.SESSION_ID.eq(trackingId))
+                        .fetchAny()
+                        .value1();
+
+        TrackingRecord trackingRecord = ktv.selectFrom(TRACKING)
+                .where(TRACKING.CREATED_TIME.eq(maxTime)
+                        .and(TRACKING.ROOM_ID.eq(request.getRoomId()))
+                        .and(TRACKING.SESSION_ID.eq(trackingId)))
+                .fetchAny();
+
+
+        List<TrackingKNearestRecord> nearestRecordsOld =
+                ktv.selectFrom(TRACKING_K_NEAREST)
+                        .where(TRACKING_K_NEAREST.TRACKING_ID.eq(trackingRecord.getId()))
+                        .fetch();
+        int indexMax;
+        if (distributionGausses.size() < K_NEAREST) {
+            indexMax = distributionGausses.size();
+        } else {
+            indexMax = K_NEAREST;
+        }
+        List<ItemPositionKNearestGauss> resultKNearst = new ArrayList<>();
+        for (int i = 0; i < indexMax; i++) {
+            DistributionGauss distributionGauss = distributionGausses.get(i);
+            for (TrackingKNearestRecord trackingKNearestRecord : nearestRecordsOld) {
+                double distance = distance2D(distributionGauss.getX(), distributionGauss.getY(),
+                        trackingKNearestRecord.getX(), trackingKNearestRecord.getY());
+                ItemPositionKNearestGauss gauss = new ItemPositionKNearestGauss();
+
+                gauss.setDistance(distance);
+                gauss.setDistribution(distributionGauss.getDistribution());
+                gauss.setX(distributionGauss.getX());
+                gauss.setY(distributionGauss.getY());
+                gauss.setMiss(distributionGauss.getNumberMiss());
+                gauss.setToX(trackingKNearestRecord.getX());
+                gauss.setToY(trackingKNearestRecord.getY());
+
+                resultKNearst.add(gauss);
+            }
+        }
+
+        resultKNearst.sort((o1, o2) -> {
+            double deltaOne = Math.abs(o1.getDistance() - MAX_MOVE_SECOND);
+            double deltaTwo = Math.abs(o2.getDistance() - MAX_MOVE_SECOND);
+            if (deltaOne > deltaTwo) {
+                return 1;
+            } else {
+                if (deltaOne < deltaTwo) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        LOG.info("getLocationGauss----------------------------------------------------------- start k nearest");
+        for (ItemPositionKNearestGauss itemPositionKNearestGauss : resultKNearst) {
+            LOG.info("getLocationGauss knearest" + "x = " + itemPositionKNearestGauss.getX() + " y = " + itemPositionKNearestGauss.getY() + " ,miss: " + itemPositionKNearestGauss.getMiss() + ", distribution: " + itemPositionKNearestGauss.getDistribution());
+        }
+
+        LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
+        LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
+        LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
+        LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
+        return new BaseResponse<>(new GetLocationResponse(
+                resultKNearst.get(0).getX(),
+                resultKNearst.get(0).getY(),
+                request.getExtendGetLocationModel().getTransactionId())
+        );
+
+    }
+
+    private void getPositionFocus(List<DistributionGauss> distributionGausses) {
+        //forcus
         int max = 10;
         if (distributionGausses.size() < 10) {
             max = distributionGausses.size();
@@ -303,11 +394,35 @@ public class LocationManager implements LocationService {
             }
         });
         for (ItemFocusPosition itemFocusPosition : itemFocusPositions) {
-            LOG.info("getLocationGauss " + "x = " + itemFocusPosition.getX() + " y = " + itemFocusPosition.getY() + " ,miss: " + itemFocusPosition.getMiss() + ", distribution: " + itemFocusPosition.getDistribution()+", distance: " + itemFocusPosition.getDistanceWithFocus());
+            LOG.info("getLocationGauss " + "x = " + itemFocusPosition.getX() + " y = " + itemFocusPosition.getY() + " ,miss: " + itemFocusPosition.getMiss() + ", distribution: " + itemFocusPosition.getDistribution() + ", distance: " + itemFocusPosition.getDistanceWithFocus());
         }
         LOG.info("getLocationGauss -------------------------------------------------focus");
-        return new BaseResponse<>(new GetLocationResponse(distributionGausses.get(0).getX(), distributionGausses.get(0).getY()));
-
     }
 
+    private int crateTransactionIdTracking() {
+        Record1<Integer> maxTransaction = ktv.select(DSL.max(TRACKING.SESSION_ID))
+                .from(TRACKING)
+                .fetchAny();
+        if (maxTransaction == null) {
+            return 1;
+        } else {
+            return maxTransaction.value1() + 1;
+        }
+    }
+
+    public static double distance2D(int x1, int y1, int x2, int y2) {
+        double result = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+        return Math.sqrt(result);
+    }
+
+    @Override
+    public BaseResponse<List<GetLocationResponse>> getPath() throws CustomExceptionResponse {
+        List<GetLocationResponse> point =
+                ktv.selectFrom(TRACK_REAL)
+                        .orderBy(TRACK_REAL.ID.asc())
+                        .fetch()
+                        .map(record -> new GetLocationResponse(record.getX(), record.getY()));
+
+        return new BaseResponse<>(point);
+    }
 }

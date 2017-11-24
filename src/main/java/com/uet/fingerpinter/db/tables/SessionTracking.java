@@ -7,8 +7,9 @@ package com.uet.fingerpinter.db.tables;
 import com.uet.fingerpinter.db.Keys;
 import com.uet.fingerpinter.db.Public;
 import com.uet.fingerpinter.db.tables.records.SessionTrackingRecord;
+import com.uet.fingerpinter.jooq.convert.LocalDateTimeConverter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SessionTracking extends TableImpl<SessionTrackingRecord> {
 
-    private static final long serialVersionUID = 72394058;
+    private static final long serialVersionUID = -191592339;
 
     /**
      * The reference instance of <code>public.session_tracking</code>
@@ -70,12 +71,12 @@ public class SessionTracking extends TableImpl<SessionTrackingRecord> {
     /**
      * The column <code>public.session_tracking.created_time</code>.
      */
-    public final TableField<SessionTrackingRecord, Timestamp> CREATED_TIME = createField("created_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
+    public final TableField<SessionTrackingRecord, LocalDateTime> CREATED_TIME = createField("created_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "", new LocalDateTimeConverter());
 
     /**
      * The column <code>public.session_tracking.update_time</code>.
      */
-    public final TableField<SessionTrackingRecord, Timestamp> UPDATE_TIME = createField("update_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
+    public final TableField<SessionTrackingRecord, LocalDateTime> UPDATE_TIME = createField("update_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "", new LocalDateTimeConverter());
 
     /**
      * Create a <code>public.session_tracking</code> table reference
