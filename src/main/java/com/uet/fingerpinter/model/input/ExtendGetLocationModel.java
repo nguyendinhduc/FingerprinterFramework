@@ -1,9 +1,18 @@
 package com.uet.fingerpinter.model.input;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ExtendGetLocationModel {
+    @JsonProperty("isFirst")
     private boolean isFirst;
+
+    @JsonProperty("x")
     private int x;
+
+    @JsonProperty("y")
     private int y;
+
+    @JsonProperty("transactionId")
     private int transactionId;
 
     public boolean isFirst() {
