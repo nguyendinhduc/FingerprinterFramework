@@ -175,6 +175,8 @@ public class LocationManager implements LocationService {
     private BaseResponse<GetLocationResponse> getLocationGauss(GetLocationRequest request) throws CustomExceptionResponse {
         LOG.info("getLocationGauss isFirst: " + request.getExtendGetLocationModel().isFirst());
         LOG.info("getLocationGauss transacsionId: " + request.getExtendGetLocationModel().getTransactionId());
+        LOG.info("getLocationGauss x: " + request.getExtendGetLocationModel().getX());
+        LOG.info("getLocationGauss y: " + request.getExtendGetLocationModel().getY());
         if (request.getExtendGetLocationModel().isFirst()) {
             int transactionId = crateTransactionIdTracking();
             int trackingId = ktv.insertInto(TRACKING)
