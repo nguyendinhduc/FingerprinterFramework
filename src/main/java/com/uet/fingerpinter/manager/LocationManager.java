@@ -276,7 +276,7 @@ public class LocationManager implements LocationService {
         for (DistributionGauss distributionGauss : distributionGausses) {
             LOG.info("getLocationGauss " + "x = " + distributionGauss.getX() + " y = " + distributionGauss.getY() + " ,miss: " + distributionGauss.getNumberMiss() + ", distribution: " + distributionGauss.getDistribution());
         }
-//        LOG.info("getLocationGauss -------------------------------------------------focus-----------------------------------------");
+        LOG.info("getLocationGauss -------------------------------------------------focus-----------------------------------------");
 //        getPositionFocus(distributionGausses);
 
 
@@ -348,7 +348,7 @@ public class LocationManager implements LocationService {
 
         int newTrackingId = ktv.insertInto(TRACKING,
                 TRACKING.CREATED_TIME, TRACKING.ROOM_ID, TRACKING.X, TRACKING.Y, TRACKING.SESSION_ID)
-                .values(LocalDateTime.now(), request.getRoomId(), resultKNearst.get(0).getX(), resultKNearst.get(0).getX(), transactionId)
+                .values(LocalDateTime.now(), request.getRoomId(), resultKNearst.get(0).getX(), resultKNearst.get(0).getY(), transactionId)
                 .returning(TRACKING.ID).fetchOne().value1();
         for (int i = 0; i < indexMax; i++) {
             DistributionGauss distributionGauss = distributionGausses.get(i);
