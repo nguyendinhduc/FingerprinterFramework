@@ -182,7 +182,7 @@ public class LocationManager implements LocationService {
             int transactionId = crateTransactionIdTracking();
             int trackingId = ktv.insertInto(TRACKING)
                     .set(TRACKING.ROOM_ID, request.getRoomId())
-                    .set(TRACKING.SESSION_ID, request.getExtendGetLocationModel().getTransactionId())
+                    .set(TRACKING.SESSION_ID, transactionId)
                     .set(TRACKING.X, request.getExtendGetLocationModel().getX())
                     .set(TRACKING.Y, request.getExtendGetLocationModel().getY())
                     .set(TRACKING.CREATED_TIME, LocalDateTime.now())
