@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
 
-    private static final long serialVersionUID = -966906024;
+    private static final long serialVersionUID = 2079602634;
 
     /**
      * The reference instance of <code>public.tracking_k_nearest</code>
@@ -135,7 +135,7 @@ public class TrackingKNearest extends TableImpl<TrackingKNearestRecord> {
      */
     @Override
     public List<ForeignKey<TrackingKNearestRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TrackingKNearestRecord, ?>>asList(Keys.TRACKING_K_NEAREST__TRACKING_K_NEAREST_1);
+        return Arrays.<ForeignKey<TrackingKNearestRecord, ?>>asList(Keys.TRACKING_K_NEAREST__TRACKING_K_NEAREST_KEY);
     }
 
     /**

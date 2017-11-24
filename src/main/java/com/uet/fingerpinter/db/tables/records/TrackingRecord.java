@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implements Record6<Integer, Integer, Integer, Integer, Integer, LocalDateTime> {
 
-    private static final long serialVersionUID = -2084310696;
+    private static final long serialVersionUID = 306110962;
 
     /**
      * Setter for <code>public.tracking.id</code>.
@@ -47,58 +47,58 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
     }
 
     /**
-     * Setter for <code>public.tracking.x</code>.
-     */
-    public void setX(Integer value) {
-        set(1, value);
-    }
-
-    /**
-     * Getter for <code>public.tracking.x</code>.
-     */
-    public Integer getX() {
-        return (Integer) get(1);
-    }
-
-    /**
-     * Setter for <code>public.tracking.y</code>.
-     */
-    public void setY(Integer value) {
-        set(2, value);
-    }
-
-    /**
-     * Getter for <code>public.tracking.y</code>.
-     */
-    public Integer getY() {
-        return (Integer) get(2);
-    }
-
-    /**
      * Setter for <code>public.tracking.room_id</code>.
      */
     public void setRoomId(Integer value) {
-        set(3, value);
+        set(1, value);
     }
 
     /**
      * Getter for <code>public.tracking.room_id</code>.
      */
     public Integer getRoomId() {
-        return (Integer) get(3);
+        return (Integer) get(1);
     }
 
     /**
      * Setter for <code>public.tracking.session_id</code>.
      */
     public void setSessionId(Integer value) {
-        set(4, value);
+        set(2, value);
     }
 
     /**
      * Getter for <code>public.tracking.session_id</code>.
      */
     public Integer getSessionId() {
+        return (Integer) get(2);
+    }
+
+    /**
+     * Setter for <code>public.tracking.x</code>.
+     */
+    public void setX(Integer value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>public.tracking.x</code>.
+     */
+    public Integer getX() {
+        return (Integer) get(3);
+    }
+
+    /**
+     * Setter for <code>public.tracking.y</code>.
+     */
+    public void setY(Integer value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>public.tracking.y</code>.
+     */
+    public Integer getY() {
         return (Integer) get(4);
     }
 
@@ -161,22 +161,6 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
      */
     @Override
     public Field<Integer> field2() {
-        return Tracking.TRACKING.X;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Field<Integer> field3() {
-        return Tracking.TRACKING.Y;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Field<Integer> field4() {
         return Tracking.TRACKING.ROOM_ID;
     }
 
@@ -184,8 +168,24 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
      * {@inheritDoc}
      */
     @Override
-    public Field<Integer> field5() {
+    public Field<Integer> field3() {
         return Tracking.TRACKING.SESSION_ID;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Field<Integer> field4() {
+        return Tracking.TRACKING.X;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Field<Integer> field5() {
+        return Tracking.TRACKING.Y;
     }
 
     /**
@@ -209,22 +209,6 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
      */
     @Override
     public Integer value2() {
-        return getX();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Integer value3() {
-        return getY();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Integer value4() {
         return getRoomId();
     }
 
@@ -232,8 +216,24 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
      * {@inheritDoc}
      */
     @Override
-    public Integer value5() {
+    public Integer value3() {
         return getSessionId();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer value4() {
+        return getX();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer value5() {
+        return getY();
     }
 
     /**
@@ -258,24 +258,6 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
      */
     @Override
     public TrackingRecord value2(Integer value) {
-        setX(value);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TrackingRecord value3(Integer value) {
-        setY(value);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public TrackingRecord value4(Integer value) {
         setRoomId(value);
         return this;
     }
@@ -284,8 +266,26 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
      * {@inheritDoc}
      */
     @Override
-    public TrackingRecord value5(Integer value) {
+    public TrackingRecord value3(Integer value) {
         setSessionId(value);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TrackingRecord value4(Integer value) {
+        setX(value);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TrackingRecord value5(Integer value) {
+        setY(value);
         return this;
     }
 
@@ -326,14 +326,14 @@ public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implemen
     /**
      * Create a detached, initialised TrackingRecord
      */
-    public TrackingRecord(Integer id, Integer x, Integer y, Integer roomId, Integer sessionId, LocalDateTime createdTime) {
+    public TrackingRecord(Integer id, Integer roomId, Integer sessionId, Integer x, Integer y, LocalDateTime createdTime) {
         super(Tracking.TRACKING);
 
         set(0, id);
-        set(1, x);
-        set(2, y);
-        set(3, roomId);
-        set(4, sessionId);
+        set(1, roomId);
+        set(2, sessionId);
+        set(3, x);
+        set(4, y);
         set(5, createdTime);
     }
 }

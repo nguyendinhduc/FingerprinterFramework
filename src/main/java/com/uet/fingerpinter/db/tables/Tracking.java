@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tracking extends TableImpl<TrackingRecord> {
 
-    private static final long serialVersionUID = -1937085044;
+    private static final long serialVersionUID = -1496384601;
 
     /**
      * The reference instance of <code>public.tracking</code>
@@ -59,16 +59,6 @@ public class Tracking extends TableImpl<TrackingRecord> {
     public final TableField<TrackingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('tracking_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>public.tracking.x</code>.
-     */
-    public final TableField<TrackingRecord, Integer> X = createField("x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-    /**
-     * The column <code>public.tracking.y</code>.
-     */
-    public final TableField<TrackingRecord, Integer> Y = createField("y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-    /**
      * The column <code>public.tracking.room_id</code>.
      */
     public final TableField<TrackingRecord, Integer> ROOM_ID = createField("room_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
@@ -77,6 +67,16 @@ public class Tracking extends TableImpl<TrackingRecord> {
      * The column <code>public.tracking.session_id</code>.
      */
     public final TableField<TrackingRecord, Integer> SESSION_ID = createField("session_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>public.tracking.x</code>.
+     */
+    public final TableField<TrackingRecord, Integer> X = createField("x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>public.tracking.y</code>.
+     */
+    public final TableField<TrackingRecord, Integer> Y = createField("y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.tracking.created_time</code>.
@@ -142,7 +142,7 @@ public class Tracking extends TableImpl<TrackingRecord> {
      */
     @Override
     public List<ForeignKey<TrackingRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING__TRACKING_1);
+        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING__TRACKING_KEY1);
     }
 
     /**

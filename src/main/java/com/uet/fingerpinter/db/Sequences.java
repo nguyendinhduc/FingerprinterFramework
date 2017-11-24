@@ -49,11 +49,6 @@ public class Sequences {
     public static final Sequence<Long> ROOM_ID_SEQ = new SequenceImpl<Long>("room_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
     /**
-     * The sequence <code>public.session_tracking_id_seq</code>
-     */
-    public static final Sequence<Long> SESSION_TRACKING_ID_SEQ = new SequenceImpl<Long>("session_tracking_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
-
-    /**
      * The sequence <code>public.tracking_id_seq</code>
      */
     public static final Sequence<Long> TRACKING_ID_SEQ = new SequenceImpl<Long>("tracking_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));

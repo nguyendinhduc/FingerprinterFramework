@@ -177,6 +177,7 @@ public class LocationManager implements LocationService {
         LOG.info("getLocationGauss transacsionId: " + request.getExtendGetLocationModel().getTransactionId());
         LOG.info("getLocationGauss x: " + request.getExtendGetLocationModel().getX());
         LOG.info("getLocationGauss y: " + request.getExtendGetLocationModel().getY());
+        LOG.info("getLocationGauss room_id: " + request.getRoomId());
         if (request.getExtendGetLocationModel().isFirst()) {
             int transactionId = crateTransactionIdTracking();
             int trackingId = ktv.insertInto(TRACKING)
@@ -308,6 +309,11 @@ public class LocationManager implements LocationService {
         List<ItemPositionKNearestGauss> resultKNearst = new ArrayList<>();
         for (int i = 0; i < indexMax; i++) {
             DistributionGauss distributionGauss = distributionGausses.get(i);
+            ktv.insertInto(TRACKING_K_NEAREST,
+                    TRACKING_K_NEAREST.X, TRACKING_K_NEAREST.Y, TRACKING_K_NEAREST.DISTRIBUTION, TRACKING_K_NEAREST.TRACKING_ID )
+                    .values(distributionGauss.getX(), distributionGauss.getY(), distributionGauss.getDistribution(), trackingId)
+                    .execute();
+
             for (TrackingKNearestRecord trackingKNearestRecord : nearestRecordsOld) {
                 double distance = distance2D(distributionGauss.getX(), distributionGauss.getY(),
                         trackingKNearestRecord.getX(), trackingKNearestRecord.getY());
