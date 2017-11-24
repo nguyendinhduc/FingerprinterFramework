@@ -281,26 +281,26 @@ public class LocationManager implements LocationService {
 
 
         //algorithm k nearest
-        int trackingId = request.getExtendGetLocationModel().getTransactionId();
+        int transactionId = request.getExtendGetLocationModel().getTransactionId();
         LocalDateTime maxTime =
                 ktv.select(DSL.max(TRACKING.CREATED_TIME))
                         .from(TRACKING)
-                        .where(TRACKING.SESSION_ID.eq(trackingId))
+                        .where(TRACKING.SESSION_ID.eq(transactionId))
                         .fetchAny()
                         .value1();
 
-        TrackingRecord trackingRecord = ktv.selectFrom(TRACKING)
+        TrackingRecord trackingRecordOld = ktv.selectFrom(TRACKING)
                 .where(TRACKING.CREATED_TIME.eq(maxTime)
                         .and(TRACKING.ROOM_ID.eq(request.getRoomId()))
-                        .and(TRACKING.SESSION_ID.eq(trackingId)))
+                        .and(TRACKING.SESSION_ID.eq(transactionId)))
                 .fetchAny();
 
 
         List<TrackingKNearestRecord> nearestRecordsOld =
                 ktv.selectFrom(TRACKING_K_NEAREST)
-                        .where(TRACKING_K_NEAREST.TRACKING_ID.eq(trackingRecord.getId()))
+                        .where(TRACKING_K_NEAREST.TRACKING_ID.eq(trackingRecordOld.getId()))
                         .fetch();
-        int indexMax;
+        final int indexMax;
         if (distributionGausses.size() < K_NEAREST) {
             indexMax = distributionGausses.size();
         } else {
@@ -309,11 +309,6 @@ public class LocationManager implements LocationService {
         List<ItemPositionKNearestGauss> resultKNearst = new ArrayList<>();
         for (int i = 0; i < indexMax; i++) {
             DistributionGauss distributionGauss = distributionGausses.get(i);
-            ktv.insertInto(TRACKING_K_NEAREST,
-                    TRACKING_K_NEAREST.X, TRACKING_K_NEAREST.Y, TRACKING_K_NEAREST.DISTRIBUTION, TRACKING_K_NEAREST.TRACKING_ID )
-                    .values(distributionGauss.getX(), distributionGauss.getY(), distributionGauss.getDistribution(), trackingId)
-                    .execute();
-
             for (TrackingKNearestRecord trackingKNearestRecord : nearestRecordsOld) {
                 double distance = distance2D(distributionGauss.getX(), distributionGauss.getY(),
                         trackingKNearestRecord.getX(), trackingKNearestRecord.getY());
@@ -350,10 +345,25 @@ public class LocationManager implements LocationService {
             LOG.info("getLocationGauss knearest" + "x = " + itemPositionKNearestGauss.getX() + " y = " + itemPositionKNearestGauss.getY() + " ,miss: " + itemPositionKNearestGauss.getMiss() + ", distribution: " + itemPositionKNearestGauss.getDistribution());
         }
 
+
+        int newTrackingId = ktv.insertInto(TRACKING,
+                TRACKING.CREATED_TIME, TRACKING.ROOM_ID, TRACKING.X, TRACKING.Y, TRACKING.SESSION_ID)
+                .values(LocalDateTime.now(), request.getRoomId(), resultKNearst.get(0).getX(), resultKNearst.get(0).getX(), transactionId)
+                .returning(TRACKING.ID).fetchOne().value1();
+        for (int i = 0; i < indexMax; i++) {
+            DistributionGauss distributionGauss = distributionGausses.get(i);
+            ktv.insertInto(TRACKING_K_NEAREST,
+                    TRACKING_K_NEAREST.X, TRACKING_K_NEAREST.Y, TRACKING_K_NEAREST.DISTRIBUTION, TRACKING_K_NEAREST.TRACKING_ID)
+                    .values(distributionGauss.getX(), distributionGauss.getY(), distributionGauss.getDistribution(), newTrackingId)
+                    .execute();
+        }
+
+
         LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
         LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
         LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
         LOG.info("getLocationGauss----------------------------------------------------------- end k nearest");
+
         return new BaseResponse<>(new GetLocationResponse(
                 resultKNearst.get(0).getX(),
                 resultKNearst.get(0).getY(),
