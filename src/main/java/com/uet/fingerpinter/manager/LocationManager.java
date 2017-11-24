@@ -408,7 +408,7 @@ public class LocationManager implements LocationService {
         Record1<Integer> maxTransaction = ktv.select(DSL.max(TRACKING.SESSION_ID))
                 .from(TRACKING)
                 .fetchAny();
-        if (maxTransaction == null) {
+        if (maxTransaction == null || maxTransaction.value1() == null) {
             return 1;
         } else {
             return maxTransaction.value1() + 1;
