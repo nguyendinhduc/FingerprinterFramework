@@ -277,9 +277,22 @@ public class LocationManager implements LocationService {
             LOG.info("getLocationGauss " + "x = " + distributionGauss.getX() + " y = " + distributionGauss.getY() + " ,miss: " + distributionGauss.getNumberMiss() + ", distribution: " + distributionGauss.getDistribution());
         }
         LOG.info("getLocationGauss -------------------------------------------------focus-----------------------------------------");
+
+
+        return new BaseResponse<>(new GetLocationResponse(
+                distributionGausses.get(0).getX(),
+                distributionGausses.get(0).getY(),
+                request.getExtendGetLocationModel().getTransactionId())
+        );
+
+
 //        getPositionFocus(distributionGausses);
+//        return kNearestHistory(request, distributionGausses);
 
 
+    }
+
+    private BaseResponse<GetLocationResponse> kNearestHistory(GetLocationRequest request, List<DistributionGauss> distributionGausses) {
         //algorithm k nearest
         int transactionId = request.getExtendGetLocationModel().getTransactionId();
         LocalDateTime maxTime =
@@ -369,10 +382,9 @@ public class LocationManager implements LocationService {
                 resultKNearst.get(0).getY(),
                 request.getExtendGetLocationModel().getTransactionId())
         );
-
     }
 
-    private void getPositionFocus(List<DistributionGauss> distributionGausses) {
+    private ItemFocusPosition getPositionFocus(List<DistributionGauss> distributionGausses) {
         //forcus
         int max = 10;
         if (distributionGausses.size() < 10) {
@@ -418,6 +430,8 @@ public class LocationManager implements LocationService {
             LOG.info("getLocationGauss " + "x = " + itemFocusPosition.getX() + " y = " + itemFocusPosition.getY() + " ,miss: " + itemFocusPosition.getMiss() + ", distribution: " + itemFocusPosition.getDistribution() + ", distance: " + itemFocusPosition.getDistanceWithFocus());
         }
         LOG.info("getLocationGauss -------------------------------------------------focus");
+
+        return itemFocusPositions.get(0);
     }
 
     private int crateTransactionIdTracking() {
