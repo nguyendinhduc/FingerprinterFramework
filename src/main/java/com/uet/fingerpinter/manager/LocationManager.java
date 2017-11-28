@@ -286,8 +286,13 @@ public class LocationManager implements LocationService {
 //        );
 
 
-//        getPositionFocus(distributionGausses);
-        return kNearestHistory(request, distributionGausses);
+        ItemFocusPosition position = getPositionFocus(distributionGausses);
+        return new BaseResponse<>(
+                new GetLocationResponse(position.getX(),
+                        position.getY())
+        );
+
+//        return kNearestHistory(request, distributionGausses);
 
 
     }
