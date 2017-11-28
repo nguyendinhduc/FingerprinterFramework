@@ -279,15 +279,15 @@ public class LocationManager implements LocationService {
         LOG.info("getLocationGauss -------------------------------------------------focus-----------------------------------------");
 
 
-        return new BaseResponse<>(new GetLocationResponse(
-                distributionGausses.get(0).getX(),
-                distributionGausses.get(0).getY(),
-                request.getExtendGetLocationModel().getTransactionId())
-        );
+//        return new BaseResponse<>(new GetLocationResponse(
+//                distributionGausses.get(0).getX(),
+//                distributionGausses.get(0).getY(),
+//                request.getExtendGetLocationModel().getTransactionId())
+//        );
 
 
 //        getPositionFocus(distributionGausses);
-//        return kNearestHistory(request, distributionGausses);
+        return kNearestHistory(request, distributionGausses);
 
 
     }
