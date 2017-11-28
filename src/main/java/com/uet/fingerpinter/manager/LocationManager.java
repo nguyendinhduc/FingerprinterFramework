@@ -391,8 +391,8 @@ public class LocationManager implements LocationService {
 
     private ItemFocusPosition getPositionFocus(List<DistributionGauss> distributionGausses) {
         //forcus
-        int max = 10;
-        if (distributionGausses.size() < 10) {
+        int max = 4;
+        if (distributionGausses.size() < 4) {
             max = distributionGausses.size();
         }
 
