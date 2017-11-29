@@ -9,6 +9,7 @@ import com.uet.fingerpinter.model.input.GetLocationRequest;
 import com.uet.fingerpinter.model.input.InfoReferencePointRequest;
 import com.uet.fingerpinter.model.input.gauss.DistributionGauss;
 import com.uet.fingerpinter.model.input.gauss.ItemFocusPosition;
+import com.uet.fingerpinter.model.input.gauss.ResponseFocus;
 import com.uet.fingerpinter.model.response.BaseResponse;
 import com.uet.fingerpinter.model.response.CustomExceptionResponse;
 import com.uet.fingerpinter.model.response.GetLocationResponse;
@@ -42,7 +43,7 @@ public class LocationManager implements LocationService {
     }
 
     @Override
-    public BaseResponse<GetLocationResponse> getLocation(GetLocationRequest request) throws CustomExceptionResponse {
+    public BaseResponse<ResponseFocus> getLocation(GetLocationRequest request) throws CustomExceptionResponse {
         return getLocationGauss(request);
 //        Comparator<InfoReferencePointRequest> comparator = (infoOne, infoTwo) -> {
 //            if (infoOne.getRss() < infoTwo.getRss()) {
@@ -172,7 +173,7 @@ public class LocationManager implements LocationService {
     }
 
 
-    private BaseResponse<GetLocationResponse> getLocationGauss(GetLocationRequest request) throws CustomExceptionResponse {
+    private BaseResponse<ResponseFocus> getLocationGauss(GetLocationRequest request) throws CustomExceptionResponse {
         LOG.info("getLocationGauss isFirst: " + request.getExtendGetLocationModel().isFirst());
         LOG.info("getLocationGauss transacsionId: " + request.getExtendGetLocationModel().getTransactionId());
         LOG.info("getLocationGauss x: " + request.getExtendGetLocationModel().getX());
@@ -195,10 +196,11 @@ public class LocationManager implements LocationService {
                     .set(TRACKING_K_NEAREST.Y, request.getExtendGetLocationModel().getY())
                     .execute();
 
-            GetLocationResponse response = new GetLocationResponse(request.getExtendGetLocationModel().getX(),
-                    request.getExtendGetLocationModel().getY());
-            response.setTransactionId(transactionId);
+//            GetLocationResponse response = new GetLocationResponse(request.getExtendGetLocationModel().getX(),
+//                    request.getExtendGetLocationModel().getY());
+//            response.setTransactionId(transactionId);
 
+            ResponseFocus response = new ResponseFocus(request.getExtendGetLocationModel().getX(), request.getExtendGetLocationModel().getY(), transactionId);
             return new BaseResponse<>(response);
         }
         request.getInfos().sort((o1, o2) -> {
@@ -286,11 +288,23 @@ public class LocationManager implements LocationService {
 //        );
 
 
-        ItemFocusPosition position = getPositionFocus(distributionGausses);
-        return new BaseResponse<>(
-                new GetLocationResponse(position.getX(),
-                        position.getY())
-        );
+        ResponseFocus position = getPositionFocus(distributionGausses, request.getExtendGetLocationModel().getTransactionId());
+        int trackingId = ktv.insertInto(TRACKING,
+                TRACKING.ROOM_ID, TRACKING.CREATED_TIME, TRACKING.X, TRACKING.Y, TRACKING.SESSION_ID
+        ).values(request.getRoomId(), LocalDateTime.now(), (int) position.getX(), (int) position.getY(), position.getTransactionId())
+                .returning(TRACKING.ID).fetchOne().getId();
+        int max = 4;
+        if (distributionGausses.size() < 4) {
+            max = distributionGausses.size();
+        }
+        for (int i = 0; i < max; i++) {
+            DistributionGauss distributionGauss = distributionGausses.get(i);
+            ktv.insertInto(TRACKING_K_NEAREST,
+                    TRACKING_K_NEAREST.X, TRACKING_K_NEAREST.Y, TRACKING_K_NEAREST.DISTRIBUTION, TRACKING_K_NEAREST.TRACKING_ID)
+                    .values(distributionGauss.getX(), distributionGauss.getY(), distributionGauss.getDistribution(), trackingId)
+                    .execute();
+        }
+        return new BaseResponse<>(position);
 
 //        return kNearestHistory(request, distributionGausses);
 
@@ -389,7 +403,7 @@ public class LocationManager implements LocationService {
         );
     }
 
-    private ItemFocusPosition getPositionFocus(List<DistributionGauss> distributionGausses) {
+    private ResponseFocus getPositionFocus(List<DistributionGauss> distributionGausses, int transactionId) {
         //forcus
         int max = 4;
         if (distributionGausses.size() < 4) {
@@ -406,37 +420,39 @@ public class LocationManager implements LocationService {
         }
         xFocus = xFocus / totalDistribution;
         yFocus = yFocus / totalDistribution;
-        List<ItemFocusPosition> itemFocusPositions = new ArrayList<>();
-        for (int i = 0; i < max; i++) {
-            ItemFocusPosition position = new ItemFocusPosition();
-            position.setX(distributionGausses.get(i).getX());
-            position.setY(distributionGausses.get(i).getY());
-            position.setDistribution(distributionGausses.get(i).getDistribution());
-            position.setDeltaX(xFocus - distributionGausses.get(i).getX());
-            position.setDeltaY(yFocus - distributionGausses.get(i).getY());
-            position.setMiss(distributionGausses.get(i).getNumberMiss());
+        return new ResponseFocus((float) xFocus, (float) yFocus, transactionId);
 
-            double distance = Math.sqrt(position.getDeltaX() * position.getDeltaX() + position.getDeltaY() * position.getDeltaY());
-            position.setDistanceWithFocus(distance);
-            itemFocusPositions.add(position);
-        }
-        itemFocusPositions.sort((o1, o2) -> {
-            if (o1.getDistanceWithFocus() > o2.getDistanceWithFocus()) {
-                return 1;
-            } else {
-                if (o1.getDistanceWithFocus() < o2.getDistanceWithFocus()) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-        for (ItemFocusPosition itemFocusPosition : itemFocusPositions) {
-            LOG.info("getLocationGauss " + "x = " + itemFocusPosition.getX() + " y = " + itemFocusPosition.getY() + " ,miss: " + itemFocusPosition.getMiss() + ", distribution: " + itemFocusPosition.getDistribution() + ", distance: " + itemFocusPosition.getDistanceWithFocus());
-        }
-        LOG.info("getLocationGauss -------------------------------------------------focus");
-
-        return itemFocusPositions.get(0);
+//        List<ItemFocusPosition> itemFocusPositions = new ArrayList<>();
+//        for (int i = 0; i < max; i++) {
+//            ItemFocusPosition position = new ItemFocusPosition();
+//            position.setX(distributionGausses.get(i).getX());
+//            position.setY(distributionGausses.get(i).getY());
+//            position.setDistribution(distributionGausses.get(i).getDistribution());
+//            position.setDeltaX(xFocus - distributionGausses.get(i).getX());
+//            position.setDeltaY(yFocus - distributionGausses.get(i).getY());
+//            position.setMiss(distributionGausses.get(i).getNumberMiss());
+//
+//            double distance = Math.sqrt(position.getDeltaX() * position.getDeltaX() + position.getDeltaY() * position.getDeltaY());
+//            position.setDistanceWithFocus(distance);
+//            itemFocusPositions.add(position);
+//        }
+//        itemFocusPositions.sort((o1, o2) -> {
+//            if (o1.getDistanceWithFocus() > o2.getDistanceWithFocus()) {
+//                return 1;
+//            } else {
+//                if (o1.getDistanceWithFocus() < o2.getDistanceWithFocus()) {
+//                    return -1;
+//                } else {
+//                    return 0;
+//                }
+//            }
+//        });
+//        for (ItemFocusPosition itemFocusPosition : itemFocusPositions) {
+//            LOG.info("getLocationGauss " + "x = " + itemFocusPosition.getX() + " y = " + itemFocusPosition.getY() + " ,miss: " + itemFocusPosition.getMiss() + ", distribution: " + itemFocusPosition.getDistribution() + ", distance: " + itemFocusPosition.getDistanceWithFocus());
+//        }
+//        LOG.info("getLocationGauss -------------------------------------------------focus");
+//
+//        return itemFocusPositions.get(0);
     }
 
     private int crateTransactionIdTracking() {
