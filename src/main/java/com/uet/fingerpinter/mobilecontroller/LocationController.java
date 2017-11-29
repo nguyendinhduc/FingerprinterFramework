@@ -22,7 +22,7 @@ public class LocationController {
 
     @PostMapping(value = Constants.URL_GET_LOCATION)
     @ResponseBody
-    public BaseResponse<GetLocationResponse> getLocation(@RequestBody GetLocationRequest request) {
+    public Object getLocation(@RequestBody GetLocationRequest request) {
         try {
             return service.getLocation(request);
         } catch (CustomExceptionResponse e) {

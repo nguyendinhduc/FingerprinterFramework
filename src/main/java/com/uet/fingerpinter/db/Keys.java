@@ -82,7 +82,7 @@ public class Keys {
     public static final ForeignKey<FingerprinterInfoGaussRecord, RoomRecord> FINGERPRINTER_INFO_GAUSS__FINGERPRINTER_INFO_GAUSS_1 = ForeignKeys0.FINGERPRINTER_INFO_GAUSS__FINGERPRINTER_INFO_GAUSS_1;
     public static final ForeignKey<RoomRecord, BuildingRecord> ROOM__FORKEY_1 = ForeignKeys0.ROOM__FORKEY_1;
     public static final ForeignKey<TrackRealRecord, RoomRecord> TRACK_REAL__TRACK_REAL_1 = ForeignKeys0.TRACK_REAL__TRACK_REAL_1;
-    public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_KEY1 = ForeignKeys0.TRACKING__TRACKING_KEY1;
+    public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_KEY_1 = ForeignKeys0.TRACKING__TRACKING_KEY_1;
     public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST__TRACKING_K_NEAREST_KEY = ForeignKeys0.TRACKING_K_NEAREST__TRACKING_K_NEAREST_KEY;
 
     // -------------------------------------------------------------------------
@@ -119,7 +119,7 @@ public class Keys {
         public static final ForeignKey<FingerprinterInfoGaussRecord, RoomRecord> FINGERPRINTER_INFO_GAUSS__FINGERPRINTER_INFO_GAUSS_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, "fingerprinter_info_gauss__fingerprinter_info_gauss_1", FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ROOM_ID);
         public static final ForeignKey<RoomRecord, BuildingRecord> ROOM__FORKEY_1 = createForeignKey(com.uet.fingerpinter.db.Keys.BUILDING_PKEY, Room.ROOM, "room__forkey_1", Room.ROOM.BUILDING_ID);
         public static final ForeignKey<TrackRealRecord, RoomRecord> TRACK_REAL__TRACK_REAL_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, TrackReal.TRACK_REAL, "track_real__track_real_1", TrackReal.TRACK_REAL.ROOM_ID);
-        public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_KEY1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, Tracking.TRACKING, "tracking__tracking_key1", Tracking.TRACKING.ROOM_ID);
+        public static final ForeignKey<TrackingRecord, RoomRecord> TRACKING__TRACKING_KEY_1 = createForeignKey(com.uet.fingerpinter.db.Keys.ROOM_PKEY, Tracking.TRACKING, "tracking__tracking_key_1", Tracking.TRACKING.ROOM_ID);
         public static final ForeignKey<TrackingKNearestRecord, TrackingRecord> TRACKING_K_NEAREST__TRACKING_K_NEAREST_KEY = createForeignKey(com.uet.fingerpinter.db.Keys.TRACKING_PKEY, TrackingKNearest.TRACKING_K_NEAREST, "tracking_k_nearest__tracking_k_nearest_key", TrackingKNearest.TRACKING_K_NEAREST.TRACKING_ID);
     }
 }

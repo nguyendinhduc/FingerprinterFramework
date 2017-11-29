@@ -38,7 +38,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tracking extends TableImpl<TrackingRecord> {
 
-    private static final long serialVersionUID = -1496384601;
+    private static final long serialVersionUID = 937094190;
 
     /**
      * The reference instance of <code>public.tracking</code>
@@ -142,7 +142,7 @@ public class Tracking extends TableImpl<TrackingRecord> {
      */
     @Override
     public List<ForeignKey<TrackingRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING__TRACKING_KEY1);
+        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING__TRACKING_KEY_1);
     }
 
     /**
