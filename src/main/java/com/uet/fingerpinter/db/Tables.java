@@ -8,6 +8,7 @@ import com.uet.fingerpinter.db.tables.Building;
 import com.uet.fingerpinter.db.tables.FingerprinterInfo;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
+import com.uet.fingerpinter.db.tables.FingerprinterTracking;
 import com.uet.fingerpinter.db.tables.Room;
 import com.uet.fingerpinter.db.tables.TrackReal;
 import com.uet.fingerpinter.db.tables.Tracking;
@@ -49,6 +50,11 @@ public class Tables {
      * The table <code>public.fingerprinter_info_gauss</code>.
      */
     public static final FingerprinterInfoGauss FINGERPRINTER_INFO_GAUSS = com.uet.fingerpinter.db.tables.FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS;
+
+    /**
+     * The table <code>public.fingerprinter_tracking</code>.
+     */
+    public static final FingerprinterTracking FINGERPRINTER_TRACKING = com.uet.fingerpinter.db.tables.FingerprinterTracking.FINGERPRINTER_TRACKING;
 
     /**
      * The table <code>public.room</code>.

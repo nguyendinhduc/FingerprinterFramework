@@ -44,6 +44,11 @@ public class Sequences {
     public static final Sequence<Long> FINGERPRINTER_INFO_ID_SEQ = new SequenceImpl<Long>("fingerprinter_info_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
 
     /**
+     * The sequence <code>public.fingerprinter_tracking_id_seq</code>
+     */
+    public static final Sequence<Long> FINGERPRINTER_TRACKING_ID_SEQ = new SequenceImpl<Long>("fingerprinter_tracking_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));
+
+    /**
      * The sequence <code>public.room_id_seq</code>
      */
     public static final Sequence<Long> ROOM_ID_SEQ = new SequenceImpl<Long>("room_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT.nullable(false));

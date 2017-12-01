@@ -200,6 +200,7 @@ public class LocationManager implements LocationService {
 //                    request.getExtendGetLocationModel().getY());
 //            response.setTransactionId(transactionId);
 
+            insertFingerPrinterInfo(request, 0);
             ResponseFocus response = new ResponseFocus(request.getExtendGetLocationModel().getX(), request.getExtendGetLocationModel().getY(), transactionId);
             return new BaseResponse<>(response);
         }
@@ -287,12 +288,18 @@ public class LocationManager implements LocationService {
 //                request.getExtendGetLocationModel().getTransactionId())
 //        );
 
+        //insert fingerpringer info
+        int index =
+                ktv.fetchCount(TRACKING, TRACKING.SESSION_ID.eq(request.getExtendGetLocationModel().getTransactionId()));
+        insertFingerPrinterInfo(request, index);
+        //end
 
         ResponseFocus position = getPositionFocus(distributionGausses, request.getExtendGetLocationModel().getTransactionId());
         int trackingId = ktv.insertInto(TRACKING,
                 TRACKING.ROOM_ID, TRACKING.CREATED_TIME, TRACKING.X, TRACKING.Y, TRACKING.SESSION_ID
         ).values(request.getRoomId(), LocalDateTime.now(), (int) position.getX(), (int) position.getY(), position.getTransactionId())
                 .returning(TRACKING.ID).fetchOne().getId();
+
         int max = 4;
         if (distributionGausses.size() < 4) {
             max = distributionGausses.size();
@@ -319,6 +326,17 @@ public class LocationManager implements LocationService {
 //        return kNearestHistory(request, distributionGausses);
 
 
+    }
+
+    private void insertFingerPrinterInfo(GetLocationRequest request, int index) {
+        //insert fingerprinter info
+        for (InfoReferencePointRequest infoReferencePointRequest : request.getInfos()) {
+            ktv.insertInto(FINGERPRINTER_TRACKING,
+                    FINGERPRINTER_TRACKING.SESSION_ID, FINGERPRINTER_TRACKING.INDEX, FINGERPRINTER_TRACKING.RSS, FINGERPRINTER_TRACKING.MAC_ADDRESS, FINGERPRINTER_TRACKING.AP_NAME)
+                    .values(request.getExtendGetLocationModel().getTransactionId(), index, infoReferencePointRequest.getRss() * 1.0, infoReferencePointRequest.getMacAddress(), infoReferencePointRequest.getName())
+                    .execute();
+        }
+        //end
     }
 
     private BaseResponse<GetLocationResponse> kNearestHistory(GetLocationRequest request, List<DistributionGauss> distributionGausses) {
@@ -386,7 +404,6 @@ public class LocationManager implements LocationService {
         for (ItemPositionKNearestGauss itemPositionKNearestGauss : resultKNearst) {
             LOG.info("getLocationGauss knearest" + "x = " + itemPositionKNearestGauss.getX() + " y = " + itemPositionKNearestGauss.getY() + " ,miss: " + itemPositionKNearestGauss.getMiss() + ", distribution: " + itemPositionKNearestGauss.getDistribution());
         }
-
 
         int newTrackingId = ktv.insertInto(TRACKING,
                 TRACKING.CREATED_TIME, TRACKING.ROOM_ID, TRACKING.X, TRACKING.Y, TRACKING.SESSION_ID)

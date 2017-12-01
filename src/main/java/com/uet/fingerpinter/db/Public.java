@@ -8,6 +8,7 @@ import com.uet.fingerpinter.db.tables.Building;
 import com.uet.fingerpinter.db.tables.FingerprinterInfo;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
+import com.uet.fingerpinter.db.tables.FingerprinterTracking;
 import com.uet.fingerpinter.db.tables.Room;
 import com.uet.fingerpinter.db.tables.TrackReal;
 import com.uet.fingerpinter.db.tables.Tracking;
@@ -39,7 +40,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 1071358294;
+    private static final long serialVersionUID = -204348267;
 
     /**
      * The reference instance of <code>public</code>
@@ -65,6 +66,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.fingerprinter_info_gauss</code>.
      */
     public final FingerprinterInfoGauss FINGERPRINTER_INFO_GAUSS = com.uet.fingerpinter.db.tables.FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS;
+
+    /**
+     * The table <code>public.fingerprinter_tracking</code>.
+     */
+    public final FingerprinterTracking FINGERPRINTER_TRACKING = com.uet.fingerpinter.db.tables.FingerprinterTracking.FINGERPRINTER_TRACKING;
 
     /**
      * The table <code>public.room</code>.
@@ -120,6 +126,7 @@ public class Public extends SchemaImpl {
             Sequences.FINGERPRINTER_INFO_DETAIL_ID_SEQ,
             Sequences.FINGERPRINTER_INFO_GAUSS_ID_SEQ,
             Sequences.FINGERPRINTER_INFO_ID_SEQ,
+            Sequences.FINGERPRINTER_TRACKING_ID_SEQ,
             Sequences.ROOM_ID_SEQ,
             Sequences.TRACKING_ID_SEQ,
             Sequences.TRACKING_K_NEAREST_ID_SEQ,
@@ -140,6 +147,7 @@ public class Public extends SchemaImpl {
             FingerprinterInfo.FINGERPRINTER_INFO,
             FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL,
             FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS,
+            FingerprinterTracking.FINGERPRINTER_TRACKING,
             Room.ROOM,
             TrackReal.TRACK_REAL,
             Tracking.TRACKING,

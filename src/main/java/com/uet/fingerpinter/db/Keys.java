@@ -8,6 +8,7 @@ import com.uet.fingerpinter.db.tables.Building;
 import com.uet.fingerpinter.db.tables.FingerprinterInfo;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoDetail;
 import com.uet.fingerpinter.db.tables.FingerprinterInfoGauss;
+import com.uet.fingerpinter.db.tables.FingerprinterTracking;
 import com.uet.fingerpinter.db.tables.Room;
 import com.uet.fingerpinter.db.tables.TrackReal;
 import com.uet.fingerpinter.db.tables.Tracking;
@@ -17,6 +18,7 @@ import com.uet.fingerpinter.db.tables.records.BuildingRecord;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoDetailRecord;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoGaussRecord;
 import com.uet.fingerpinter.db.tables.records.FingerprinterInfoRecord;
+import com.uet.fingerpinter.db.tables.records.FingerprinterTrackingRecord;
 import com.uet.fingerpinter.db.tables.records.RoomRecord;
 import com.uet.fingerpinter.db.tables.records.TrackRealRecord;
 import com.uet.fingerpinter.db.tables.records.TrackingKNearestRecord;
@@ -53,6 +55,7 @@ public class Keys {
     public static final Identity<FingerprinterInfoRecord, Integer> IDENTITY_FINGERPRINTER_INFO = Identities0.IDENTITY_FINGERPRINTER_INFO;
     public static final Identity<FingerprinterInfoDetailRecord, Integer> IDENTITY_FINGERPRINTER_INFO_DETAIL = Identities0.IDENTITY_FINGERPRINTER_INFO_DETAIL;
     public static final Identity<FingerprinterInfoGaussRecord, Integer> IDENTITY_FINGERPRINTER_INFO_GAUSS = Identities0.IDENTITY_FINGERPRINTER_INFO_GAUSS;
+    public static final Identity<FingerprinterTrackingRecord, Integer> IDENTITY_FINGERPRINTER_TRACKING = Identities0.IDENTITY_FINGERPRINTER_TRACKING;
     public static final Identity<RoomRecord, Integer> IDENTITY_ROOM = Identities0.IDENTITY_ROOM;
     public static final Identity<TrackRealRecord, Integer> IDENTITY_TRACK_REAL = Identities0.IDENTITY_TRACK_REAL;
     public static final Identity<TrackingRecord, Integer> IDENTITY_TRACKING = Identities0.IDENTITY_TRACKING;
@@ -67,6 +70,7 @@ public class Keys {
     public static final UniqueKey<FingerprinterInfoRecord> FINGERPRINTER_INFO_PKEY = UniqueKeys0.FINGERPRINTER_INFO_PKEY;
     public static final UniqueKey<FingerprinterInfoDetailRecord> FINGERPRINTER_INFO_DETAIL_PKEY = UniqueKeys0.FINGERPRINTER_INFO_DETAIL_PKEY;
     public static final UniqueKey<FingerprinterInfoGaussRecord> FINGERPRINTER_INFO_GAUSS_PKEY = UniqueKeys0.FINGERPRINTER_INFO_GAUSS_PKEY;
+    public static final UniqueKey<FingerprinterTrackingRecord> FINGERPRINTER_TRACKING_PKEY = UniqueKeys0.FINGERPRINTER_TRACKING_PKEY;
     public static final UniqueKey<RoomRecord> ROOM_PKEY = UniqueKeys0.ROOM_PKEY;
     public static final UniqueKey<TrackRealRecord> TRACK_REAL_PKEY = UniqueKeys0.TRACK_REAL_PKEY;
     public static final UniqueKey<TrackingRecord> TRACKING_PKEY = UniqueKeys0.TRACKING_PKEY;
@@ -94,6 +98,7 @@ public class Keys {
         public static Identity<FingerprinterInfoRecord, Integer> IDENTITY_FINGERPRINTER_INFO = createIdentity(FingerprinterInfo.FINGERPRINTER_INFO, FingerprinterInfo.FINGERPRINTER_INFO.ID);
         public static Identity<FingerprinterInfoDetailRecord, Integer> IDENTITY_FINGERPRINTER_INFO_DETAIL = createIdentity(FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL, FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL.ID);
         public static Identity<FingerprinterInfoGaussRecord, Integer> IDENTITY_FINGERPRINTER_INFO_GAUSS = createIdentity(FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ID);
+        public static Identity<FingerprinterTrackingRecord, Integer> IDENTITY_FINGERPRINTER_TRACKING = createIdentity(FingerprinterTracking.FINGERPRINTER_TRACKING, FingerprinterTracking.FINGERPRINTER_TRACKING.ID);
         public static Identity<RoomRecord, Integer> IDENTITY_ROOM = createIdentity(Room.ROOM, Room.ROOM.ID);
         public static Identity<TrackRealRecord, Integer> IDENTITY_TRACK_REAL = createIdentity(TrackReal.TRACK_REAL, TrackReal.TRACK_REAL.ID);
         public static Identity<TrackingRecord, Integer> IDENTITY_TRACKING = createIdentity(Tracking.TRACKING, Tracking.TRACKING.ID);
@@ -106,6 +111,7 @@ public class Keys {
         public static final UniqueKey<FingerprinterInfoRecord> FINGERPRINTER_INFO_PKEY = createUniqueKey(FingerprinterInfo.FINGERPRINTER_INFO, "fingerprinter_info_pkey", FingerprinterInfo.FINGERPRINTER_INFO.ID);
         public static final UniqueKey<FingerprinterInfoDetailRecord> FINGERPRINTER_INFO_DETAIL_PKEY = createUniqueKey(FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL, "fingerprinter_info_detail_pkey", FingerprinterInfoDetail.FINGERPRINTER_INFO_DETAIL.ID);
         public static final UniqueKey<FingerprinterInfoGaussRecord> FINGERPRINTER_INFO_GAUSS_PKEY = createUniqueKey(FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS, "fingerprinter_info_gauss_pkey", FingerprinterInfoGauss.FINGERPRINTER_INFO_GAUSS.ID);
+        public static final UniqueKey<FingerprinterTrackingRecord> FINGERPRINTER_TRACKING_PKEY = createUniqueKey(FingerprinterTracking.FINGERPRINTER_TRACKING, "fingerprinter_tracking_pkey", FingerprinterTracking.FINGERPRINTER_TRACKING.ID);
         public static final UniqueKey<RoomRecord> ROOM_PKEY = createUniqueKey(Room.ROOM, "room_pkey", Room.ROOM.ID);
         public static final UniqueKey<TrackRealRecord> TRACK_REAL_PKEY = createUniqueKey(TrackReal.TRACK_REAL, "track_real_pkey", TrackReal.TRACK_REAL.ID);
         public static final UniqueKey<TrackingRecord> TRACKING_PKEY = createUniqueKey(Tracking.TRACKING, "tracking_pkey", Tracking.TRACKING.ID);
