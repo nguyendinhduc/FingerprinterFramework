@@ -141,7 +141,7 @@ public class UploadInfoManager implements UploadInfoService {
                             .from(FINGERPRINTER_INFO_DETAIL)
                             .where(
                                     FINGERPRINTER_INFO_DETAIL.REFERENCE_ID.eq(gaussId)
-                                            .and(FINGERPRINTER_INFO_DETAIL.TYPE.eq(TypeFingerprinterInfo.GAUSS))
+                                            .and(FINGERPRINTER_INFO_DETAIL.TYPE.eq(TypeFingerprinterInfo.GAUSS_NORMAL))
                             )
                             .fetch()
                             .map(record -> record.value1().floatValue());
@@ -152,7 +152,7 @@ public class UploadInfoManager implements UploadInfoService {
                         maxId++;
                         dslContext.insertInto(FINGERPRINTER_INFO_DETAIL,
                                 FINGERPRINTER_INFO_DETAIL.ID, FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
-                                .values(maxId, gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                                .values(maxId, gaussId, (double) value, TypeFingerprinterInfo.GAUSS_NORMAL)
                                 .execute();
                     }
                     item.getListRss().addAll(oldRss);
@@ -202,7 +202,7 @@ public class UploadInfoManager implements UploadInfoService {
                         maxIdDetail++;
                         dslContext.insertInto(FINGERPRINTER_INFO_DETAIL,
                                 FINGERPRINTER_INFO_DETAIL.ID, FINGERPRINTER_INFO_DETAIL.REFERENCE_ID, FINGERPRINTER_INFO_DETAIL.RSS, FINGERPRINTER_INFO_DETAIL.TYPE)
-                                .values(maxIdDetail, gaussId, (double) value, TypeFingerprinterInfo.GAUSS)
+                                .values(maxIdDetail, gaussId, (double) value, TypeFingerprinterInfo.GAUSS_NORMAL)
                                 .execute();
                     }
                 }

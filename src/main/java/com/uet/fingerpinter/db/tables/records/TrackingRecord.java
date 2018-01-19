@@ -30,87 +30,87 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrackingRecord extends UpdatableRecordImpl<TrackingRecord> implements Record6<Integer, Integer, Integer, Integer, Integer, LocalDateTime> {
 
-    private static final long serialVersionUID = 306110962;
+    private static final long serialVersionUID = -1458152646;
 
     /**
-     * Setter for <code>public.tracking.id</code>.
+     * Setter for <code>location_indoor.tracking.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.tracking.id</code>.
+     * Getter for <code>location_indoor.tracking.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.tracking.room_id</code>.
+     * Setter for <code>location_indoor.tracking.room_id</code>.
      */
     public void setRoomId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.tracking.room_id</code>.
+     * Getter for <code>location_indoor.tracking.room_id</code>.
      */
     public Integer getRoomId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>public.tracking.session_id</code>.
+     * Setter for <code>location_indoor.tracking.session_id</code>.
      */
     public void setSessionId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.tracking.session_id</code>.
+     * Getter for <code>location_indoor.tracking.session_id</code>.
      */
     public Integer getSessionId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>public.tracking.x</code>.
+     * Setter for <code>location_indoor.tracking.x</code>.
      */
     public void setX(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.tracking.x</code>.
+     * Getter for <code>location_indoor.tracking.x</code>.
      */
     public Integer getX() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>public.tracking.y</code>.
+     * Setter for <code>location_indoor.tracking.y</code>.
      */
     public void setY(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.tracking.y</code>.
+     * Getter for <code>location_indoor.tracking.y</code>.
      */
     public Integer getY() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>public.tracking.created_time</code>.
+     * Setter for <code>location_indoor.tracking.created_time</code>.
      */
     public void setCreatedTime(LocalDateTime value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.tracking.created_time</code>.
+     * Getter for <code>location_indoor.tracking.created_time</code>.
      */
     public LocalDateTime getCreatedTime() {
         return (LocalDateTime) get(5);

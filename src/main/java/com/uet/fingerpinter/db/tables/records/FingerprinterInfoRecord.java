@@ -28,115 +28,115 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FingerprinterInfoRecord extends UpdatableRecordImpl<FingerprinterInfoRecord> implements Record8<Integer, String, String, Double, Integer, Integer, Integer, Integer> {
 
-    private static final long serialVersionUID = 607339242;
+    private static final long serialVersionUID = 514056660;
 
     /**
-     * Setter for <code>public.fingerprinter_info.id</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.id</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info.ap_name</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.ap_name</code>.
      */
     public void setApName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.ap_name</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.ap_name</code>.
      */
     public String getApName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info.mac_address</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.mac_address</code>.
      */
     public void setMacAddress(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.mac_address</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.mac_address</code>.
      */
     public String getMacAddress() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info.rss</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.rss</code>.
      */
     public void setRss(Double value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.rss</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.rss</code>.
      */
     public Double getRss() {
         return (Double) get(3);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info.x</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.x</code>.
      */
     public void setX(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.x</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.x</code>.
      */
     public Integer getX() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info.y</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.y</code>.
      */
     public void setY(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.y</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.y</code>.
      */
     public Integer getY() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info.room_id</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.room_id</code>.
      */
     public void setRoomId(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.room_id</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.room_id</code>.
      */
     public Integer getRoomId() {
         return (Integer) get(6);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info.building_id</code>.
+     * Setter for <code>location_indoor.fingerprinter_info.building_id</code>.
      */
     public void setBuildingId(Integer value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info.building_id</code>.
+     * Getter for <code>location_indoor.fingerprinter_info.building_id</code>.
      */
     public Integer getBuildingId() {
         return (Integer) get(7);

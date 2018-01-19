@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.Public;
+import com.uet.fingerpinter.db.LocationIndoor;
 import com.uet.fingerpinter.db.tables.records.TrackingRecord;
 import com.uet.fingerpinter.jooq.convert.LocalDateTimeConverter;
 
@@ -38,10 +38,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tracking extends TableImpl<TrackingRecord> {
 
-    private static final long serialVersionUID = 937094190;
+    private static final long serialVersionUID = 759722448;
 
     /**
-     * The reference instance of <code>public.tracking</code>
+     * The reference instance of <code>location_indoor.tracking</code>
      */
     public static final Tracking TRACKING = new Tracking();
 
@@ -54,44 +54,44 @@ public class Tracking extends TableImpl<TrackingRecord> {
     }
 
     /**
-     * The column <code>public.tracking.id</code>.
+     * The column <code>location_indoor.tracking.id</code>.
      */
-    public final TableField<TrackingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('tracking_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<TrackingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking.room_id</code>.
+     * The column <code>location_indoor.tracking.room_id</code>.
      */
     public final TableField<TrackingRecord, Integer> ROOM_ID = createField("room_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking.session_id</code>.
+     * The column <code>location_indoor.tracking.session_id</code>.
      */
-    public final TableField<TrackingRecord, Integer> SESSION_ID = createField("session_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<TrackingRecord, Integer> SESSION_ID = createField("session_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>public.tracking.x</code>.
+     * The column <code>location_indoor.tracking.x</code>.
      */
     public final TableField<TrackingRecord, Integer> X = createField("x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking.y</code>.
+     * The column <code>location_indoor.tracking.y</code>.
      */
     public final TableField<TrackingRecord, Integer> Y = createField("y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.tracking.created_time</code>.
+     * The column <code>location_indoor.tracking.created_time</code>.
      */
-    public final TableField<TrackingRecord, LocalDateTime> CREATED_TIME = createField("created_time", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "", new LocalDateTimeConverter());
+    public final TableField<TrackingRecord, LocalDateTime> CREATED_TIME = createField("created_time", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaultValue(org.jooq.impl.DSL.inline("CURRENT_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "", new LocalDateTimeConverter());
 
     /**
-     * Create a <code>public.tracking</code> table reference
+     * Create a <code>location_indoor.tracking</code> table reference
      */
     public Tracking() {
         this("tracking", null);
     }
 
     /**
-     * Create an aliased <code>public.tracking</code> table reference
+     * Create an aliased <code>location_indoor.tracking</code> table reference
      */
     public Tracking(String alias) {
         this(alias, TRACKING);
@@ -110,7 +110,7 @@ public class Tracking extends TableImpl<TrackingRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return LocationIndoor.LOCATION_INDOOR;
     }
 
     /**
@@ -126,7 +126,7 @@ public class Tracking extends TableImpl<TrackingRecord> {
      */
     @Override
     public UniqueKey<TrackingRecord> getPrimaryKey() {
-        return Keys.TRACKING_PKEY;
+        return Keys.KEY_TRACKING_PRIMARY;
     }
 
     /**
@@ -134,7 +134,7 @@ public class Tracking extends TableImpl<TrackingRecord> {
      */
     @Override
     public List<UniqueKey<TrackingRecord>> getKeys() {
-        return Arrays.<UniqueKey<TrackingRecord>>asList(Keys.TRACKING_PKEY);
+        return Arrays.<UniqueKey<TrackingRecord>>asList(Keys.KEY_TRACKING_PRIMARY);
     }
 
     /**
@@ -142,7 +142,7 @@ public class Tracking extends TableImpl<TrackingRecord> {
      */
     @Override
     public List<ForeignKey<TrackingRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING__TRACKING_KEY_1);
+        return Arrays.<ForeignKey<TrackingRecord, ?>>asList(Keys.TRACKING_GAUSS_1);
     }
 
     /**

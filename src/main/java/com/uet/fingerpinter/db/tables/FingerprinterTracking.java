@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.Public;
+import com.uet.fingerpinter.db.LocationIndoor;
 import com.uet.fingerpinter.db.tables.records.FingerprinterTrackingRecord;
 
 import java.util.Arrays;
@@ -35,10 +35,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FingerprinterTracking extends TableImpl<FingerprinterTrackingRecord> {
 
-    private static final long serialVersionUID = -48519836;
+    private static final long serialVersionUID = -1071541601;
 
     /**
-     * The reference instance of <code>public.fingerprinter_tracking</code>
+     * The reference instance of <code>location_indoor.fingerprinter_tracking</code>
      */
     public static final FingerprinterTracking FINGERPRINTER_TRACKING = new FingerprinterTracking();
 
@@ -51,44 +51,49 @@ public class FingerprinterTracking extends TableImpl<FingerprinterTrackingRecord
     }
 
     /**
-     * The column <code>public.fingerprinter_tracking.id</code>.
+     * The column <code>location_indoor.fingerprinter_tracking.id</code>.
      */
-    public final TableField<FingerprinterTrackingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('fingerprinter_tracking_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<FingerprinterTrackingRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.fingerprinter_tracking.session_id</code>.
+     * The column <code>location_indoor.fingerprinter_tracking.session_id</code>.
      */
     public final TableField<FingerprinterTrackingRecord, Integer> SESSION_ID = createField("session_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.fingerprinter_tracking.index</code>.
+     * The column <code>location_indoor.fingerprinter_tracking.index</code>.
      */
     public final TableField<FingerprinterTrackingRecord, Integer> INDEX = createField("index", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>public.fingerprinter_tracking.rss</code>.
+     * The column <code>location_indoor.fingerprinter_tracking.rss</code>.
      */
     public final TableField<FingerprinterTrackingRecord, Double> RSS = createField("rss", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
-     * The column <code>public.fingerprinter_tracking.mac_address</code>.
+     * The column <code>location_indoor.fingerprinter_tracking.mac_address</code>.
      */
     public final TableField<FingerprinterTrackingRecord, String> MAC_ADDRESS = createField("mac_address", org.jooq.impl.SQLDataType.VARCHAR.length(1000).nullable(false), this, "");
 
     /**
-     * The column <code>public.fingerprinter_tracking.ap_name</code>.
+     * The column <code>location_indoor.fingerprinter_tracking.ap_name</code>.
      */
     public final TableField<FingerprinterTrackingRecord, String> AP_NAME = createField("ap_name", org.jooq.impl.SQLDataType.VARCHAR.length(1000), this, "");
 
     /**
-     * Create a <code>public.fingerprinter_tracking</code> table reference
+     * The column <code>location_indoor.fingerprinter_tracking.room_id</code>.
+     */
+    public final TableField<FingerprinterTrackingRecord, Integer> ROOM_ID = createField("room_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.inline("4", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+
+    /**
+     * Create a <code>location_indoor.fingerprinter_tracking</code> table reference
      */
     public FingerprinterTracking() {
         this("fingerprinter_tracking", null);
     }
 
     /**
-     * Create an aliased <code>public.fingerprinter_tracking</code> table reference
+     * Create an aliased <code>location_indoor.fingerprinter_tracking</code> table reference
      */
     public FingerprinterTracking(String alias) {
         this(alias, FINGERPRINTER_TRACKING);
@@ -107,7 +112,7 @@ public class FingerprinterTracking extends TableImpl<FingerprinterTrackingRecord
      */
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return LocationIndoor.LOCATION_INDOOR;
     }
 
     /**
@@ -123,7 +128,7 @@ public class FingerprinterTracking extends TableImpl<FingerprinterTrackingRecord
      */
     @Override
     public UniqueKey<FingerprinterTrackingRecord> getPrimaryKey() {
-        return Keys.FINGERPRINTER_TRACKING_PKEY;
+        return Keys.KEY_FINGERPRINTER_TRACKING_PRIMARY;
     }
 
     /**
@@ -131,7 +136,7 @@ public class FingerprinterTracking extends TableImpl<FingerprinterTrackingRecord
      */
     @Override
     public List<UniqueKey<FingerprinterTrackingRecord>> getKeys() {
-        return Arrays.<UniqueKey<FingerprinterTrackingRecord>>asList(Keys.FINGERPRINTER_TRACKING_PKEY);
+        return Arrays.<UniqueKey<FingerprinterTrackingRecord>>asList(Keys.KEY_FINGERPRINTER_TRACKING_PRIMARY);
     }
 
     /**

@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.Public;
+import com.uet.fingerpinter.db.LocationIndoor;
 import com.uet.fingerpinter.db.tables.records.UserRecord;
 
 import java.util.Arrays;
@@ -35,10 +35,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = -230672538;
+    private static final long serialVersionUID = -384158344;
 
     /**
-     * The reference instance of <code>public.user</code>
+     * The reference instance of <code>location_indoor.user</code>
      */
     public static final User USER = new User();
 
@@ -51,24 +51,24 @@ public class User extends TableImpl<UserRecord> {
     }
 
     /**
-     * The column <code>public.user.id</code>.
+     * The column <code>location_indoor.user.id</code>.
      */
-    public final TableField<UserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('user_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<UserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.user.mac_address</code>.
+     * The column <code>location_indoor.user.mac_address</code>.
      */
-    public final TableField<UserRecord, String> MAC_ADDRESS = createField("mac_address", org.jooq.impl.SQLDataType.VARCHAR.length(500).nullable(false), this, "");
+    public final TableField<UserRecord, String> MAC_ADDRESS = createField("mac_address", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
 
     /**
-     * Create a <code>public.user</code> table reference
+     * Create a <code>location_indoor.user</code> table reference
      */
     public User() {
         this("user", null);
     }
 
     /**
-     * Create an aliased <code>public.user</code> table reference
+     * Create an aliased <code>location_indoor.user</code> table reference
      */
     public User(String alias) {
         this(alias, USER);
@@ -87,7 +87,7 @@ public class User extends TableImpl<UserRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return LocationIndoor.LOCATION_INDOOR;
     }
 
     /**
@@ -103,7 +103,7 @@ public class User extends TableImpl<UserRecord> {
      */
     @Override
     public UniqueKey<UserRecord> getPrimaryKey() {
-        return Keys.USER_PKEY;
+        return Keys.KEY_USER_PRIMARY;
     }
 
     /**
@@ -111,7 +111,7 @@ public class User extends TableImpl<UserRecord> {
      */
     @Override
     public List<UniqueKey<UserRecord>> getKeys() {
-        return Arrays.<UniqueKey<UserRecord>>asList(Keys.USER_PKEY);
+        return Arrays.<UniqueKey<UserRecord>>asList(Keys.KEY_USER_PRIMARY);
     }
 
     /**

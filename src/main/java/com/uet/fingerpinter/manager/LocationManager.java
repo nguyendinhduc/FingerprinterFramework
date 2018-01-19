@@ -332,8 +332,8 @@ public class LocationManager implements LocationService {
         //insert fingerprinter info
         for (InfoReferencePointRequest infoReferencePointRequest : request.getInfos()) {
             ktv.insertInto(FINGERPRINTER_TRACKING,
-                    FINGERPRINTER_TRACKING.SESSION_ID, FINGERPRINTER_TRACKING.INDEX, FINGERPRINTER_TRACKING.RSS, FINGERPRINTER_TRACKING.MAC_ADDRESS, FINGERPRINTER_TRACKING.AP_NAME)
-                    .values(request.getExtendGetLocationModel().getTransactionId(), index, infoReferencePointRequest.getRss() * 1.0, infoReferencePointRequest.getMacAddress(), infoReferencePointRequest.getName())
+                    FINGERPRINTER_TRACKING.SESSION_ID, FINGERPRINTER_TRACKING.INDEX, FINGERPRINTER_TRACKING.RSS, FINGERPRINTER_TRACKING.MAC_ADDRESS, FINGERPRINTER_TRACKING.AP_NAME, FINGERPRINTER_TRACKING.ROOM_ID)
+                    .values(request.getExtendGetLocationModel().getTransactionId(), index, infoReferencePointRequest.getRss() * 1.0, infoReferencePointRequest.getMacAddress(), infoReferencePointRequest.getName(), request.getRoomId())
                     .execute();
         }
         //end
@@ -493,7 +493,7 @@ public class LocationManager implements LocationService {
         }
     }
 
-    public static double distance2D(int x1, int y1, int x2, int y2) {
+    public static double distance2D(double x1, double y1, double x2, double y2) {
         double result = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
         return Math.sqrt(result);
     }

@@ -28,129 +28,129 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FingerprinterInfoGaussRecord extends UpdatableRecordImpl<FingerprinterInfoGaussRecord> implements Record9<Integer, Integer, String, String, Integer, Integer, Double, Double, Integer> {
 
-    private static final long serialVersionUID = -1367202604;
+    private static final long serialVersionUID = -285620716;
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.id</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.id</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.room_id</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.room_id</code>.
      */
     public void setRoomId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.room_id</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.room_id</code>.
      */
     public Integer getRoomId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.ap_name</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.ap_name</code>.
      */
     public void setApName(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.ap_name</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.ap_name</code>.
      */
     public String getApName() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.mac_address</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.mac_address</code>.
      */
     public void setMacAddress(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.mac_address</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.mac_address</code>.
      */
     public String getMacAddress() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.x</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.x</code>.
      */
     public void setX(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.x</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.x</code>.
      */
     public Integer getX() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.y</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.y</code>.
      */
     public void setY(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.y</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.y</code>.
      */
     public Integer getY() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.mean</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.mean</code>.
      */
     public void setMean(Double value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.mean</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.mean</code>.
      */
     public Double getMean() {
         return (Double) get(6);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.standard_deviation</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.standard_deviation</code>.
      */
     public void setStandardDeviation(Double value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.standard_deviation</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.standard_deviation</code>.
      */
     public Double getStandardDeviation() {
         return (Double) get(7);
     }
 
     /**
-     * Setter for <code>public.fingerprinter_info_gauss.measures</code>.
+     * Setter for <code>location_indoor.fingerprinter_info_gauss.measures</code>.
      */
     public void setMeasures(Integer value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>public.fingerprinter_info_gauss.measures</code>.
+     * Getter for <code>location_indoor.fingerprinter_info_gauss.measures</code>.
      */
     public Integer getMeasures() {
         return (Integer) get(8);

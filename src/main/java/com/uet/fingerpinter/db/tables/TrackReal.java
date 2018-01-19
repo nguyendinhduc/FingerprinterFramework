@@ -5,7 +5,7 @@ package com.uet.fingerpinter.db.tables;
 
 
 import com.uet.fingerpinter.db.Keys;
-import com.uet.fingerpinter.db.Public;
+import com.uet.fingerpinter.db.LocationIndoor;
 import com.uet.fingerpinter.db.tables.records.TrackRealRecord;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrackReal extends TableImpl<TrackRealRecord> {
 
-    private static final long serialVersionUID = -1078568511;
+    private static final long serialVersionUID = 1323233982;
 
     /**
-     * The reference instance of <code>public.track_real</code>
+     * The reference instance of <code>location_indoor.track_real</code>
      */
     public static final TrackReal TRACK_REAL = new TrackReal();
 
@@ -52,34 +52,34 @@ public class TrackReal extends TableImpl<TrackRealRecord> {
     }
 
     /**
-     * The column <code>public.track_real.id</code>.
+     * The column <code>location_indoor.track_real.id</code>.
      */
-    public final TableField<TrackRealRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('track_real_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<TrackRealRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.track_real.room_id</code>.
+     * The column <code>location_indoor.track_real.room_id</code>.
      */
     public final TableField<TrackRealRecord, Integer> ROOM_ID = createField("room_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.track_real.x</code>.
+     * The column <code>location_indoor.track_real.x</code>.
      */
     public final TableField<TrackRealRecord, Integer> X = createField("x", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.track_real.y</code>.
+     * The column <code>location_indoor.track_real.y</code>.
      */
     public final TableField<TrackRealRecord, Integer> Y = createField("y", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * Create a <code>public.track_real</code> table reference
+     * Create a <code>location_indoor.track_real</code> table reference
      */
     public TrackReal() {
         this("track_real", null);
     }
 
     /**
-     * Create an aliased <code>public.track_real</code> table reference
+     * Create an aliased <code>location_indoor.track_real</code> table reference
      */
     public TrackReal(String alias) {
         this(alias, TRACK_REAL);
@@ -98,7 +98,7 @@ public class TrackReal extends TableImpl<TrackRealRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Public.PUBLIC;
+        return LocationIndoor.LOCATION_INDOOR;
     }
 
     /**
@@ -114,7 +114,7 @@ public class TrackReal extends TableImpl<TrackRealRecord> {
      */
     @Override
     public UniqueKey<TrackRealRecord> getPrimaryKey() {
-        return Keys.TRACK_REAL_PKEY;
+        return Keys.KEY_TRACK_REAL_PRIMARY;
     }
 
     /**
@@ -122,7 +122,7 @@ public class TrackReal extends TableImpl<TrackRealRecord> {
      */
     @Override
     public List<UniqueKey<TrackRealRecord>> getKeys() {
-        return Arrays.<UniqueKey<TrackRealRecord>>asList(Keys.TRACK_REAL_PKEY);
+        return Arrays.<UniqueKey<TrackRealRecord>>asList(Keys.KEY_TRACK_REAL_PRIMARY);
     }
 
     /**
@@ -130,7 +130,7 @@ public class TrackReal extends TableImpl<TrackRealRecord> {
      */
     @Override
     public List<ForeignKey<TrackRealRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<TrackRealRecord, ?>>asList(Keys.TRACK_REAL__TRACK_REAL_1);
+        return Arrays.<ForeignKey<TrackRealRecord, ?>>asList(Keys.KEY_ROOM_ID);
     }
 
     /**

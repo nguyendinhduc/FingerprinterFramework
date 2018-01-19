@@ -28,59 +28,59 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TrackRealRecord extends UpdatableRecordImpl<TrackRealRecord> implements Record4<Integer, Integer, Integer, Integer> {
 
-    private static final long serialVersionUID = -937992342;
+    private static final long serialVersionUID = 1133026684;
 
     /**
-     * Setter for <code>public.track_real.id</code>.
+     * Setter for <code>location_indoor.track_real.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.track_real.id</code>.
+     * Getter for <code>location_indoor.track_real.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.track_real.room_id</code>.
+     * Setter for <code>location_indoor.track_real.room_id</code>.
      */
     public void setRoomId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.track_real.room_id</code>.
+     * Getter for <code>location_indoor.track_real.room_id</code>.
      */
     public Integer getRoomId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>public.track_real.x</code>.
+     * Setter for <code>location_indoor.track_real.x</code>.
      */
     public void setX(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.track_real.x</code>.
+     * Getter for <code>location_indoor.track_real.x</code>.
      */
     public Integer getX() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>public.track_real.y</code>.
+     * Setter for <code>location_indoor.track_real.y</code>.
      */
     public void setY(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.track_real.y</code>.
+     * Getter for <code>location_indoor.track_real.y</code>.
      */
     public Integer getY() {
         return (Integer) get(3);
